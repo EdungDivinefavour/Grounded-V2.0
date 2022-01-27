@@ -1,0 +1,1 @@
+const iconPath = 'assets/icons/';
