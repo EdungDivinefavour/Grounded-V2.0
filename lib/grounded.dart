@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:grounded/constants/enums/online_presence.dart';
 import 'package:grounded/screens/splash.dart';
 import 'package:grounded/services/firebase/authentication_service.dart';
@@ -20,7 +19,7 @@ class _GroundedState extends State<Grounded> with WidgetsBindingObserver {
   final _messagingService = MessagingService.instance;
   final _databaseService = DatabaseService.instance;
   final _authenticationService = AuthenticationService.instance;
-  final navigatorKey = GlobalKey<NavigatorState>();
+  final _navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   void initState() {
@@ -33,7 +32,8 @@ class _GroundedState extends State<Grounded> with WidgetsBindingObserver {
           onlinePresence: OnlinePresence.online,
           userId: _authenticationService.currentUser?.uid);
     }
-    if (!kIsWeb) _notificationService.setupHandler(navigatorKey);
+
+    _notificationService.setupHandler(_navigatorKey);
     WidgetsBinding.instance?.addObserver(this);
   }
 
@@ -66,14 +66,11 @@ class _GroundedState extends State<Grounded> with WidgetsBindingObserver {
         }
 
         final user = snapshot.data;
-        if (user == null) {
-          return Splash();
-        }
+        if (user == null) return Splash(isSessionStillActive: false);
 
         _firestoreService.storeParentInfo(
             userId: _authenticationService.currentUser!.uid);
-        return Splash(
-            displayName: _authenticationService.currentUser!.displayName);
+        return Splash(isSessionStillActive: true);
       },
     );
   }

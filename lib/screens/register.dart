@@ -13,7 +13,7 @@ class Register extends StatelessWidget {
     return Scaffold();
   }
 
-  void registerParent() {
+  void _registerParent() {
     _authenticationService
         .registerParent(
             email: _emailController.text,
