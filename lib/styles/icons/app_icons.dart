@@ -3,5 +3,7 @@
 
 abstract class AppIcons {
   static const checkBox = "check_box.svg";
+  static const fetchedImageFailedPNG = 'fetched_image_failed.png';
+  static const fetchedImageFailedSVG = 'fetched_image_failed.svg';
   static const logo = 'logo.svg';
 }

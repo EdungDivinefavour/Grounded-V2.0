@@ -25,7 +25,7 @@ class LoginParent extends StatelessWidget {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (_) => HomeParent()), (_) => false);
     }).catchError((onError) {
-      EasyLoading.showError("Could not sign you in!. Please try again later");
+      EasyLoading.showError('Please confirm email and password and try again.');
     });
   }
 }

@@ -48,10 +48,7 @@ class AuthenticationService {
   }) async {
     final result = await _auth.signInWithEmailAndPassword(
         email: email, password: password);
-    if (result.user == null) {
-      EasyLoading.showError('Please confirm email and password and try again.');
-      return;
-    }
+
     final parentInfo = await _firestoreService.getParentInfo(result.user!.uid);
 
     await _databaseService.updateRealTimeDbPresence(

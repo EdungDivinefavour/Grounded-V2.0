@@ -41,10 +41,11 @@ class _GroundedState extends State<Grounded> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (_authenticationService.currentUser != null) {
       _databaseService.updateRealTimeDbPresence(
-          userId: _authenticationService.currentUser!.uid,
-          onlinePresence: state == AppLifecycleState.resumed
-              ? OnlinePresence.online
-              : OnlinePresence.away);
+        userId: _authenticationService.currentUser!.uid,
+        onlinePresence: state == AppLifecycleState.resumed
+            ? OnlinePresence.online
+            : OnlinePresence.away,
+      );
     }
   }
 
@@ -69,7 +70,8 @@ class _GroundedState extends State<Grounded> with WidgetsBindingObserver {
         if (user == null) return Splash(isSessionStillActive: false);
 
         _firestoreService.storeParentInfo(
-            userId: _authenticationService.currentUser!.uid);
+          userId: _authenticationService.currentUser!.uid,
+        );
         return Splash(isSessionStillActive: true);
       },
     );

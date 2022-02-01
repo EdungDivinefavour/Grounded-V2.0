@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:grounded/services/firebase/authentication_service.dart';
 
 class ForgotPassword extends StatelessWidget {
@@ -10,7 +11,8 @@ class ForgotPassword extends StatelessWidget {
     return Scaffold();
   }
 
-  void sendPasswordResetEmail() {
+  void _sendPasswordResetEmail() {
+    EasyLoading.show();
     _authenticationService
         .sendPasswordResetEmail(email: _emailController.text)
         .then((_) {})

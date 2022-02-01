@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:grounded/models/grounded_user/child/child.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';
 import 'package:grounded/services/local_storage/local_storage.dart';
 
@@ -29,6 +30,30 @@ class FirestoreService {
         .collection(FirebaseDocuments.users)
         .doc(userId)
         .set({"id": userId, ...parentInfo.toJson()});
+  }
+
+  Future<void> storeChildInfo({required Child newChild}) async {
+    await _firestore
+        .collection(FirebaseDocuments.users)
+        .doc(newChild.parentID)
+        .update({
+      "children": FieldValue.arrayUnion([newChild.toJson()])
+    });
+
+    final parent = await getParentInfo(newChild.parentID);
+    await _localStorage.storeParentInfoToLocal(parent);
+  }
+
+  Future<void> updateChildProfilePhoto({
+    required String photoUrl,
+    required String parentID,
+  }) async {
+    // await _firestore.collection(FirebaseDocuments.users).doc(parentID).update({
+    //   "children": FieldValue.arrayUnion([newChild.toJson()])
+    // });
+
+    final parent = await getParentInfo(parentID);
+    await _localStorage.storeParentInfoToLocal(parent);
   }
 
   Future<void> storeToken(String userId, String token) async {

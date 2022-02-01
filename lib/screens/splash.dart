@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grounded/screens/parent/add_child.dart';
 import 'package:grounded/screens/parent/home_parent.dart';
 import 'package:grounded/screens/parent/login_parent.dart';
 import 'package:grounded/styles/colors/theme_colors.dart';
@@ -16,7 +17,7 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
 
-    _navigateToNextScreen();
+    _openNextScreen();
   }
 
   @override
@@ -24,9 +25,8 @@ class _SplashState extends State<Splash> {
     return Scaffold(backgroundColor: ThemeColors.primary);
   }
 
-  void _navigateToNextScreen() {
-    final nextScreen =
-        widget.isSessionStillActive ? HomeParent() : LoginParent();
+  void _openNextScreen() {
+    final nextScreen = widget.isSessionStillActive ? AddChild() : LoginParent();
 
     Future.delayed(const Duration(milliseconds: 3800), () {
       Navigator.of(context).pushAndRemoveUntil(
