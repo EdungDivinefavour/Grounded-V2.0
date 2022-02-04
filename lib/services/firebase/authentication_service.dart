@@ -39,7 +39,7 @@ class AuthenticationService {
         userId: newParent.id, onlinePresence: OnlinePresence.online);
 
     await _messagingService.getAndSetTokens();
-    await _localStorage.storeParentInfoToLocal(newParent);
+    await _localStorage.storeUserInfoToLocal(newParent);
   }
 
   Future<void> loginParent({
@@ -55,7 +55,7 @@ class AuthenticationService {
         userId: parentInfo.id, onlinePresence: OnlinePresence.online);
 
     await _messagingService.getAndSetTokens();
-    await _localStorage.storeParentInfoToLocal(parentInfo);
+    await _localStorage.storeUserInfoToLocal(parentInfo);
   }
 
   Future<void> updatePassword({required String password}) async {
@@ -87,7 +87,7 @@ class AuthenticationService {
 
   void signOutUser() {
     _auth.signOut();
-    _localStorage.clearParentInfoFromLocal();
+    _localStorage.clearUserInfoFromLocal();
   }
 
   Stream<User?> authStateChanges() {

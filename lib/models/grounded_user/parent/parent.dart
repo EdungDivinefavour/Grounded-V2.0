@@ -2,7 +2,6 @@ import 'package:grounded/constants/enums/user_type.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
 import 'package:grounded/models/grounded_user/grounded_user.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:uuid/uuid.dart';
 
 part 'parent.g.dart';
 
@@ -16,13 +15,13 @@ class Parent extends GroundedUser {
   final String password;
   final List<Child> children;
 
-  Parent(
-      {required this.id,
-      required this.name,
-      required this.email,
-      required this.password,
-      required this.children})
-      : super(id: id, name: name, userType: UserType.parent);
+  Parent({
+    required this.id,
+    required this.name,
+    required this.email,
+    required this.password,
+    required this.children,
+  }) : super(id: id, name: name, userType: UserType.parent);
 
   static Parent newParent({
     required String id,

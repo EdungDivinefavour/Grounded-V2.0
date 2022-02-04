@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:grounded/models/grounded_user/parent/parent.dart';
+import 'package:grounded/models/grounded_user/grounded_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorage {
@@ -14,20 +14,20 @@ class LocalStorage {
     _prefs = await SharedPreferences.getInstance();
   }
 
-  Future<Parent?> getParentInfoFromLocal() async {
-    final parentInfo = _prefs.getString("parentInfo");
-    if (parentInfo == null) {
+  Future<GroundedUser?> getUserInfoFromLocal() async {
+    final userInfo = _prefs.getString("userInfo");
+    if (userInfo == null) {
       return null;
     }
 
-    return Parent.fromJson(jsonDecode(parentInfo));
+    return GroundedUser.fromJson(jsonDecode(userInfo));
   }
 
-  Future<void> storeParentInfoToLocal(Parent parent) async {
-    await _prefs.setString("parentInfo", jsonEncode(parent.toJson()));
+  Future<void> storeUserInfoToLocal(GroundedUser groundedUser) async {
+    await _prefs.setString("userInfo", jsonEncode(groundedUser.toJson()));
   }
 
-  Future<void> clearParentInfoFromLocal() {
-    return _prefs.remove("parentInfo");
+  Future<void> clearUserInfoFromLocal() {
+    return _prefs.remove("userInfo");
   }
 }

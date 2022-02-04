@@ -12,13 +12,17 @@ Child _$ChildFromJson(Map<String, dynamic> json) => Child(
       loginToken: json['loginToken'] as String,
       age: json['age'] as int,
       grade: json['grade'] as int,
+      achievements: (json['achievements'] as List<dynamic>)
+          .map((e) => Achievement.fromJson(e as Map<String, dynamic>))
+          .toList(),
     )..profilePhoto = json['profilePhoto'] as String;
 
 Map<String, dynamic> _$ChildToJson(Child instance) => <String, dynamic>{
       'profilePhoto': instance.profilePhoto,
+      'name': instance.name,
       'parentID': instance.parentID,
       'loginToken': instance.loginToken,
-      'name': instance.name,
       'age': instance.age,
       'grade': instance.grade,
+      'achievements': instance.achievements.map((e) => e.toJson()).toList(),
     };

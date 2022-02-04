@@ -2,13 +2,13 @@ import 'dart:io';
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/components/user_image.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
 import 'package:grounded/screens/parent/home_parent.dart';
 import 'package:grounded/services/firebase/authentication_service.dart';
 import 'package:grounded/services/firebase/firestore_service.dart';
 import 'package:grounded/services/firebase/storage_service.dart';
-import 'package:grounded/services/local_storage/local_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddChild extends StatefulWidget {
@@ -22,29 +22,21 @@ class _AddChildState extends State<AddChild> {
   final _gradeController = TextEditingController();
 
   final _firestoreService = FirestoreService.instance;
-  final _authenticationService = AuthenticationService.instance;
+  final _authService = AuthenticationService.instance;
   final _storageService = StorageService.instance;
-  final _localStorage = LocalStorage.instance;
 
   final _imagePicker = ImagePicker();
   File? _pickedImage;
-
-  Child? _child;
+  String? pickedUploadedPhotoUrl;
 
   @override
   void initState() {
     super.initState();
-
-    _child = Child.newChild(
-        name: "",
-        parentID: _authenticationService.currentUser!.uid,
-        age: 0,
-        grade: 0);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return CustomScaffold(
       body: Column(
         children: [
           InkWell(onTap: _openPickImageSheet, child: UserImage()),
@@ -64,7 +56,7 @@ class _AddChildState extends State<AddChild> {
 
     if (result == "gallery") {
       _uploadChildProfilePhoto(ImageSource.gallery);
-    } else {
+    } else if (result == "camera") {
       _uploadChildProfilePhoto(ImageSource.camera);
     }
   }
@@ -85,26 +77,25 @@ class _AddChildState extends State<AddChild> {
         await _storageService.uploadProfilePhoto(_pickedImage!);
 
     await _firestoreService.updateChildProfilePhoto(
-        photoUrl: uploadedPhotoUrl, parentID: _child!.parentID);
+        photoUrl: uploadedPhotoUrl, parentID: _authService.currentUser!.uid);
 
     EasyLoading.showInfo("Profile photo uploaded successfully");
-    _child?.profilePhoto = uploadedPhotoUrl;
+    pickedUploadedPhotoUrl = uploadedPhotoUrl;
   }
 
   void _addChild(BuildContext context) async {
     EasyLoading.show();
-    _child!.name = _nameController.text;
-    _child!.age = int.parse(_ageController.text);
-    _child!.grade = int.parse(_gradeController.text);
+    final child = Child.newChild(
+      name: _nameController.text,
+      parentID: _authService.currentUser!.uid,
+      age: int.parse(_ageController.text),
+      grade: int.parse(_gradeController.text),
+    );
 
-    _firestoreService.storeChildInfo(newChild: _child!).then((_) {
-      EasyLoading.showSuccess("Child added successfully");
+    await _firestoreService.storeChildInfo(newChild: child);
+    EasyLoading.showSuccess("Child added successfully");
 
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (_) => HomeParent()));
-    }).catchError((onError) {
-      EasyLoading.showError(
-          'Unable to create your account at this time. Please try again later');
-    });
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (_) => HomeParent()));
   }
 }

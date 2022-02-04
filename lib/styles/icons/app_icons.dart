@@ -2,8 +2,13 @@
 /// Note: Always add icons in alphabetical order to make it easy to find
 
 abstract class AppIcons {
+  static const add = 'add.svg';
+  static const badges = 'badges.svg';
   static const checkBox = "check_box.svg";
   static const fetchedImageFailedPNG = 'fetched_image_failed.png';
   static const fetchedImageFailedSVG = 'fetched_image_failed.svg';
-  static const logo = 'logo.svg';
+  static const home = 'home.svg';
+  static const profile = 'profile.svg';
+  static const reports = 'reports.svg';
+  static const settings = 'settings.svg';
 }

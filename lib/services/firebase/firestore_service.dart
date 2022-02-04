@@ -41,7 +41,7 @@ class FirestoreService {
     });
 
     final parent = await getParentInfo(newChild.parentID);
-    await _localStorage.storeParentInfoToLocal(parent);
+    await _localStorage.storeUserInfoToLocal(parent);
   }
 
   Future<void> updateChildProfilePhoto({
@@ -53,7 +53,7 @@ class FirestoreService {
     // });
 
     final parent = await getParentInfo(parentID);
-    await _localStorage.storeParentInfoToLocal(parent);
+    await _localStorage.storeUserInfoToLocal(parent);
   }
 
   Future<void> storeToken(String userId, String token) async {
