@@ -48,7 +48,7 @@ class _HomeParentState extends State<HomeParent> {
     );
   }
 
-  // TODO: Delete text widget and properly build the proper widget here
+  // TODO: Delete text widget and properly build the actual widget here
   // Ensure to wrap it in an inkwell and set the onPress/onTap for this to _openAddTaskScreen
   Widget _buildEachChild(Child child) {
     return Text(child.name);

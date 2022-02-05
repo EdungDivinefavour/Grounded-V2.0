@@ -1,4 +1,4 @@
-package com.example.grounded
+package com.grounded.app
 
 import io.flutter.embedding.android.FlutterActivity
 
