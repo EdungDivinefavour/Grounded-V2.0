@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:grounded/components/custom_scaffold.dart';
+import 'package:grounded/constants/enums/question_category.dart';
 import 'package:grounded/constants/enums/question_type.dart';
 import 'package:grounded/models/grounded_task.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
@@ -21,7 +22,8 @@ class _AddTaskState extends State<AddTask> {
   final _firestoreService = FirestoreService.instance;
 
   final _taskNameController = TextEditingController();
-  final _subjectController = TextEditingController();
+  final _questionCategoryController = TextEditingController();
+  final _questionTypeController = TextEditingController();
   final _expectedCompletionDateController = TextEditingController();
   final _expectedCompletionTimeController = TextEditingController();
 
@@ -86,7 +88,9 @@ class _AddTaskState extends State<AddTask> {
       name: _taskNameController.text,
       parentID: widget.parent.id,
       childID: widget.child.id,
-      questionTypeToCreate: _subjectController.text.toQuestionType,
+      questionCategoryToCreate:
+          _questionCategoryController.text.toQuestionCategory,
+      questionTypeToCreate: _questionTypeController.text.toQuestionType,
       expectedCompletionTimestamp: compiledDateAndTime!.millisecondsSinceEpoch,
     );
 
@@ -100,7 +104,11 @@ class _AddTaskState extends State<AddTask> {
   bool get _allFieldsPassedValidation {
     if (_taskNameController.text == "") {
       return false;
-    } else if (_subjectController.text == "") {
+    } else if (_questionCategoryController.text == "") {
+      return false;
+    } else if (_questionCategoryController.text ==
+            QuestionCategory.maths.value &&
+        _questionTypeController.text == "") {
       return false;
     } else if (_expectedCompletionDateController.text == "") {
       return false;

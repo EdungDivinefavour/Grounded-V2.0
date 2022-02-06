@@ -1,5 +1,7 @@
+import 'package:grounded/constants/enums/question_category.dart';
 import 'package:grounded/constants/enums/question_type.dart';
 import 'package:grounded/models/question/question.dart';
+import 'package:grounded/models/question_manager.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:uuid/uuid.dart';
 
@@ -13,8 +15,9 @@ class GroundedTask {
   final String childID;
   final int creationTimestamp;
   final int expectedCompletionTimestamp;
+  final QuestionCategory questionCategoryToCreate;
   final QuestionType questionTypeToCreate;
-  final List<Question> questions;
+  List<Question> questions;
 
   GroundedTask({
     required this.id,
@@ -23,6 +26,7 @@ class GroundedTask {
     required this.childID,
     required this.creationTimestamp,
     required this.expectedCompletionTimestamp,
+    required this.questionCategoryToCreate,
     required this.questionTypeToCreate,
     required this.questions,
   });
@@ -31,19 +35,24 @@ class GroundedTask {
     required String name,
     required String parentID,
     required String childID,
+    required QuestionCategory questionCategoryToCreate,
     required QuestionType questionTypeToCreate,
     required int expectedCompletionTimestamp,
   }) {
-    return GroundedTask(
+    final task = GroundedTask(
       id: Uuid().v1(),
       parentID: parentID,
       childID: childID,
       name: name,
       creationTimestamp: DateTime.now().millisecondsSinceEpoch,
       expectedCompletionTimestamp: expectedCompletionTimestamp,
+      questionCategoryToCreate: questionCategoryToCreate,
       questionTypeToCreate: questionTypeToCreate,
       questions: [],
     );
+    QuestionManager.instance.buildQuestionList(task);
+
+    return task;
   }
 
   factory GroundedTask.fromJson(Map<String, dynamic> json) =>

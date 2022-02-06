@@ -1,6 +1,12 @@
 import 'package:flutter/foundation.dart';
 
-enum QuestionType { maths, english }
+enum QuestionType {
+  generalEnglish,
+  addition,
+  subtraction,
+  multiplication,
+  division,
+}
 
 extension QuestionTypeExtension on QuestionType {
   String get value => describeEnum(this);

@@ -13,6 +13,8 @@ GroundedTask _$GroundedTaskFromJson(Map<String, dynamic> json) => GroundedTask(
       childID: json['childID'] as String,
       creationTimestamp: json['creationTimestamp'] as int,
       expectedCompletionTimestamp: json['expectedCompletionTimestamp'] as int,
+      questionCategoryToCreate: $enumDecode(
+          _$QuestionCategoryEnumMap, json['questionCategoryToCreate']),
       questionTypeToCreate:
           $enumDecode(_$QuestionTypeEnumMap, json['questionTypeToCreate']),
       questions: (json['questions'] as List<dynamic>)
@@ -28,12 +30,22 @@ Map<String, dynamic> _$GroundedTaskToJson(GroundedTask instance) =>
       'childID': instance.childID,
       'creationTimestamp': instance.creationTimestamp,
       'expectedCompletionTimestamp': instance.expectedCompletionTimestamp,
+      'questionCategoryToCreate':
+          _$QuestionCategoryEnumMap[instance.questionCategoryToCreate],
       'questionTypeToCreate':
           _$QuestionTypeEnumMap[instance.questionTypeToCreate],
       'questions': instance.questions.map((e) => e.toJson()).toList(),
     };
 
+const _$QuestionCategoryEnumMap = {
+  QuestionCategory.maths: 'maths',
+  QuestionCategory.english: 'english',
+};
+
 const _$QuestionTypeEnumMap = {
-  QuestionType.maths: 'maths',
-  QuestionType.english: 'english',
+  QuestionType.generalEnglish: 'generalEnglish',
+  QuestionType.addition: 'addition',
+  QuestionType.subtraction: 'subtraction',
+  QuestionType.multiplication: 'multiplication',
+  QuestionType.division: 'division',
 };
