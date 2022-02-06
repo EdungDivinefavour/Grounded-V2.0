@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:grounded/models/grounded_task.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';
 import 'package:grounded/services/local_storage/local_storage.dart';
 
 class FirebaseDocuments {
   static const users = 'users';
+  static const tasks = 'tasks';
 }
 
 class FirestoreService {
@@ -54,6 +56,13 @@ class FirestoreService {
 
     final parent = await getParentInfo(parentID);
     await _localStorage.storeUserInfoToLocal(parent);
+  }
+
+  Future<void> storeTask({required GroundedTask task}) async {
+    await _firestore
+        .collection(FirebaseDocuments.tasks)
+        .doc(task.id)
+        .set(task.toJson());
   }
 
   Future<void> storeToken(String userId, String token) async {

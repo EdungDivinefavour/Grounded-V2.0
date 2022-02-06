@@ -21,7 +21,7 @@ class AuthenticationService {
 
   User? get currentUser => _auth.currentUser;
 
-  Future<void> registerParent({
+  Future<Parent> registerParent({
     required String email,
     required String password,
     required String name,
@@ -40,9 +40,11 @@ class AuthenticationService {
 
     await _messagingService.getAndSetTokens();
     await _localStorage.storeUserInfoToLocal(newParent);
+
+    return newParent;
   }
 
-  Future<void> loginParent({
+  Future<Parent> loginParent({
     required String email,
     required String password,
   }) async {
@@ -56,6 +58,8 @@ class AuthenticationService {
 
     await _messagingService.getAndSetTokens();
     await _localStorage.storeUserInfoToLocal(parentInfo);
+
+    return parentInfo;
   }
 
   Future<void> updatePassword({required String password}) async {

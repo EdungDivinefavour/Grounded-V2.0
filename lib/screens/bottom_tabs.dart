@@ -53,9 +53,9 @@ class _BottomTabsState extends State<BottomTabs> {
   List<Widget> get _buildTabs {
     return widget.groundedUser.userType == UserType.parent
         ? [
-            HomeParent(),
+            HomeParent(parent: widget.groundedUser as Parent),
             BadgesParent(parent: widget.groundedUser as Parent),
-            Reports(),
+            Reports(parent: widget.groundedUser as Parent),
             Settings(),
           ]
         : [

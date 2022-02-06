@@ -93,9 +93,8 @@ class _AddChildState extends State<AddChild> {
     );
 
     await _firestoreService.storeChildInfo(newChild: child);
-    EasyLoading.showSuccess("Child added successfully");
 
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (_) => HomeParent()));
+    EasyLoading.showSuccess("Child added successfully");
+    Navigator.pop(context);
   }
 }

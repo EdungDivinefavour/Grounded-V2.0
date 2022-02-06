@@ -13,12 +13,8 @@ class Question {
     this.hasBeenAnswered = false,
   });
 
-  Question newEnglishQuestion() {
-    return Question(questionType: QuestionType.english);
-  }
-
-  Question newMathsQuestion() {
-    return Question(questionType: QuestionType.maths);
+  Question newQuestion(QuestionType questionType) {
+    return Question(questionType: questionType);
   }
 
   factory Question.fromJson(Map<String, dynamic> json) =>
