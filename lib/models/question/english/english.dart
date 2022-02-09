@@ -8,29 +8,41 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'english.g.dart';
 
+const allLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
 @JsonSerializable(explicitToJson: true)
 class English extends Question {
   Word word;
+  List<String> suggestedAnswers;
 
-  English({required this.word})
+  English({required this.word, required this.suggestedAnswers})
       : super(questionCategory: QuestionCategory.english);
 
   static English regularEnglish() {
+    final r = Random();
     final english = English(
         word: Word(
             text: "nebucadnezir",
             wordType: WordType.household,
-            imageUrl: "https://"));
+            imageUrl: "https://"),
+        suggestedAnswers: []);
 
-    // Picks a random index
-    final randomIndex = Random().nextInt(english.word.text.length - 1) + 1;
-
-    // Sets the correct answer to be the char at that index
+    final randomIndex = r.nextInt(english.word.text.length - 1) + 1;
     english.correctAnswer = english.word.text[randomIndex];
-
-    // Masks the initial word with an _ and sets it to the displayed question
     english.displayedQuestion =
         english.word.text.replaceFirst(RegExp(english.correctAnswer!), '_');
+
+    // Setup suggestions
+    english.suggestedAnswers.add(english.correctAnswer!);
+    // Remove correct answer from allAlphabets array
+    final chars = allLetters.replaceFirst(RegExp(english.correctAnswer!), '');
+
+    for (int i = 0; i < 3; i++) {
+      final letter =
+          List.generate(1, (index) => chars[r.nextInt(chars.length)]).join();
+      english.suggestedAnswers.add(letter);
+    }
+    english.suggestedAnswers.shuffle();
 
     return english;
   }
