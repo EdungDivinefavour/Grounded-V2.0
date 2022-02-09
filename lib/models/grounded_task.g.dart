@@ -15,11 +15,13 @@ GroundedTask _$GroundedTaskFromJson(Map<String, dynamic> json) => GroundedTask(
       expectedCompletionTimestamp: json['expectedCompletionTimestamp'] as int,
       questionCategoryToCreate: $enumDecode(
           _$QuestionCategoryEnumMap, json['questionCategoryToCreate']),
-      questionTypeToCreate:
-          $enumDecode(_$QuestionTypeEnumMap, json['questionTypeToCreate']),
       questions: (json['questions'] as List<dynamic>)
           .map((e) => Question.fromJson(e as Map<String, dynamic>))
           .toList(),
+      mathTypeToCreate:
+          $enumDecodeNullable(_$MathTypeEnumMap, json['mathTypeToCreate']),
+      englishTypeToCreate: $enumDecodeNullable(
+          _$EnglishTypeEnumMap, json['englishTypeToCreate']),
     );
 
 Map<String, dynamic> _$GroundedTaskToJson(GroundedTask instance) =>
@@ -32,8 +34,8 @@ Map<String, dynamic> _$GroundedTaskToJson(GroundedTask instance) =>
       'expectedCompletionTimestamp': instance.expectedCompletionTimestamp,
       'questionCategoryToCreate':
           _$QuestionCategoryEnumMap[instance.questionCategoryToCreate],
-      'questionTypeToCreate':
-          _$QuestionTypeEnumMap[instance.questionTypeToCreate],
+      'mathTypeToCreate': _$MathTypeEnumMap[instance.mathTypeToCreate],
+      'englishTypeToCreate': _$EnglishTypeEnumMap[instance.englishTypeToCreate],
       'questions': instance.questions.map((e) => e.toJson()).toList(),
     };
 
@@ -42,10 +44,13 @@ const _$QuestionCategoryEnumMap = {
   QuestionCategory.english: 'english',
 };
 
-const _$QuestionTypeEnumMap = {
-  QuestionType.generalEnglish: 'generalEnglish',
-  QuestionType.addition: 'addition',
-  QuestionType.subtraction: 'subtraction',
-  QuestionType.multiplication: 'multiplication',
-  QuestionType.division: 'division',
+const _$MathTypeEnumMap = {
+  MathType.addition: 'addition',
+  MathType.subtraction: 'subtraction',
+  MathType.multiplication: 'multiplication',
+  MathType.division: 'division',
+};
+
+const _$EnglishTypeEnumMap = {
+  EnglishType.general: 'general',
 };

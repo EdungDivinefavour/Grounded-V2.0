@@ -5,7 +5,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/components/user_image.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
-import 'package:grounded/screens/parent/home_parent.dart';
 import 'package:grounded/services/firebase/authentication_service.dart';
 import 'package:grounded/services/firebase/firestore_service.dart';
 import 'package:grounded/services/firebase/storage_service.dart';

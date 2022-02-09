@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grounded/models/achievement.dart';
-import 'package:grounded/models/badge.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
-import 'package:grounded/models/grounded_user/parent/parent.dart';
 
 class BadgesChild extends StatelessWidget {
   final Child child;

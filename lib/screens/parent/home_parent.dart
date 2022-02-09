@@ -11,8 +11,8 @@ import 'package:grounded/styles/icons/app_icons.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 
 class HomeParent extends StatefulWidget {
-  Parent parent;
-  HomeParent({required this.parent});
+  final Parent parent;
+  const HomeParent({required this.parent});
 
   @override
   State<HomeParent> createState() => _HomeParentState();

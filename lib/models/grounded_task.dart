@@ -1,7 +1,8 @@
+import 'package:grounded/constants/enums/english_type.dart';
+import 'package:grounded/constants/enums/math_type.dart';
 import 'package:grounded/constants/enums/question_category.dart';
-import 'package:grounded/constants/enums/question_type.dart';
+import 'package:grounded/models/managers/question_manager.dart';
 import 'package:grounded/models/question/question.dart';
-import 'package:grounded/models/question_manager.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:uuid/uuid.dart';
 
@@ -16,8 +17,14 @@ class GroundedTask {
   final int creationTimestamp;
   final int expectedCompletionTimestamp;
   final QuestionCategory questionCategoryToCreate;
-  final QuestionType questionTypeToCreate;
+  final MathType? mathTypeToCreate;
+  final EnglishType? englishTypeToCreate;
   List<Question> questions;
+
+  int get completedQuestions =>
+      questions.where((x) => x.hasBeenAnswered).toList().length;
+
+  int get completedPercentage => completedQuestions ~/ questions.length;
 
   GroundedTask({
     required this.id,
@@ -27,8 +34,9 @@ class GroundedTask {
     required this.creationTimestamp,
     required this.expectedCompletionTimestamp,
     required this.questionCategoryToCreate,
-    required this.questionTypeToCreate,
     required this.questions,
+    this.mathTypeToCreate,
+    this.englishTypeToCreate,
   });
 
   static GroundedTask newTask({
@@ -36,8 +44,9 @@ class GroundedTask {
     required String parentID,
     required String childID,
     required QuestionCategory questionCategoryToCreate,
-    required QuestionType questionTypeToCreate,
     required int expectedCompletionTimestamp,
+    MathType? mathTypeToCreate,
+    EnglishType? englishTypeToCreate,
   }) {
     final task = GroundedTask(
       id: Uuid().v1(),
@@ -47,11 +56,16 @@ class GroundedTask {
       creationTimestamp: DateTime.now().millisecondsSinceEpoch,
       expectedCompletionTimestamp: expectedCompletionTimestamp,
       questionCategoryToCreate: questionCategoryToCreate,
-      questionTypeToCreate: questionTypeToCreate,
       questions: [],
+      mathTypeToCreate: mathTypeToCreate,
+      englishTypeToCreate: englishTypeToCreate,
     );
-    QuestionManager.instance.buildQuestionList(task);
 
+    if (questionCategoryToCreate == QuestionCategory.maths) {
+      QuestionManager.instance.buildMathList(task);
+    } else {
+      QuestionManager.instance.buildEnglishList(task);
+    }
     return task;
   }
 

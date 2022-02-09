@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:grounded/components/custom_scaffold.dart';
+import 'package:grounded/constants/enums/math_type.dart';
 import 'package:grounded/constants/enums/question_category.dart';
-import 'package:grounded/constants/enums/question_type.dart';
 import 'package:grounded/models/grounded_task.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';
@@ -23,7 +23,7 @@ class _AddTaskState extends State<AddTask> {
 
   final _taskNameController = TextEditingController();
   final _questionCategoryController = TextEditingController();
-  final _questionTypeController = TextEditingController();
+  final _mathTypeController = TextEditingController();
   final _expectedCompletionDateController = TextEditingController();
   final _expectedCompletionTimeController = TextEditingController();
 
@@ -90,7 +90,7 @@ class _AddTaskState extends State<AddTask> {
       childID: widget.child.id,
       questionCategoryToCreate:
           _questionCategoryController.text.toQuestionCategory,
-      questionTypeToCreate: _questionTypeController.text.toQuestionType,
+      mathTypeToCreate: _mathTypeController.text.toMathType,
       expectedCompletionTimestamp: compiledDateAndTime!.millisecondsSinceEpoch,
     );
 
@@ -108,7 +108,7 @@ class _AddTaskState extends State<AddTask> {
       return false;
     } else if (_questionCategoryController.text ==
             QuestionCategory.maths.value &&
-        _questionTypeController.text == "") {
+        _mathTypeController.text == "") {
       return false;
     } else if (_expectedCompletionDateController.text == "") {
       return false;
