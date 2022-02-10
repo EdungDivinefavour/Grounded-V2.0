@@ -17,21 +17,29 @@ class FirestoreService {
   final LocalStorage _localStorage = LocalStorage.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<Parent> getParentInfo(String userId) {
+  Future<Parent> getParentInfo(String parentId) {
     return _firestore
         .collection(FirebaseDocuments.users)
-        .doc(userId)
+        .doc(parentId)
         .get()
         .then((snapshot) => Parent.fromJson(snapshot.data()!));
   }
 
-  Future<void> storeParentInfo({Parent? parent, String? userId}) async {
-    final parentInfo = parent ?? await getParentInfo(userId!);
+  Future<Parent> getParentInfoForLoginToken(String loginToken) {
+    return _firestore
+        .collection(FirebaseDocuments.users)
+        .where("childrenLoginTokens", arrayContains: loginToken)
+        .get()
+        .then((snapshot) => Parent.fromJson(snapshot.docs[0].data()));
+  }
+
+  Future<void> storeParentInfo({Parent? parent, String? parentId}) async {
+    final parentInfo = parent ?? await getParentInfo(parentId!);
 
     return _firestore
         .collection(FirebaseDocuments.users)
-        .doc(userId)
-        .set({"id": userId, ...parentInfo.toJson()});
+        .doc(parentId)
+        .set({"id": parentId, ...parentInfo.toJson()});
   }
 
   Future<void> storeChildInfo({required Child newChild}) async {
@@ -39,6 +47,7 @@ class FirestoreService {
         .collection(FirebaseDocuments.users)
         .doc(newChild.parentID)
         .update({
+      "childrenLoginTokens": FieldValue.arrayUnion([newChild.loginToken]),
       "children": FieldValue.arrayUnion([newChild.toJson()])
     });
 

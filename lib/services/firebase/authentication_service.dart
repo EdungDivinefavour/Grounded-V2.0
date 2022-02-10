@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:grounded/constants/enums/online_presence.dart';
+import 'package:grounded/models/grounded_user/child/child.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';
 import 'package:grounded/services/firebase/database_service.dart';
 import 'package:grounded/services/firebase/firestore_service.dart';
@@ -33,7 +34,7 @@ class AuthenticationService {
         id: result.user!.uid, name: name, email: email, password: password);
 
     await _firestoreService.storeParentInfo(
-        userId: result.user!.uid, parent: newParent);
+        parentId: result.user!.uid, parent: newParent);
 
     await _databaseService.updateRealTimeDbPresence(
         userId: newParent.id, onlinePresence: OnlinePresence.online);
@@ -60,6 +61,13 @@ class AuthenticationService {
     await _localStorage.storeUserInfoToLocal(parentInfo);
 
     return parentInfo;
+  }
+
+  Future<Child> loginChild({required String loginToken}) async {
+    final parent =
+        await _firestoreService.getParentInfoForLoginToken(loginToken);
+
+    return parent.children.firstWhere((x) => x.loginToken == loginToken);
   }
 
   Future<void> updatePassword({required String password}) async {

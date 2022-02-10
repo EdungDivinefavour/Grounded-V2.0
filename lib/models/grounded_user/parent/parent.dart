@@ -14,6 +14,7 @@ class Parent extends GroundedUser {
   final String email;
   final String password;
   final List<Child> children;
+  final List<String> childrenLoginTokens;
 
   Parent({
     required this.id,
@@ -21,6 +22,7 @@ class Parent extends GroundedUser {
     required this.email,
     required this.password,
     required this.children,
+    required this.childrenLoginTokens,
   }) : super(id: id, name: name, userType: UserType.parent);
 
   static Parent newParent({
@@ -30,7 +32,13 @@ class Parent extends GroundedUser {
     required String password,
   }) {
     return Parent(
-        id: id, name: name, email: email, password: password, children: []);
+      id: id,
+      name: name,
+      email: email,
+      password: password,
+      children: [],
+      childrenLoginTokens: [],
+    );
   }
 
   factory Parent.fromJson(Map<String, dynamic> json) => _$ParentFromJson(json);
