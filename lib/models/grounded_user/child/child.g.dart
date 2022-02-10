@@ -7,6 +7,7 @@ part of 'child.dart';
 // **************************************************************************
 
 Child _$ChildFromJson(Map<String, dynamic> json) => Child(
+      id: json['id'] as String,
       name: json['name'] as String,
       parentID: json['parentID'] as String,
       loginToken: json['loginToken'] as String,
@@ -19,6 +20,7 @@ Child _$ChildFromJson(Map<String, dynamic> json) => Child(
 
 Map<String, dynamic> _$ChildToJson(Child instance) => <String, dynamic>{
       'profilePhoto': instance.profilePhoto,
+      'id': instance.id,
       'name': instance.name,
       'parentID': instance.parentID,
       'loginToken': instance.loginToken,

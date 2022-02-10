@@ -10,6 +10,8 @@ part 'child.g.dart';
 @JsonSerializable(explicitToJson: true)
 class Child extends GroundedUser {
   @override
+  final String id;
+  @override
   final String name;
   final String parentID;
   final String loginToken;
@@ -18,13 +20,14 @@ class Child extends GroundedUser {
   final List<Achievement> achievements;
 
   Child({
+    required this.id,
     required this.name,
     required this.parentID,
     required this.loginToken,
     required this.age,
     required this.grade,
     required this.achievements,
-  }) : super(id: Uuid().v1(), name: name, userType: UserType.child);
+  }) : super(id: id, name: name, userType: UserType.child);
 
   static Child newChild({
     required String name,
@@ -33,6 +36,7 @@ class Child extends GroundedUser {
     required int grade,
   }) {
     return Child(
+      id: Uuid().v1(),
       name: name,
       parentID: parentID,
       loginToken: generateLoginToken,

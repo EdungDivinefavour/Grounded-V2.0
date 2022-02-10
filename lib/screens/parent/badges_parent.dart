@@ -35,7 +35,7 @@ class BadgesParent extends StatelessWidget {
 // TODO: Call this widget when you need the list of achievements
   Widget _buildAchievementsList() {
     return SizedBox(
-      child: _badges.isEmpty
+      child: _achievements.isEmpty
           ? Text("No achievements yet!. Complete some assignments")
           : ListView.builder(
               shrinkWrap: true,

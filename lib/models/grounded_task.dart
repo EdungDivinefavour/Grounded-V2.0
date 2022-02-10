@@ -71,5 +71,9 @@ class GroundedTask {
 
   factory GroundedTask.fromJson(Map<String, dynamic> json) =>
       _$GroundedTaskFromJson(json);
+
+  static List<GroundedTask> fromJsonList(List<dynamic>? list) =>
+      list?.map((e) => GroundedTask.fromJson(e)).toList() ?? [];
+
   Map<String, dynamic> toJson() => _$GroundedTaskToJson(this);
 }

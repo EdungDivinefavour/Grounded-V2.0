@@ -59,7 +59,7 @@ class _BottomTabsState extends State<BottomTabs> {
             Settings(),
           ]
         : [
-            HomeChild(),
+            HomeChild(child: widget.groundedUser as Child),
             BadgesChild(child: widget.groundedUser as Child),
           ];
   }
