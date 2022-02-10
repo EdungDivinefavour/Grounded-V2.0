@@ -38,7 +38,8 @@ class FirestoreService {
         .collection(FirebaseDocuments.tasks)
         .where("childID", isEqualTo: child.id)
         .get()
-        .then((snapshot) => GroundedTask.fromJsonList(snapshot.docs));
+        .then((snapshot) => GroundedTask.fromJsonList(
+            snapshot.docs.map((x) => x.data()).toList()));
   }
 
   Future<void> storeParentInfo({Parent? parent, String? parentId}) async {
