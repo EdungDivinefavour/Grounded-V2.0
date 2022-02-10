@@ -28,9 +28,6 @@ jobs:
       - name: Fix formatting issues if any
         run: flutter format --set-exit-if-changed .
 
-      - name: Run widget tests
-        run: flutter test
-
       - name: Build APK
         run: flutter build apk
 

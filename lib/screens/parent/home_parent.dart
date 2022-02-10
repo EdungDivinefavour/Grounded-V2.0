@@ -10,6 +10,7 @@ import 'package:grounded/services/firebase/authentication_service.dart';
 import 'package:grounded/services/firebase/firestore_service.dart';
 import 'package:grounded/styles/icons/app_icons.dart';
 import 'package:grounded/components/custom_scaffold.dart';
+import 'package:uuid/uuid.dart';
 
 class HomeParent extends StatefulWidget {
   final Parent parent;
