@@ -6,11 +6,9 @@ import 'package:grounded/models/grounded_user/child/child.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';
 import 'package:grounded/screens/parent/add_child.dart';
 import 'package:grounded/screens/parent/add_task.dart';
-import 'package:grounded/services/firebase/authentication_service.dart';
 import 'package:grounded/services/firebase/firestore_service.dart';
 import 'package:grounded/styles/icons/app_icons.dart';
 import 'package:grounded/components/custom_scaffold.dart';
-import 'package:uuid/uuid.dart';
 
 class HomeParent extends StatefulWidget {
   final Parent parent;
@@ -80,12 +78,6 @@ class _HomeParentState extends State<HomeParent> {
   }
 
   void _openAddChildScreen() async {
-    final child =
-        await AuthenticationService.instance.loginChild(loginToken: "400194");
-
-    print(child);
-    final tt = await _firestoreService.getTasksForChild(child);
-    print(tt);
-    // Navigator.push(context, MaterialPageRoute(builder: (_) => AddChild()));
+    Navigator.push(context, MaterialPageRoute(builder: (_) => AddChild()));
   }
 }

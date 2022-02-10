@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/models/grounded_task.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
+import 'package:grounded/screens/child/solve_task.dart';
 import 'package:grounded/services/firebase/firestore_service.dart';
 
 class HomeChild extends StatefulWidget {
@@ -59,5 +60,10 @@ class _HomeChildState extends State<HomeChild> {
     setState(() {
       _tasks = res;
     });
+  }
+
+  void _openSolveTaskScreen(GroundedTask task) async {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => SolveTask(task: task)));
   }
 }
