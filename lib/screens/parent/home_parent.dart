@@ -81,7 +81,7 @@ class _HomeParentState extends State<HomeParent> {
 
   void _openAddChildScreen() async {
     final child =
-        await AuthenticationService.instance.loginChild(loginToken: "869229");
+        await AuthenticationService.instance.loginChild(loginToken: "400194");
 
     print(child);
     final tt = await _firestoreService.getTasksForChild(child);
