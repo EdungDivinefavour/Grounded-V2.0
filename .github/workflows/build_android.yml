@@ -6,7 +6,8 @@ on:
       - master
 
 jobs:
-  build:
+  deploy_android:
+    name: Deploy Android Build
     runs-on: ubuntu-latest
     steps:
       - name: Setup Java environment
