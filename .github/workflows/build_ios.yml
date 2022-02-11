@@ -37,6 +37,9 @@ jobs:
         with:
           ruby-version: "2.7.4"
 
+      - name: Install Bundler
+        run: set -ex && gem install bundler:1.17.2 --force
+
       - name: Build and Archive iOS Build
         run: flutter build ios --release --no-codesign
 
