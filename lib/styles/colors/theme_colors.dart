@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class ThemeColors {
   static const primary = Color.fromRGBO(0, 65, 196, 1);
+  static get primaryLight => primary.withOpacity(0.1);
   static const accent = Color.fromRGBO(232, 176, 0, 1);
   static const transparent = Colors.transparent;
   static const success = Color.fromRGBO(25, 170, 90, 1);

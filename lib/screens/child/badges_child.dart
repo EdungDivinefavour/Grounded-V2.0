@@ -10,7 +10,11 @@ class BadgesChild extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      body: Container(),
+      body: Column(
+        children: [
+          Container(),
+        ],
+      ),
     );
   }
 

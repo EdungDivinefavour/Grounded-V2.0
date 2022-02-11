@@ -7,6 +7,7 @@ import 'package:grounded/models/grounded_user/parent/parent.dart';
 import 'package:grounded/screens/parent/add_child.dart';
 import 'package:grounded/screens/parent/add_task.dart';
 import 'package:grounded/services/firebase/firestore_service.dart';
+import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/icons/app_icons.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 
@@ -44,6 +45,7 @@ class _HomeParentState extends State<HomeParent> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _openAddChildScreen,
+        backgroundColor: ThemeColors.primary,
         child: SVGIcon(icon: AppIcons.add, size: 25),
       ),
     );
