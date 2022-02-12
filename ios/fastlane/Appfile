@@ -1,9 +1,3 @@
-app_identifier("com.grounded.app") # The bundle identifier of your app
-apple_id("mleechin@hotmail.com") # Your Apple email address
-
-itc_team_id("123973370") # App Store Connect Team ID
-team_id("4C6S594NSF") # Developer Portal Team ID
-
 app_identifier(ENV["DEVELOPER_APP_IDENTIFIER"])
 apple_id(ENV["FASTLANE_APPLE_ID"])
 
