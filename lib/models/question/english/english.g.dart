@@ -14,12 +14,14 @@ English _$EnglishFromJson(Map<String, dynamic> json) => English(
     )
       ..displayedQuestion = json['displayedQuestion'] as String?
       ..pickedAnswer = json['pickedAnswer'] as String?
-      ..correctAnswer = json['correctAnswer'] as String?;
+      ..correctAnswer = json['correctAnswer'] as String?
+      ..completedTimestap = json['completedTimestap'] as int?;
 
 Map<String, dynamic> _$EnglishToJson(English instance) => <String, dynamic>{
       'displayedQuestion': instance.displayedQuestion,
       'pickedAnswer': instance.pickedAnswer,
       'correctAnswer': instance.correctAnswer,
+      'completedTimestap': instance.completedTimestap,
       'word': instance.word.toJson(),
       'suggestedAnswers': instance.suggestedAnswers,
     };

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grounded/components/custom_scaffold.dart';
-import 'package:grounded/models/grounded_task.dart';
+import 'package:grounded/models/grounded_task/grounded_task.dart';
 
 class SolveTask extends StatefulWidget {
   final GroundedTask task;

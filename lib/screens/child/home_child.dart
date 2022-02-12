@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grounded/components/custom_scaffold.dart';
-import 'package:grounded/models/grounded_task.dart';
+import 'package:grounded/models/grounded_task/grounded_task.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
 import 'package:grounded/screens/child/solve_task.dart';
 import 'package:grounded/services/firebase/firestore_service.dart';

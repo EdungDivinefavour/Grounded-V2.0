@@ -1,4 +1,4 @@
-import 'package:grounded/models/grounded_task.dart';
+import 'package:grounded/models/grounded_task/grounded_task.dart';
 import 'package:grounded/models/question/english/english.dart';
 import 'package:grounded/models/question/math/math.dart';
 

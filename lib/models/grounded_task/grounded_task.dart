@@ -3,6 +3,7 @@ import 'package:grounded/constants/enums/math_type.dart';
 import 'package:grounded/constants/enums/question_category.dart';
 import 'package:grounded/models/managers/question_manager.dart';
 import 'package:grounded/models/question/question.dart';
+import 'package:grounded/models/weekly_assignment_data.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:uuid/uuid.dart';
 
@@ -24,7 +25,11 @@ class GroundedTask {
   int get completedQuestions =>
       questions.where((x) => x.hasBeenAnswered).toList().length;
 
+  Question get lastCompletedQuestion =>
+      questions.lastWhere((x) => x.completedTimestap != null);
+
   int get completedPercentage => completedQuestions ~/ questions.length;
+  int get totalPointsGotten => completedQuestions * 10;
 
   GroundedTask({
     required this.id,
@@ -67,6 +72,17 @@ class GroundedTask {
       QuestionManager.instance.buildEnglishList(task);
     }
     return task;
+  }
+
+  WeeklyAssignmentData? toWeeklyAssignmentData() {
+    if (lastCompletedQuestion.completedTimestap == null) return null;
+
+    return WeeklyAssignmentData(
+      dayOfWeek: DateTime.fromMillisecondsSinceEpoch(
+              lastCompletedQuestion.completedTimestap!)
+          .weekday,
+      count: completedQuestions,
+    );
   }
 
   factory GroundedTask.fromJson(Map<String, dynamic> json) =>

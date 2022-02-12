@@ -37,7 +37,7 @@ jobs:
         with:
           ruby-version: "2.7.4"
 
-      - name: Build and Archive iOS Build
+      - name: Compile and Archive iOS Build
         run: flutter build ios --release --no-codesign
 
       - name: Deploy iOS Beta to TestFlight via Fastlane

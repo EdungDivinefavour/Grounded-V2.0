@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:grounded/models/grounded_task.dart';
+import 'package:grounded/models/grounded_task/grounded_task.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';
 import 'package:grounded/services/local_storage/local_storage.dart';

@@ -3,7 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/constants/enums/math_type.dart';
 import 'package:grounded/constants/enums/question_category.dart';
-import 'package:grounded/models/grounded_task.dart';
+import 'package:grounded/models/grounded_task/grounded_task.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';
 import 'package:grounded/services/firebase/firestore_service.dart';

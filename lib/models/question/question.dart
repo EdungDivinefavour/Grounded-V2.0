@@ -9,6 +9,7 @@ class Question {
   String? displayedQuestion;
   String? pickedAnswer;
   String? correctAnswer;
+  int? completedTimestap;
 
   bool get hasBeenAnswered => pickedAnswer != null;
 
@@ -17,6 +18,7 @@ class Question {
     this.displayedQuestion,
     this.pickedAnswer,
     this.correctAnswer,
+    this.completedTimestap,
   });
 
   factory Question.fromJson(Map<String, dynamic> json) =>
