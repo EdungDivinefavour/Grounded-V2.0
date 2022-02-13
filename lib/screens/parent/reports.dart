@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';
 import 'package:grounded/models/data_points/daily_data_point.dart';
+import 'package:grounded/styles/colors/theme_colors.dart';
+import 'package:grounded/styles/texts/text_styles.dart';
 
 class Reports extends StatelessWidget {
   final Parent parent;
@@ -14,8 +16,32 @@ class Reports extends StatelessWidget {
     return CustomScaffold(
         body: Column(
       children: [
-        SizedBox(height: 40),
-        Text("Reports"),
+        SizedBox(height: 10),
+        Row(
+          children: [
+            Icon(Icons.list_outlined),
+            Spacer(),
+            Icon(Icons.notifications)
+          ],
+        ),
+        SizedBox(height: 30),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Row(
+            children: [
+              Text(
+                "Reports",
+                style: TextStyles.extraBold.copyWith(fontSize: 23),
+              ),
+              Spacer(),
+              Icon(
+                Icons.expand_outlined,
+                size: 18,
+                color: ThemeColors.darkBackground,
+              )
+            ],
+          ),
+        ),
         SizedBox(
           height: 350,
           child: LineChart(
@@ -27,7 +53,9 @@ class Reports extends StatelessWidget {
             ),
           ),
         ),
-        Text("These are you child's total points per week etc etc etc"),
+        SizedBox(height: 30),
+        Text(
+            "These are you child's total points per week. A child can get 10 points for a correct answer. -10 points for an incorrect answer. Click the button below to get a breakdown of the points by tasks"),
       ],
     ));
   }

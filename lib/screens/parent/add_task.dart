@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:grounded/components/custom_scaffold.dart';
+import 'package:grounded/components/input_field.dart';
 import 'package:grounded/constants/enums/math_type.dart';
 import 'package:grounded/constants/enums/question_category.dart';
 import 'package:grounded/models/grounded_task/grounded_task.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';
 import 'package:grounded/services/firebase/firestore_service.dart';
+import 'package:grounded/styles/texts/text_styles.dart';
 
 class AddTask extends StatefulWidget {
   final Parent parent;
@@ -34,7 +36,31 @@ class _AddTaskState extends State<AddTask> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(body: Container());
+    return CustomScaffold(
+        body: SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Container(
+          margin: EdgeInsets.all(20),
+          child: Column(
+            children: [
+              SizedBox(height: 20),
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  "Add New Task",
+                  style: TextStyles.medium,
+                ),
+              ),
+              InputField(
+                  controller: _taskNameController,
+                  hintText: "Enter the name of the task",
+                  title: "Task Name")
+            ],
+          ),
+        ),
+      ),
+    ));
   }
 
   Future<void> _openDatePicker() async {
