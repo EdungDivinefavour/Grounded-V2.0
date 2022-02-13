@@ -1,14 +1,13 @@
 import 'dart:math';
-
-import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:charts_flutter/flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';
-import 'package:grounded/models/weekly_assignment_data.dart';
+import 'package:grounded/models/data_points/daily_data_point.dart';
 
 class Reports extends StatelessWidget {
   final Parent parent;
-  const Reports({required this.parent});
+  Reports({required this.parent});
 
   @override
   Widget build(BuildContext context) {
@@ -19,68 +18,95 @@ class Reports extends StatelessWidget {
         Text("Reports"),
         SizedBox(
           height: 350,
-          child: charts.LineChart(_chartData, animate: true),
+          child: LineChart(
+            _chartData,
+            domainAxis: NumericAxisSpec(
+              tickProviderSpec:
+                  BasicNumericTickProviderSpec(desiredTickCount: 7),
+              tickFormatterSpec: customTickFormatter,
+            ),
+          ),
         ),
         Text("These are you child's total points per week etc etc etc"),
       ],
     ));
   }
 
-  List<charts.Series<WeeklyAssignmentData, int>> get _chartData {
+  List<Series<DailyDataPoint, int>> get _chartData {
     final random = Random();
 
     final data = [
-      WeeklyAssignmentData(dayOfWeek: 1, count: random.nextInt(10)),
-      WeeklyAssignmentData(dayOfWeek: 2, count: random.nextInt(10)),
-      WeeklyAssignmentData(dayOfWeek: 3, count: random.nextInt(10)),
-      WeeklyAssignmentData(dayOfWeek: 4, count: random.nextInt(10)),
-      WeeklyAssignmentData(dayOfWeek: 5, count: random.nextInt(10)),
-      WeeklyAssignmentData(dayOfWeek: 6, count: random.nextInt(10)),
-      WeeklyAssignmentData(dayOfWeek: 7, count: random.nextInt(10)),
+      DailyDataPoint(dayOfWeek: 1, completedTasks: random.nextInt(10)),
+      DailyDataPoint(dayOfWeek: 2, completedTasks: random.nextInt(10)),
+      DailyDataPoint(dayOfWeek: 3, completedTasks: random.nextInt(10)),
+      DailyDataPoint(dayOfWeek: 4, completedTasks: random.nextInt(10)),
+      DailyDataPoint(dayOfWeek: 5, completedTasks: random.nextInt(10)),
+      DailyDataPoint(dayOfWeek: 6, completedTasks: random.nextInt(10)),
+      DailyDataPoint(dayOfWeek: 7, completedTasks: random.nextInt(10)),
     ];
 
     final data2 = [
-      WeeklyAssignmentData(dayOfWeek: 1, count: random.nextInt(10)),
-      WeeklyAssignmentData(dayOfWeek: 2, count: random.nextInt(10)),
-      WeeklyAssignmentData(dayOfWeek: 3, count: random.nextInt(10)),
-      WeeklyAssignmentData(dayOfWeek: 4, count: random.nextInt(10)),
-      WeeklyAssignmentData(dayOfWeek: 5, count: random.nextInt(10)),
-      WeeklyAssignmentData(dayOfWeek: 6, count: random.nextInt(10)),
-      WeeklyAssignmentData(dayOfWeek: 7, count: random.nextInt(10)),
+      DailyDataPoint(dayOfWeek: 1, completedTasks: random.nextInt(10)),
+      DailyDataPoint(dayOfWeek: 2, completedTasks: random.nextInt(10)),
+      DailyDataPoint(dayOfWeek: 3, completedTasks: random.nextInt(10)),
+      DailyDataPoint(dayOfWeek: 4, completedTasks: random.nextInt(10)),
+      DailyDataPoint(dayOfWeek: 5, completedTasks: random.nextInt(10)),
+      DailyDataPoint(dayOfWeek: 6, completedTasks: random.nextInt(10)),
+      DailyDataPoint(dayOfWeek: 7, completedTasks: random.nextInt(10)),
     ];
 
     final data3 = [
-      WeeklyAssignmentData(dayOfWeek: 1, count: random.nextInt(10)),
-      WeeklyAssignmentData(dayOfWeek: 2, count: random.nextInt(10)),
-      WeeklyAssignmentData(dayOfWeek: 3, count: random.nextInt(10)),
-      WeeklyAssignmentData(dayOfWeek: 4, count: random.nextInt(10)),
-      WeeklyAssignmentData(dayOfWeek: 5, count: random.nextInt(10)),
-      WeeklyAssignmentData(dayOfWeek: 6, count: random.nextInt(10)),
-      WeeklyAssignmentData(dayOfWeek: 7, count: random.nextInt(10)),
+      DailyDataPoint(dayOfWeek: 1, completedTasks: random.nextInt(10)),
+      DailyDataPoint(dayOfWeek: 2, completedTasks: random.nextInt(10)),
+      DailyDataPoint(dayOfWeek: 3, completedTasks: random.nextInt(10)),
+      DailyDataPoint(dayOfWeek: 4, completedTasks: random.nextInt(10)),
+      DailyDataPoint(dayOfWeek: 5, completedTasks: random.nextInt(10)),
+      DailyDataPoint(dayOfWeek: 6, completedTasks: random.nextInt(10)),
+      DailyDataPoint(dayOfWeek: 7, completedTasks: random.nextInt(10)),
     ];
 
     return [
-      charts.Series<WeeklyAssignmentData, int>(
+      Series<DailyDataPoint, int>(
         id: 'Sales',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (WeeklyAssignmentData assignment, _) => assignment.dayOfWeek,
-        measureFn: (WeeklyAssignmentData assignment, _) => assignment.count,
+        colorFn: (_, __) => MaterialPalette.blue.shadeDefault,
+        domainFn: (DailyDataPoint assignment, _) => assignment.dayOfWeek,
+        measureFn: (DailyDataPoint assignment, _) => assignment.completedTasks,
         data: data,
       ),
-      charts.Series<WeeklyAssignmentData, int>(
+      Series<DailyDataPoint, int>(
         id: 'Sales',
-        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-        domainFn: (WeeklyAssignmentData assignment, _) => assignment.dayOfWeek,
-        measureFn: (WeeklyAssignmentData assignment, _) => assignment.count,
+        colorFn: (_, __) => MaterialPalette.red.shadeDefault,
+        domainFn: (DailyDataPoint assignment, _) => assignment.dayOfWeek,
+        measureFn: (DailyDataPoint assignment, _) => assignment.completedTasks,
         data: data2,
       ),
-      charts.Series<WeeklyAssignmentData, int>(
+      Series<DailyDataPoint, int>(
         id: 'Sales',
-        colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
-        domainFn: (WeeklyAssignmentData assignment, _) => assignment.dayOfWeek,
-        measureFn: (WeeklyAssignmentData assignment, _) => assignment.count,
+        colorFn: (_, __) => MaterialPalette.green.shadeDefault,
+        domainFn: (DailyDataPoint assignment, _) => assignment.dayOfWeek,
+        measureFn: (DailyDataPoint assignment, _) => assignment.completedTasks,
         data: data3,
       )
     ];
   }
+
+  final customTickFormatter = BasicNumericTickFormatterSpec((num? value) {
+    if (value == 0) {
+      return "Mon";
+    } else if (value == 1) {
+      return "Tue";
+    } else if (value == 2) {
+      return "Wed";
+    } else if (value == 3) {
+      return "Thr";
+    } else if (value == 4) {
+      return "Fri";
+    } else if (value == 5) {
+      return "Sat";
+    } else if (value == 6) {
+      return "Sun";
+    }
+
+    return "empty";
+  });
 }
