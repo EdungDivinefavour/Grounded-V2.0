@@ -8,6 +8,7 @@ abstract class AppIcons {
   static const fetchedImageFailedPNG = 'fetched_image_failed.png';
   static const fetchedImageFailedSVG = 'fetched_image_failed.svg';
   static const home = 'home.svg';
+  static const logoPNG = 'logo.png';
   static const profile = 'profile.svg';
   static const reports = 'reports.svg';
   static const settings = 'settings.svg';

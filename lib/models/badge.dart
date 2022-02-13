@@ -7,9 +7,8 @@ part 'badge.g.dart';
 class Badge {
   final String name;
   final BadgeType type;
-  final int dateEarned;
 
-  Badge({required this.name, required this.type, required this.dateEarned});
+  Badge({required this.name, required this.type});
 
   factory Badge.fromJson(Map<String, dynamic> json) => _$BadgeFromJson(json);
   Map<String, dynamic> toJson() => _$BadgeToJson(this);

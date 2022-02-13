@@ -14,9 +14,6 @@ Parent _$ParentFromJson(Map<String, dynamic> json) => Parent(
       children: (json['children'] as List<dynamic>)
           .map((e) => Child.fromJson(e as Map<String, dynamic>))
           .toList(),
-      childrenLoginTokens: (json['childrenLoginTokens'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
     )..profilePhoto = json['profilePhoto'] as String;
 
 Map<String, dynamic> _$ParentToJson(Parent instance) => <String, dynamic>{
@@ -26,5 +23,4 @@ Map<String, dynamic> _$ParentToJson(Parent instance) => <String, dynamic>{
       'email': instance.email,
       'password': instance.password,
       'children': instance.children.map((e) => e.toJson()).toList(),
-      'childrenLoginTokens': instance.childrenLoginTokens,
     };

@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:grounded/constants/enums/online_presence.dart';
-import 'package:grounded/models/grounded_user/child/child.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';
 import 'package:grounded/services/firebase/database_service.dart';
 import 'package:grounded/services/firebase/firestore_service.dart';
@@ -22,7 +21,7 @@ class AuthenticationService {
 
   User? get currentUser => _auth.currentUser;
 
-  Future<Parent> registerParent({
+  Future<void> registerParent({
     required String email,
     required String password,
     required String name,
@@ -34,18 +33,16 @@ class AuthenticationService {
         id: result.user!.uid, name: name, email: email, password: password);
 
     await _firestoreService.storeParentInfo(
-        parentId: result.user!.uid, parent: newParent);
+        userId: result.user!.uid, parent: newParent);
 
     await _databaseService.updateRealTimeDbPresence(
         userId: newParent.id, onlinePresence: OnlinePresence.online);
 
     await _messagingService.getAndSetTokens();
     await _localStorage.storeUserInfoToLocal(newParent);
-
-    return newParent;
   }
 
-  Future<Parent> loginParent({
+  Future<void> loginParent({
     required String email,
     required String password,
   }) async {
@@ -59,15 +56,6 @@ class AuthenticationService {
 
     await _messagingService.getAndSetTokens();
     await _localStorage.storeUserInfoToLocal(parentInfo);
-
-    return parentInfo;
-  }
-
-  Future<Child> loginChild({required String loginToken}) async {
-    final parent =
-        await _firestoreService.getParentInfoForLoginToken(loginToken);
-
-    return parent.children.firstWhere((x) => x.loginToken == loginToken);
   }
 
   Future<void> updatePassword({required String password}) async {
