@@ -51,7 +51,9 @@ class _SplashState extends State<Splash> {
 
     Future.delayed(const Duration(milliseconds: 3800), () {
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (_) => nextScreen), (_) => false);
+        MaterialPageRoute(builder: (_) => nextScreen),
+        (_) => false,
+      );
     });
   }
 }

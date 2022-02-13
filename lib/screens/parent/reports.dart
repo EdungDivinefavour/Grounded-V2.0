@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';
 import 'package:grounded/models/data_points/daily_data_point.dart';
-import 'package:grounded/styles/colors/theme_colors.dart';
-import 'package:grounded/styles/texts/text_styles.dart';
 
 class Reports extends StatelessWidget {
   final Parent parent;
@@ -16,32 +14,6 @@ class Reports extends StatelessWidget {
     return CustomScaffold(
         body: Column(
       children: [
-        SizedBox(height: 10),
-        Row(
-          children: [
-            Icon(Icons.list_outlined),
-            Spacer(),
-            Icon(Icons.notifications)
-          ],
-        ),
-        SizedBox(height: 30),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Row(
-            children: [
-              Text(
-                "Reports",
-                style: TextStyles.extraBold.copyWith(fontSize: 23),
-              ),
-              Spacer(),
-              Icon(
-                Icons.expand_outlined,
-                size: 18,
-                color: ThemeColors.darkBackground,
-              )
-            ],
-          ),
-        ),
         SizedBox(
           height: 350,
           child: LineChart(

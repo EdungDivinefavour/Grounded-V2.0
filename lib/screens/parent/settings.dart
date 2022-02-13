@@ -19,21 +19,6 @@ class _SettingsState extends State<Settings> {
         margin: EdgeInsets.all(25),
         child: Column(
           children: [
-            Row(
-              children: [
-                Icon(Icons.list_outlined),
-                Spacer(),
-                Icon(Icons.notifications)
-              ],
-            ),
-            SizedBox(height: 40),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Settings",
-                style: TextStyles.extraBold.copyWith(fontSize: 25),
-              ),
-            ),
             _buildSettingsItem(
                 title: "Communications", screenToLaunch: Communications()),
             _buildSettingsItem(
@@ -41,7 +26,7 @@ class _SettingsState extends State<Settings> {
             _buildSettingsItem(
                 title: "Password Settings", screenToLaunch: ChangePassword()),
             SizedBox(height: 50),
-            Align(
+            Container(
               alignment: Alignment.centerLeft,
               child: Text(
                 "Legal",

@@ -18,22 +18,6 @@ class BadgesParent extends StatelessWidget {
         body: Container(
             margin: EdgeInsets.all(20),
             child: Column(children: [
-              Row(
-                children: [
-                  Icon(Icons.list_outlined),
-                  Spacer(),
-                  Icon(Icons.notifications)
-                ],
-              ),
-              SizedBox(height: 30),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Insights!",
-                  style: TextStyles.extraBold.copyWith(fontSize: 24),
-                ),
-              ),
-              SizedBox(height: 5),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(

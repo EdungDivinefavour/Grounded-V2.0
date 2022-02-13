@@ -3,6 +3,7 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:grounded/components/custom_action_button.dart';
+import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/components/input_field.dart';
 import 'package:grounded/components/user_image.dart';
@@ -10,6 +11,7 @@ import 'package:grounded/models/grounded_user/child/child.dart';
 import 'package:grounded/services/firebase/authentication_service.dart';
 import 'package:grounded/services/firebase/firestore_service.dart';
 import 'package:grounded/services/firebase/storage_service.dart';
+import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/texts/text_styles.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -42,17 +44,10 @@ class _AddChildState extends State<AddChild> {
     return CustomScaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(10),
           child: Column(
             children: [
-              SizedBox(height: 20),
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  "Add New Child",
-                  style: TextStyles.medium,
-                ),
-              ),
+              CustomAppBar(title: "Add New Child"),
               SizedBox(height: 30),
               InkWell(onTap: _openPickImageSheet, child: UserImage()),
               InputField(
@@ -81,15 +76,14 @@ class _AddChildState extends State<AddChild> {
                     style: TextStyles.regular,
                   ),
                   Slider(
-                      inactiveColor: Colors.grey,
+                      thumbColor: ThemeColors.primary,
+                      activeColor: ThemeColors.primary,
+                      inactiveColor: ThemeColors.lightBackground,
                       divisions: 10,
                       value: sliderValue,
-                      min: 0,
                       max: 10,
                       onChanged: (value) {
-                        setState(() {
-                          sliderValue = value;
-                        });
+                        setState(() => sliderValue = value);
                       }),
                 ],
               ),

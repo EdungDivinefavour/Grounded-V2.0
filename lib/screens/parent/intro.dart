@@ -29,6 +29,7 @@ class _IntroState extends State<Intro> {
               'With Grounded you can monitor and track thier progress with ease',
           sliderImage: 'intro_2.png'),
     ];
+
     return Scaffold(
         body: SingleChildScrollView(
       child: CarouselSlider(
@@ -93,7 +94,7 @@ class _IntroState extends State<Intro> {
                           const EdgeInsets.only(left: 25, right: 25, top: 40),
                       child: Text(title,
                           style: TextStyles.extraBold.copyWith(
-                              fontSize: 28, color: ThemeColors.lightElement)),
+                              fontSize: 26, color: ThemeColors.lightElement)),
                     ),
                     Container(
                       alignment: Alignment.centerLeft,

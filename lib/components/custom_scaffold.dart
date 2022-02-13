@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:grounded/styles/colors/theme_colors.dart';
 
 class CustomScaffold extends StatelessWidget {
+  final PreferredSizeWidget? appBar;
   final Widget body;
   final Widget? drawer;
   final Widget? floatingActionButton;
@@ -10,6 +11,7 @@ class CustomScaffold extends StatelessWidget {
 
   const CustomScaffold({
     required this.body,
+    this.appBar,
     this.drawer,
     this.floatingActionButton,
     this.bottomNavigationBar,
@@ -19,6 +21,7 @@ class CustomScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: appBar,
       body: SafeArea(child: body),
       drawer: drawer,
       floatingActionButton: floatingActionButton,

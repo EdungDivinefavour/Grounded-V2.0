@@ -3,12 +3,15 @@
 
 abstract class AppIcons {
   static const add = 'add.svg';
+  static const back = 'back.svg';
   static const badges = 'badges.svg';
   static const checkBox = "check_box.svg";
   static const fetchedImageFailedPNG = 'fetched_image_failed.png';
   static const fetchedImageFailedSVG = 'fetched_image_failed.svg';
   static const home = 'home.svg';
   static const logoPNG = 'logo.png';
+  static const menu = 'menu.svg';
+  static const notification = 'notification.svg';
   static const profile = 'profile.svg';
   static const reports = 'reports.svg';
   static const settings = 'settings.svg';

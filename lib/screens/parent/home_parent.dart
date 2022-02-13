@@ -35,26 +35,10 @@ class _HomeParentState extends State<HomeParent> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      body: Container(
-        margin: EdgeInsets.all(20),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
-            Row(
-              children: [
-                Icon(Icons.list_outlined),
-                Spacer(),
-                Icon(Icons.notifications)
-              ],
-            ),
-            SizedBox(height: 20),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Hey James",
-                style: TextStyles.extraBold.copyWith(fontSize: 24),
-              ),
-            ),
-            SizedBox(height: 5),
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -84,44 +68,42 @@ class _HomeParentState extends State<HomeParent> {
 
   // TODO: Delete text widget and properly build the actual widget here
   Widget _buildEachChild(Child child) {
-    return Container(
-      margin: EdgeInsets.all(10),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              UserImage(imageURL: child.profilePhoto, size: 60),
-              SizedBox(width: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(child.name, style: TextStyles.medium),
-                      SizedBox(width: 5),
-                      Text("(" + child.age.toString() + " years old)")
-                    ],
-                  ),
-                  SizedBox(height: 5),
-                  Text("Grade " + child.grade.toString()),
-                  SizedBox(height: 5),
-                  Text("Login Token - " + child.loginToken)
-                ],
-              )
-            ],
-          ),
-          SizedBox(height: 10),
-          FlatButton(
-              onPressed: () {
-                _openAddTaskScreen(child);
-              },
-              child: Text(
-                'Assign New Task',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-              )),
-          Divider(height: 5, thickness: 1)
-        ],
-      ),
+    return Column(
+      children: [
+        SizedBox(height: 20),
+        Row(
+          children: [
+            UserImage(imageURL: child.profilePhoto, size: 60),
+            SizedBox(width: 20),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(child.name, style: TextStyles.semiBold),
+                    SizedBox(width: 5),
+                    Text("(" + child.age.toString() + " years old)")
+                  ],
+                ),
+                SizedBox(height: 10),
+                Text("Grade " + child.grade.toString()),
+                SizedBox(height: 10),
+                Text("Login Token - " + child.loginToken)
+              ],
+            )
+          ],
+        ),
+        SizedBox(height: 20),
+        FlatButton(
+            onPressed: () {
+              _openAddTaskScreen(child);
+            },
+            child: Text(
+              'Assign New Task',
+              style: TextStyles.bold.copyWith(fontSize: 16),
+            )),
+        Divider(height: 5, thickness: 1)
+      ],
     );
   }
 

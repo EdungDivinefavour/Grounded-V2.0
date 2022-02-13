@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grounded/components/svg_icon.dart';
+import 'package:grounded/styles/texts/text_styles.dart';
 
 class CustomBottomBar extends StatelessWidget {
   const CustomBottomBar({
@@ -106,7 +107,10 @@ class CustomBottomBar extends StatelessWidget {
                                           t),
                                       fontWeight: FontWeight.w600,
                                     ),
-                                    child: item.title,
+                                    child: Text(item.title,
+                                        style: TextStyles.regular.copyWith(
+                                            fontSize: 15,
+                                            color: item.selectedColor)),
                                   ),
                                 ),
                               ),
@@ -129,7 +133,7 @@ class CustomBottomBar extends StatelessWidget {
 class CustomBottomBarItem {
   final String icon;
   final String? activeIcon;
-  final Widget title;
+  final String title;
   final Color? selectedColor;
   final Color? unselectedColor;
 
