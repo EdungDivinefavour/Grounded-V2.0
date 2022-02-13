@@ -10,11 +10,13 @@ class InputField extends StatefulWidget {
   final bool enabled;
   final InputFieldType? inputFieldType;
   final String hintText;
+  final String title;
 
   const InputField({
     required this.controller,
+    required this.hintText,
+    required this.title,
     this.enabled = true,
-    this.hintText = 'Enter text here...',
     this.inputFieldType = InputFieldType.name,
   });
 
@@ -25,36 +27,49 @@ class InputField extends StatefulWidget {
 class _InputFieldState extends State<InputField> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        margin: const EdgeInsets.only(top: 20, left: 10, right: 10),
-        height: 50,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.0),
-          color: ThemeColors.lightBackground,
-        ),
-        child: TextField(
-            enabled: widget.enabled,
-            keyboardType: _buildTextInputType(),
-            controller: widget.controller,
-            obscureText: widget.inputFieldType == InputFieldType.password,
-            autocorrect: false,
-            decoration: InputDecoration(
-                contentPadding: const EdgeInsets.only(left: 10),
-                border: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                errorBorder: InputBorder.none,
-                disabledBorder: InputBorder.none,
-                hintText: widget.hintText,
-                suffixIcon: _isValidated
-                    ? const Padding(
-                        padding: EdgeInsetsDirectional.all(12),
-                        child: SVGIcon(icon: AppIcons.checkBox),
-                      )
-                    : null),
-            onChanged: (_) {
-              setState(() {});
-            }));
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 15),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: Align(
+                alignment: Alignment.centerLeft, child: Text(widget.title)),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
+            height: 50,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.0),
+              color: ThemeColors.lightBackground,
+            ),
+            child: TextField(
+                enabled: widget.enabled,
+                keyboardType: _buildTextInputType(),
+                controller: widget.controller,
+                obscureText: widget.inputFieldType == InputFieldType.password,
+                autocorrect: false,
+                decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.only(left: 10),
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                    hintText: widget.hintText,
+                    suffixIcon: _isValidated
+                        ? const Padding(
+                            padding: EdgeInsetsDirectional.all(12),
+                            child: SVGIcon(icon: AppIcons.checkBox),
+                          )
+                        : null),
+                onChanged: (_) {
+                  setState(() {});
+                }),
+          ),
+        ],
+      ),
+    );
   }
 
   bool get _isValidated {

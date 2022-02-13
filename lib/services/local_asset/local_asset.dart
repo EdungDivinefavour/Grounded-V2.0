@@ -10,7 +10,7 @@ class LocalAsset {
 
   Future<dynamic> readJSON(String source) {
     return rootBundle
-        .loadString(mockDataPath + source)
+        .loadString(questionJSONPath + source)
         .then((jsonStr) => jsonDecode(jsonStr));
   }
 }

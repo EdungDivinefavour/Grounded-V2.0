@@ -1,2 +1,4 @@
 const iconPath = 'assets/icons/';
-const mockDataPath = 'assets/data/';
+const imagePath = 'assets/images/';
+
+const questionJSONPath = 'assets/data/';

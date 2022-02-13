@@ -1,6 +1,5 @@
 import 'package:grounded/constants/enums/user_type.dart';
 import 'package:grounded/models/achievement.dart';
-import 'package:grounded/models/badge.dart';
 import 'package:grounded/models/grounded_user/grounded_user.dart';
 import 'package:grounded/utils/string_utils.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -46,12 +45,6 @@ class Child extends GroundedUser {
       achievements: [],
     );
   }
-
-  // Badge _getMostRecentBadge() {
-  //   achievements.sort();
-
-  //   achievements.
-  // }
 
   factory Child.fromJson(Map<String, dynamic> json) => _$ChildFromJson(json);
   Map<String, dynamic> toJson() => _$ChildToJson(this);
