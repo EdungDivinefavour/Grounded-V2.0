@@ -1,3 +1,4 @@
+import 'package:dart_date/dart_date.dart';
 import 'package:grounded/models/data_points/daily_data_point.dart';
 import 'package:grounded/models/grounded_task/grounded_task.dart';
 
@@ -28,10 +29,14 @@ class GroundedTaskManager {
 
   List<DateTime> get daysInThisWeek {
     List<DateTime> daysInWeek = [];
-    final now = DateTime.now();
+    final firstDayOfThisWeek = DateTime.now().startOfWeek;
 
     for (int i = 0; i < 7; i++) {
-      daysInWeek.add(DateTime(now.year, now.month, now.day + i));
+      daysInWeek.add(DateTime(
+        firstDayOfThisWeek.year,
+        firstDayOfThisWeek.month,
+        firstDayOfThisWeek.day + i,
+      ));
     }
 
     return daysInWeek;
