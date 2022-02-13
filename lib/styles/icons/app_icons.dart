@@ -8,6 +8,7 @@ abstract class AppIcons {
   static const checkBox = "check_box.svg";
   static const fetchedImageFailedPNG = 'fetched_image_failed.png';
   static const fetchedImageFailedSVG = 'fetched_image_failed.svg';
+  static const forward = 'forward.svg';
   static const home = 'home.svg';
   static const logoPNG = 'logo.png';
   static const menu = 'menu.svg';
