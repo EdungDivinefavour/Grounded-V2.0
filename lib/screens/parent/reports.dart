@@ -12,24 +12,25 @@ class Reports extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+        bubblePosition: BackgroundBubblePosition.bottomLeft,
         body: Column(
-      children: [
-        SizedBox(
-          height: 350,
-          child: LineChart(
-            _chartData,
-            domainAxis: NumericAxisSpec(
-              tickProviderSpec:
-                  BasicNumericTickProviderSpec(desiredTickCount: 7),
-              tickFormatterSpec: customTickFormatter,
+          children: [
+            SizedBox(
+              height: 350,
+              child: LineChart(
+                _chartData,
+                domainAxis: NumericAxisSpec(
+                  tickProviderSpec:
+                      BasicNumericTickProviderSpec(desiredTickCount: 7),
+                  tickFormatterSpec: customTickFormatter,
+                ),
+              ),
             ),
-          ),
-        ),
-        SizedBox(height: 30),
-        Text(
-            "These are you child's total points per week. A child can get 10 points for a correct answer. -10 points for an incorrect answer. Click the button below to get a breakdown of the points by tasks"),
-      ],
-    ));
+            SizedBox(height: 30),
+            Text(
+                "These are you child's total points per week. A child can get 10 points for a correct answer. -10 points for an incorrect answer. Click the button below to get a breakdown of the points by tasks"),
+          ],
+        ));
   }
 
   List<Series<DailyDataPoint, int>> get _chartData {

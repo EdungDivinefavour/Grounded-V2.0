@@ -13,6 +13,8 @@ class SolveTask extends StatefulWidget {
 class _SolveTaskState extends State<SolveTask> {
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(body: Container());
+    return CustomScaffold(
+        bubblePosition: BackgroundBubblePosition.centerRight,
+        body: Container());
   }
 }

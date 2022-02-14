@@ -35,6 +35,7 @@ class _HomeParentState extends State<HomeParent> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+      bubblePosition: BackgroundBubblePosition.centerLeft,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: Column(

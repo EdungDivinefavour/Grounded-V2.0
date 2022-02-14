@@ -1,3 +1,4 @@
+import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/constants/strings/paths.dart';
 import 'package:grounded/screens/parent/login_parent.dart';
 import 'package:grounded/styles/colors/theme_colors.dart';
@@ -30,9 +31,8 @@ class _IntroState extends State<Intro> {
           sliderImage: 'intro_2.png'),
     ];
 
-    return Scaffold(
-        body: SingleChildScrollView(
-      child: CarouselSlider(
+    return CustomScaffold(
+      body: CarouselSlider(
         options: CarouselOptions(
           height: MediaQuery.of(context).size.height,
           autoPlay: true,
@@ -48,7 +48,7 @@ class _IntroState extends State<Intro> {
         ),
         items: _introScreens,
       ),
-    ));
+    );
   }
 
   Widget _buildSlideDots({required List<Widget> widgets}) {

@@ -5,6 +5,9 @@ abstract class AppIcons {
   static const add = 'add.svg';
   static const back = 'back.svg';
   static const badges = 'badges.svg';
+  static const bottomLeftBubble = 'bottom_left_bubble.svg';
+  static const centerLeftBubble = 'center_left_bubble.svg';
+  static const centerRightBubble = 'center_right_bubble.svg';
   static const checkBox = "check_box.svg";
   static const fetchedImageFailedPNG = 'fetched_image_failed.png';
   static const fetchedImageFailedSVG = 'fetched_image_failed.svg';
@@ -16,4 +19,5 @@ abstract class AppIcons {
   static const profile = 'profile.svg';
   static const reports = 'reports.svg';
   static const settings = 'settings.svg';
+  static const topRightBubble = 'top_right_bubble.svg';
 }

@@ -11,8 +11,10 @@ class ClickableText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      child: Text(text,
-          style: TextStyles.regular.copyWith(color: ThemeColors.link)),
+      child: Text(
+        text,
+        style: TextStyles.small.copyWith(color: ThemeColors.link),
+      ),
       onPressed: onPressed,
     );
   }

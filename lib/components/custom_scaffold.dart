@@ -1,13 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:grounded/components/empty_widget.dart';
+import 'package:grounded/components/svg_icon.dart';
 import 'package:grounded/styles/colors/theme_colors.dart';
+import 'package:grounded/styles/icons/app_icons.dart';
+import 'package:grounded/utils/device_utils.dart';
 
-class CustomScaffold extends StatelessWidget {
+enum BackgroundBubblePosition {
+  topLeft,
+  topRight,
+  centerLeft,
+  centerRight,
+  bottomRight,
+  bottomLeft,
+  none,
+}
+
+class CustomScaffold extends StatefulWidget {
   final PreferredSizeWidget? appBar;
   final Widget body;
   final Widget? drawer;
   final Widget? floatingActionButton;
   final Widget? bottomNavigationBar;
-  final Color? backgroundColor;
+  final BackgroundBubblePosition? bubblePosition;
+  final Color backgroundColor;
 
   const CustomScaffold({
     required this.body,
@@ -15,18 +30,52 @@ class CustomScaffold extends StatelessWidget {
     this.drawer,
     this.floatingActionButton,
     this.bottomNavigationBar,
-    this.backgroundColor,
+    this.bubblePosition,
+    this.backgroundColor = ThemeColors.lightElement,
   });
 
   @override
+  State<CustomScaffold> createState() => _CustomScaffoldState();
+}
+
+class _CustomScaffoldState extends State<CustomScaffold> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar,
-      body: SafeArea(child: body),
-      drawer: drawer,
-      floatingActionButton: floatingActionButton,
-      bottomNavigationBar: bottomNavigationBar,
-      backgroundColor: backgroundColor ?? ThemeColors.lightElement,
+      appBar: widget.appBar,
+      body: Stack(
+        children: [SafeArea(child: widget.body), _buildBubble],
+      ),
+      drawer: widget.drawer,
+      floatingActionButton: widget.floatingActionButton,
+      bottomNavigationBar: widget.bottomNavigationBar,
+      backgroundColor: widget.backgroundColor,
     );
+  }
+
+  Widget get _buildBubble {
+    if (widget.bubblePosition == BackgroundBubblePosition.bottomLeft) {
+      return Positioned(
+        bottom: 0,
+        left: 0,
+        child: SVGIcon(icon: AppIcons.bottomLeftBubble),
+      );
+    } else if (widget.bubblePosition == BackgroundBubblePosition.centerLeft) {
+      return Positioned(
+        top: getDeviceHeight(context) / 2,
+        left: 0,
+        child: SVGIcon(icon: AppIcons.centerLeftBubble),
+      );
+    } else if (widget.bubblePosition == BackgroundBubblePosition.centerRight) {
+      return Positioned(
+          top: getDeviceHeight(context) / 2,
+          right: 0,
+          child: SVGIcon(icon: AppIcons.centerRightBubble));
+    } else if (widget.bubblePosition == BackgroundBubblePosition.none) {
+      return emptyWidget;
+    }
+
+    return Positioned(
+        top: 0, right: 0, child: SVGIcon(icon: AppIcons.topRightBubble));
   }
 }

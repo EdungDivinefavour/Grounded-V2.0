@@ -42,6 +42,7 @@ class _AddChildState extends State<AddChild> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+      bubblePosition: BackgroundBubblePosition.centerRight,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(10),
