@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grounded/components/achieved_badge.dart';
 import 'package:grounded/models/achievement.dart';
 import 'package:grounded/models/badge.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';
@@ -77,16 +78,7 @@ class BadgesParent extends StatelessWidget {
 
   // TODO: Beautify badge here
   Widget _buildEachBadge(Badge badge) {
-    return Container(
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 10,
-          ),
-          Text('Champion')
-        ],
-      ),
-    );
+    return AchievedBadge(badge: badge);
   }
 
   // TODO: Beautify achievement here
