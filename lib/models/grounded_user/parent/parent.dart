@@ -1,6 +1,7 @@
 import 'package:grounded/constants/enums/user_type.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
 import 'package:grounded/models/grounded_user/grounded_user.dart';
+import 'package:grounded/models/grounded_user/parent/notification_preferences/notification_preferences.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'parent.g.dart';
@@ -15,6 +16,7 @@ class Parent extends GroundedUser {
   final String password;
   final List<Child> children;
   final List<String> childrenLoginTokens;
+  final NotificationPreferences notificationPreferences;
 
   bool wantsNewsletters;
 
@@ -25,6 +27,7 @@ class Parent extends GroundedUser {
     required this.password,
     required this.children,
     required this.childrenLoginTokens,
+    required this.notificationPreferences,
     this.wantsNewsletters = false,
   }) : super(id: id, name: name, userType: UserType.parent);
 
@@ -41,6 +44,7 @@ class Parent extends GroundedUser {
       password: password,
       children: [],
       childrenLoginTokens: [],
+      notificationPreferences: NotificationPreferences(),
     );
   }
 

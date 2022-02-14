@@ -7,8 +7,10 @@ class DatabaseService {
   static DatabaseService get instance => _instance;
   final DatabaseReference _databaseReference = FirebaseDatabase.instance.ref();
 
-  Future<void> updateRealTimeDbPresence(
-      {String? userId, required OnlinePresence onlinePresence}) {
+  Future<void> updateRealTimeDbPresence({
+    String? userId,
+    required OnlinePresence onlinePresence,
+  }) {
     if (userId == null) return Future.value();
 
     return _databaseReference.child("users").child(userId).update({

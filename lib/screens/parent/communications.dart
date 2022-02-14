@@ -60,7 +60,7 @@ class CommunicationsState extends State<Communications> {
                               onChanged: (value) {
                                 setState(
                                     () => _parent?.wantsNewsletters = value);
-                                setCommunicationPreference(value);
+                                setCommunicationPreference();
                               })),
                     ],
                   ))
@@ -71,7 +71,7 @@ class CommunicationsState extends State<Communications> {
     );
   }
 
-  void setCommunicationPreference(bool value) async {
+  void setCommunicationPreference() async {
     EasyLoading.show();
 
     await _firestoreService.storeParentInfo(parent: _parent);
