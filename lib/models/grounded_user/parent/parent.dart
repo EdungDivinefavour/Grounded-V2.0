@@ -16,6 +16,8 @@ class Parent extends GroundedUser {
   final List<Child> children;
   final List<String> childrenLoginTokens;
 
+  bool wantsNewsletters;
+
   Parent({
     required this.id,
     required this.name,
@@ -23,6 +25,7 @@ class Parent extends GroundedUser {
     required this.password,
     required this.children,
     required this.childrenLoginTokens,
+    this.wantsNewsletters = false,
   }) : super(id: id, name: name, userType: UserType.parent);
 
   static Parent newParent({

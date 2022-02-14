@@ -37,7 +37,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
   Widget build(BuildContext context) {
     return Container(
         margin: _buildAppBarMargin,
-        padding: EdgeInsets.symmetric(vertical: 10),
+        padding: EdgeInsets.only(top: 20),
         child: Column(
           children: [
             Row(
