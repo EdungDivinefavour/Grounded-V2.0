@@ -19,12 +19,11 @@ class GroundedUser {
     required this.name,
     required this.id,
     required this.userType,
-    this.registrationTime = 0,
-    this.lastSeenAt = 0,
-    this.firebaseToken = '',
-    this.onlinePresence = OnlinePresence.offline,
-    this.profilePhoto =
-        "https://firebasestorage.googleapis.com/v0/b/sonocare-15c7d.appspot.com/o/user_icon.png?alt=media&token=3de311b3-2b09-4573-949d-3887711f1368",
+    required this.registrationTime,
+    required this.lastSeenAt,
+    required this.firebaseToken,
+    required this.onlinePresence,
+    required this.profilePhoto,
   });
 
   factory GroundedUser.fromJson(Map<String, dynamic> json) =>

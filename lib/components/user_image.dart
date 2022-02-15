@@ -8,7 +8,7 @@ class UserImage extends StatelessWidget {
   final String? imageURL;
   final double? size;
 
-  const UserImage({this.imageURL, this.size});
+  const UserImage({this.imageURL, this.size = 150});
 
   @override
   Widget build(BuildContext context) {

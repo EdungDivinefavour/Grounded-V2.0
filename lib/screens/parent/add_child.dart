@@ -3,17 +3,23 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:grounded/components/custom_action_button.dart';
+import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/components/input_field.dart';
 import 'package:grounded/components/user_image.dart';
-import 'package:grounded/models/grounded_user/child/child.dart';
+import 'package:grounded/models/grounded_user/parent/parent.dart';
 import 'package:grounded/services/firebase/authentication_service.dart';
 import 'package:grounded/services/firebase/firestore_service.dart';
 import 'package:grounded/services/firebase/storage_service.dart';
+import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/texts/text_styles.dart';
+import 'package:grounded/utils/string_utils.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddChild extends StatefulWidget {
+  final Parent parent;
+  AddChild({required this.parent});
+
   @override
   State<AddChild> createState() => _AddChildState();
 }
@@ -40,21 +46,18 @@ class _AddChildState extends State<AddChild> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+      appBar: CustomAppBar(title: "Add New Child"),
+      bubblePosition: BackgroundBubblePosition.centerRight,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(15),
           child: Column(
             children: [
-              SizedBox(height: 20),
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  "Add New Child",
-                  style: TextStyles.medium,
-                ),
-              ),
+              SizedBox(height: 35),
+              InkWell(
+                  onTap: _openPickImageSheet,
+                  child: UserImage(imageURL: pickedUploadedPhotoUrl)),
               SizedBox(height: 30),
-              InkWell(onTap: _openPickImageSheet, child: UserImage()),
               InputField(
                 title: "Name",
                 controller: _nameController,
@@ -81,15 +84,14 @@ class _AddChildState extends State<AddChild> {
                     style: TextStyles.regular,
                   ),
                   Slider(
-                      inactiveColor: Colors.grey,
+                      thumbColor: ThemeColors.primary,
+                      activeColor: ThemeColors.primary,
+                      inactiveColor: ThemeColors.lightBackground,
                       divisions: 10,
                       value: sliderValue,
-                      min: 0,
                       max: 10,
                       onChanged: (value) {
-                        setState(() {
-                          sliderValue = value;
-                        });
+                        setState(() => sliderValue = value);
                       }),
                 ],
               ),
@@ -137,21 +139,33 @@ class _AddChildState extends State<AddChild> {
         photoUrl: uploadedPhotoUrl, parentID: _authService.currentUser!.uid);
 
     EasyLoading.showInfo("Profile photo uploaded successfully");
-    pickedUploadedPhotoUrl = uploadedPhotoUrl;
+    setState(() {
+      pickedUploadedPhotoUrl = uploadedPhotoUrl;
+    });
   }
 
   void _addChild() async {
     EasyLoading.show();
-    final child = Child.newChild(
-      name: _nameController.text,
-      parentID: _authService.currentUser!.uid,
-      age: int.parse(_ageController.text),
-      grade: sliderValue.toInt(),
-    );
+    final parentID = _authService.currentUser!.uid;
+    final loginToken = generateLoginToken;
+    final email = loginToken + "fromParent" + parentID + "@gmail.com";
 
-    await _firestoreService.storeChildInfo(newChild: child);
+    final child = await _authService.registerChild(
+        email: email,
+        password: loginToken,
+        loginToken: loginToken,
+        name: _nameController.text,
+        parentID: _authService.currentUser!.uid,
+        age: int.parse(_ageController.text),
+        grade: sliderValue.toInt());
 
+    // This signs in the parent again  because firebase auth by default signs in a new user upon creation
+    // TODO: Make firebase functions to create user instead
+    await _authService.loginUser(
+        email: widget.parent.email,
+        password: widget.parent.password,
+        userType: widget.parent.userType);
     EasyLoading.showSuccess("Child added successfully");
-    Navigator.pop(context);
+    Navigator.pop(context, child);
   }
 }

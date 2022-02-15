@@ -1,3 +1,4 @@
+import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
 import 'package:grounded/components/custom_bottom_bar.dart';
 import 'package:grounded/components/drawer/navigation_drawer.dart';
 import 'package:grounded/constants/enums/user_type.dart';
@@ -14,6 +15,7 @@ import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/icons/app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:grounded/components/custom_scaffold.dart';
+import 'package:grounded/utils/string_utils.dart';
 
 class BottomTabs extends StatefulWidget {
   final GroundedUser groundedUser;
@@ -25,11 +27,18 @@ class BottomTabs extends StatefulWidget {
 
 class _BottomTabsState extends State<BottomTabs> {
   int _currentIndex = 0;
+  String _appBarTitle = "";
+
+  @override
+  void initState() {
+    super.initState();
+
+    _appBarTitle = "Hey " + shortenToFirstOnly(widget.groundedUser.name);
+  }
 
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      drawer: NavigationDrawer(groundedUser: widget.groundedUser),
       body: IndexedStack(index: _currentIndex, children: _buildTabs),
       bottomNavigationBar: CustomBottomBar(
         currentIndex: _currentIndex,
@@ -38,12 +47,6 @@ class _BottomTabsState extends State<BottomTabs> {
         items: _buildTabItems,
       ),
     );
-  }
-
-  void _onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
   }
 
   List<Widget> get _buildTabs {
@@ -79,6 +82,18 @@ class _BottomTabsState extends State<BottomTabs> {
     required String icon,
   }) {
     return CustomBottomBarItem(
-        icon: icon, title: Text(title), selectedColor: ThemeColors.primary);
+      icon: icon,
+      title: title,
+      selectedColor: ThemeColors.primary,
+    );
+  }
+
+  void _onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+      _appBarTitle = index == 0
+          ? "Hey " + shortenToFirstOnly(widget.groundedUser.name)
+          : _buildTabItems[index].title;
+    });
   }
 }

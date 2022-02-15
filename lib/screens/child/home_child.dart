@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
 import 'package:grounded/components/custom_scaffold.dart';
+import 'package:grounded/components/screen_title.dart';
 import 'package:grounded/models/grounded_task/grounded_task.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
 import 'package:grounded/screens/child/solve_task.dart';
 import 'package:grounded/services/firebase/firestore_service.dart';
 import 'package:grounded/styles/texts/text_styles.dart';
+import 'package:grounded/utils/string_utils.dart';
 
 class HomeChild extends StatefulWidget {
   final Child child;
@@ -29,9 +32,13 @@ class _HomeChildState extends State<HomeChild> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      body: Container(
-          margin: EdgeInsets.all(20),
+      appBar: CustomAppBar(hasDrawer: true),
+      body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
           child: Column(children: [
+            ScreenTitle(
+                title: "Hey " + shortenToFirstOnly(widget.child.name),
+                isWhiteBackround: true),
             Row(
               children: [
                 Icon(Icons.list_outlined),

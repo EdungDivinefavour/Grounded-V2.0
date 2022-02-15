@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
+import 'package:grounded/components/custom_scaffold.dart';
+import 'package:grounded/components/screen_title.dart';
+import 'package:grounded/components/svg_icon.dart';
 import 'package:grounded/screens/parent/change_password.dart';
 import 'package:grounded/screens/parent/communications.dart';
 import 'package:grounded/screens/parent/notifications.dart';
-import 'package:grounded/styles/colors/theme_colors.dart';
+import 'package:grounded/styles/icons/app_icons.dart';
 import 'package:grounded/styles/texts/text_styles.dart';
 import 'package:grounded/utils/launcher_utils.dart';
 
@@ -14,26 +18,14 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        margin: EdgeInsets.all(25),
+    return CustomScaffold(
+      appBar: CustomAppBar(hasDrawer: true),
+      bubblePosition: BackgroundBubblePosition.none,
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
-            Row(
-              children: [
-                Icon(Icons.list_outlined),
-                Spacer(),
-                Icon(Icons.notifications)
-              ],
-            ),
-            SizedBox(height: 40),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Settings",
-                style: TextStyles.extraBold.copyWith(fontSize: 25),
-              ),
-            ),
+            ScreenTitle(title: "Settings", isWhiteBackround: true),
             _buildSettingsItem(
                 title: "Communications", screenToLaunch: Communications()),
             _buildSettingsItem(
@@ -41,7 +33,7 @@ class _SettingsState extends State<Settings> {
             _buildSettingsItem(
                 title: "Password Settings", screenToLaunch: ChangePassword()),
             SizedBox(height: 50),
-            Align(
+            Container(
               alignment: Alignment.centerLeft,
               child: Text(
                 "Legal",
@@ -59,34 +51,28 @@ class _SettingsState extends State<Settings> {
     );
   }
 
-// TODO: Build the settings item here
   Widget _buildSettingsItem({required String title, dynamic screenToLaunch}) {
     return InkWell(
-      onTap: () {
-        _navigateToPage(screenToLaunch);
-      },
-      child: Container(
-        alignment: Alignment.centerLeft,
-        height: 50,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Row(
-              children: [
-                Text(title, style: TextStyles.regular),
-                Spacer(),
-                Icon(
-                  Icons.arrow_forward_ios_sharp,
-                  size: 16,
-                  color: ThemeColors.darkBackground,
-                ),
-              ],
-            ),
-            Divider(height: 2, thickness: 1.5),
-          ],
-        ),
-      ),
-    );
+        onTap: () {
+          _navigateToPage(screenToLaunch);
+        },
+        child: SizedBox(
+          height: 50,
+          child: Column(
+            children: [
+              Spacer(),
+              Row(
+                children: [
+                  Text(title, style: TextStyles.regular),
+                  Spacer(),
+                  SVGIcon(icon: AppIcons.forward, size: 15)
+                ],
+              ),
+              Spacer(),
+              Divider(height: 2, thickness: 1.5),
+            ],
+          ),
+        ));
   }
 
   void _navigateToPage(dynamic whatToLaunch) async {

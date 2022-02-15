@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:grounded/components/achieved_badge.dart';
+import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
+import 'package:grounded/components/screen_title.dart';
 import 'package:grounded/models/achievement.dart';
 import 'package:grounded/models/badge.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';
@@ -15,25 +18,11 @@ class BadgesParent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-        body: Container(
-            margin: EdgeInsets.all(20),
+        appBar: CustomAppBar(hasDrawer: true),
+        body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: Column(children: [
-              Row(
-                children: [
-                  Icon(Icons.list_outlined),
-                  Spacer(),
-                  Icon(Icons.notifications)
-                ],
-              ),
-              SizedBox(height: 30),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Insights!",
-                  style: TextStyles.extraBold.copyWith(fontSize: 24),
-                ),
-              ),
-              SizedBox(height: 5),
+              ScreenTitle(title: "Badges", isWhiteBackround: true),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -93,16 +82,7 @@ class BadgesParent extends StatelessWidget {
 
   // TODO: Beautify badge here
   Widget _buildEachBadge(Badge badge) {
-    return Container(
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 10,
-          ),
-          Text('Champion')
-        ],
-      ),
-    );
+    return AchievedBadge(badge: badge);
   }
 
   // TODO: Beautify achievement here
@@ -112,9 +92,9 @@ class BadgesParent extends StatelessWidget {
 
   List<Achievement> get _setupAchievementLists {
     final List<Achievement> achievements = [];
-    for (final e in parent.children) {
-      achievements.addAll(e.achievements);
-    }
+    // for (final e in parent.children) {
+    //   achievements.addAll(e.achievements);
+    // }
 
     return achievements;
   }

@@ -1,12 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:grounded/components/loader.dart';
 import 'package:grounded/constants/enums/online_presence.dart';
-import 'package:grounded/models/grounded_user/grounded_user.dart';
 import 'package:grounded/screens/splash.dart';
 import 'package:grounded/services/firebase/authentication_service.dart';
 import 'package:grounded/services/firebase/database_service.dart';
-import 'package:grounded/services/firebase/firestore_service.dart';
 import 'package:grounded/services/firebase/messaging_service.dart';
 import 'package:grounded/services/notification/notification_service.dart';
 
@@ -17,7 +15,6 @@ class Grounded extends StatefulWidget {
 
 class _GroundedState extends State<Grounded> with WidgetsBindingObserver {
   final _notificationService = NotificationService.instance;
-  final _firestoreService = FirestoreService.instance;
   final _messagingService = MessagingService.instance;
   final _databaseService = DatabaseService.instance;
   final _authService = AuthenticationService.instance;
@@ -29,10 +26,10 @@ class _GroundedState extends State<Grounded> with WidgetsBindingObserver {
     if (_authService.currentUser != null) {
       _messagingService.getAndSetTokens();
       _databaseService.listenForAppDisconnected(
-          userId: _authService.currentUser?.uid);
+          userId: _authService.currentUser!.uid);
       _databaseService.updateRealTimeDbPresence(
           onlinePresence: OnlinePresence.online,
-          userId: _authService.currentUser?.uid);
+          userId: _authService.currentUser!.uid);
     }
 
     _notificationService.setupHandler(_navigatorKey);
@@ -68,19 +65,10 @@ class _GroundedState extends State<Grounded> with WidgetsBindingObserver {
           return Center(child: CircularProgressIndicator());
         }
 
-        final user = snapshot.data;
-        if (user == null) return Splash();
+        final firebaseUser = snapshot.data;
+        if (firebaseUser == null) return Splash();
 
-        return FutureBuilder(
-            future:
-                _firestoreService.getParentInfo(_authService.currentUser!.uid),
-            builder: (_, AsyncSnapshot<Object?> snapshot) {
-              if (snapshot.hasData) {
-                return Splash(groundedUser: snapshot.data as GroundedUser);
-              }
-
-              return loader;
-            });
+        return Splash(firebaseUser: firebaseUser as User);
       },
     );
   }

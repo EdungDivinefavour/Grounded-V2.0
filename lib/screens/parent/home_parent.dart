@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:grounded/components/empty_widget.dart';
+import 'package:grounded/components/center_text.dart';
+import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
+import 'package:grounded/components/screen_title.dart';
 import 'package:grounded/components/svg_icon.dart';
 import 'package:grounded/components/user_image.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
@@ -12,6 +14,7 @@ import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/icons/app_icons.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/styles/texts/text_styles.dart';
+import 'package:grounded/utils/string_utils.dart';
 
 class HomeParent extends StatefulWidget {
   final Parent parent;
@@ -35,36 +38,21 @@ class _HomeParentState extends State<HomeParent> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      body: Container(
-        margin: EdgeInsets.all(20),
+      appBar: CustomAppBar(hasDrawer: true),
+      bubblePosition: BackgroundBubblePosition.centerLeft,
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
-            Row(
-              children: [
-                Icon(Icons.list_outlined),
-                Spacer(),
-                Icon(Icons.notifications)
-              ],
-            ),
-            SizedBox(height: 20),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Hey James",
-                style: TextStyles.extraBold.copyWith(fontSize: 24),
-              ),
-            ),
-            SizedBox(height: 5),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Pick a child to asign them tasks",
-                style: TextStyles.regular,
-              ),
-            ),
+            ScreenTitle(
+                title: "Hey " + shortenToFirstOnly(widget.parent.name),
+                subTitle: "Pick a child to asign them tasks",
+                isWhiteBackround: true),
             SizedBox(height: 20),
             children.isEmpty
-                ? emptyWidget
+                ? CenterText(
+                    text:
+                        "You haven't added any children yet. Click the button below to add children")
                 : ListView.builder(
                     shrinkWrap: true,
                     itemCount: children.length,
@@ -84,54 +72,52 @@ class _HomeParentState extends State<HomeParent> {
 
   // TODO: Delete text widget and properly build the actual widget here
   Widget _buildEachChild(Child child) {
-    return Container(
-      margin: EdgeInsets.all(10),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              UserImage(imageURL: child.profilePhoto, size: 60),
-              SizedBox(width: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(child.name, style: TextStyles.medium),
-                      SizedBox(width: 5),
-                      Text("(" + child.age.toString() + " years old)")
-                    ],
-                  ),
-                  SizedBox(height: 5),
-                  Text("Grade " + child.grade.toString()),
-                  SizedBox(height: 5),
-                  Text("Login Token - " + child.loginToken)
-                ],
-              )
-            ],
-          ),
-          SizedBox(height: 10),
-          FlatButton(
-              onPressed: () {
-                _openAddTaskScreen(child);
-              },
-              child: Text(
-                'Assign New Task',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-              )),
-          Divider(height: 5, thickness: 1)
-        ],
-      ),
+    return Column(
+      children: [
+        SizedBox(height: 20),
+        Row(
+          children: [
+            UserImage(imageURL: child.profilePhoto, size: 60),
+            SizedBox(width: 20),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(child.name, style: TextStyles.semiBold),
+                    SizedBox(width: 5),
+                    Text("(" + child.age.toString() + " years old)")
+                  ],
+                ),
+                SizedBox(height: 10),
+                Text("Grade " + child.grade.toString()),
+                SizedBox(height: 10),
+                Text("Login Token - " + child.loginToken)
+              ],
+            )
+          ],
+        ),
+        SizedBox(height: 20),
+        FlatButton(
+            onPressed: () {
+              _openAddTaskScreen(child);
+            },
+            child: Text(
+              'Assign New Task',
+              style: TextStyles.bold.copyWith(fontSize: 16),
+            )),
+        Divider(height: 5, thickness: 1)
+      ],
     );
   }
 
   void _getChildren() async {
     EasyLoading.show();
-    final parentInfo = await _firestoreService.getParentInfo(widget.parent.id);
+    final result = await _firestoreService.getChildrenForParent(widget.parent);
 
     EasyLoading.dismiss();
     setState(() {
-      children = parentInfo.children;
+      children = result;
     });
   }
 
@@ -144,6 +130,14 @@ class _HomeParentState extends State<HomeParent> {
   }
 
   void _openAddChildScreen() async {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => AddChild()));
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => AddChild(parent: widget.parent)),
+    );
+    if (result == null) return;
+
+    setState(() {
+      children.add(result as Child);
+    });
   }
 }

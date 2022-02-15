@@ -456,7 +456,7 @@ packages:
       name: http_multi_server
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.1"
+    version: "3.2.0"
   http_parser:
     dependency: transitive
     description:
@@ -555,6 +555,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  open_mail_app:
+    dependency: "direct main"
+    description:
+      name: open_mail_app
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.4"
   package_config:
     dependency: transitive
     description:

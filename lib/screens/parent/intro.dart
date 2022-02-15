@@ -1,3 +1,4 @@
+import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/constants/strings/paths.dart';
 import 'package:grounded/screens/parent/login_parent.dart';
 import 'package:grounded/styles/colors/theme_colors.dart';
@@ -12,8 +13,6 @@ class Intro extends StatefulWidget {
 }
 
 class _IntroState extends State<Intro> {
-  int _currentIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     List<Widget> _introScreens = [
@@ -29,25 +28,20 @@ class _IntroState extends State<Intro> {
               'With Grounded you can monitor and track thier progress with ease',
           sliderImage: 'intro_2.png'),
     ];
-    return Scaffold(
-        body: SingleChildScrollView(
-      child: CarouselSlider(
+
+    return CustomScaffold(
+      body: CarouselSlider(
         options: CarouselOptions(
           height: MediaQuery.of(context).size.height,
           autoPlay: true,
           viewportFraction: 1.0,
           initialPage: 0,
           autoPlayInterval: const Duration(seconds: 5),
-          onPageChanged: (index, reason) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
           scrollDirection: Axis.horizontal,
         ),
         items: _introScreens,
       ),
-    ));
+    );
   }
 
   Widget _buildSlideDots({required List<Widget> widgets}) {
@@ -93,7 +87,7 @@ class _IntroState extends State<Intro> {
                           const EdgeInsets.only(left: 25, right: 25, top: 40),
                       child: Text(title,
                           style: TextStyles.extraBold.copyWith(
-                              fontSize: 28, color: ThemeColors.lightElement)),
+                              fontSize: 26, color: ThemeColors.lightElement)),
                     ),
                     Container(
                       alignment: Alignment.centerLeft,
