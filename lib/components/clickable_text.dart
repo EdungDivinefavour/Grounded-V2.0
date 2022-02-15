@@ -13,7 +13,7 @@ class ClickableText extends StatelessWidget {
     return TextButton(
       child: Text(
         text,
-        style: TextStyles.small.copyWith(color: ThemeColors.link),
+        style: TextStyles.smallBold.copyWith(color: ThemeColors.link),
       ),
       onPressed: onPressed,
     );

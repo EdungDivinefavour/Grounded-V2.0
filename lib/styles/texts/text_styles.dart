@@ -7,8 +7,9 @@ const semiBoldFamily = 'Poppins-SemiBold';
 const boldFamily = 'Poppins-Bold';
 
 class TextStyles {
-  static const tiny = TextStyle(fontSize: 12, fontFamily: regularFamily);
-  static const small = TextStyle(fontSize: 14, fontFamily: mediumFamily);
+  static const smallRegular =
+      TextStyle(fontSize: 14, fontFamily: regularFamily);
+  static const smallBold = TextStyle(fontSize: 14, fontFamily: boldFamily);
   static const regular = TextStyle(fontSize: 16, fontFamily: regularFamily);
   static const medium = TextStyle(fontSize: 17, fontFamily: mediumFamily);
   static const semiBold = TextStyle(fontSize: 18, fontFamily: semiBoldFamily);

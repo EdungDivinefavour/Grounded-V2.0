@@ -28,6 +28,7 @@ class NotificationsState extends State<Notifications> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+      appBar: CustomAppBar(title: "Notifications"),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(10),
@@ -35,7 +36,6 @@ class NotificationsState extends State<Notifications> {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               children: [
-                CustomAppBar(title: "Notifications"),
                 SizedBox(height: 30),
                 CustomCheckBox(
                   title: "Notify me when my child completes a \ntask",

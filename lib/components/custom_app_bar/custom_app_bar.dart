@@ -12,46 +12,51 @@ class CustomAppBarTheme {
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String? title;
-  final String? lowerTitle;
   final Widget? rightIcon;
   final Color? theme;
   final bool hasDrawer;
+  final bool isWhiteBackround;
 
   CustomAppBar({
     this.title,
-    this.lowerTitle,
     this.rightIcon,
     this.theme,
     this.hasDrawer = false,
+    this.isWhiteBackround = true,
   });
 
   @override
   State<CustomAppBar> createState() => _CustomAppBarState();
 
   @override
-  Size get preferredSize => const Size.fromHeight(130);
+  Size get preferredSize => Size.fromHeight(60);
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        margin: _buildAppBarMargin,
-        padding: EdgeInsets.only(top: 20),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                _buildLeftIcon,
-                Spacer(),
-                _buildTitle,
-                Spacer(),
-                _buildRightIcon
-              ],
-            ),
-            _buildLowerTitle
-          ],
-        ));
+    return AppBar(
+      automaticallyImplyLeading: false,
+      backgroundColor: widget.isWhiteBackround
+          ? ThemeColors.lightElement
+          : ThemeColors.primary,
+      elevation: 0,
+      title: Container(
+          margin: EdgeInsets.only(top: 30),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  _buildLeftIcon,
+                  Spacer(),
+                  _buildTitle,
+                  Spacer(),
+                  _buildRightIcon
+                ],
+              ),
+            ],
+          )),
+    );
   }
 
   Widget get _buildLeftIcon {
@@ -80,22 +85,6 @@ class _CustomAppBarState extends State<CustomAppBar> {
     );
   }
 
-  Widget get _buildLowerTitle {
-    if (widget.lowerTitle == null) return emptyWidget;
-
-    return Container(
-      margin: EdgeInsets.only(top: 40, left: 5),
-      alignment: Alignment.centerLeft,
-      child: Text(
-        widget.lowerTitle!,
-        style: TextStyles.extraBold.copyWith(
-          fontSize: 25,
-          color: widget.theme ?? CustomAppBarTheme.dark,
-        ),
-      ),
-    );
-  }
-
   Widget get _buildRightIcon {
     return SizedBox(
       height: 25,
@@ -104,16 +93,6 @@ class _CustomAppBarState extends State<CustomAppBar> {
           ? SVGIcon(icon: AppIcons.notification)
           : widget.rightIcon,
     );
-  }
-
-  EdgeInsetsGeometry? get _buildAppBarMargin {
-    if (widget.hasDrawer) {
-      return EdgeInsets.only(top: 50, left: 15, right: 15);
-    } else if (widget.lowerTitle != null) {
-      return EdgeInsets.only(top: 20, bottom: 10, left: 15, right: 15);
-    }
-
-    return null;
   }
 
   void _closeScreen() {

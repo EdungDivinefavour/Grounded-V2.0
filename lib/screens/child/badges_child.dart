@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:grounded/components/achieved_badge.dart';
+import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
+import 'package:grounded/components/screen_title.dart';
 import 'package:grounded/models/achievement.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
+import 'package:grounded/utils/string_utils.dart';
 
 class BadgesChild extends StatefulWidget {
   final Child child;
@@ -25,10 +28,15 @@ class _BadgesChildState extends State<BadgesChild> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      body: Column(
-        children: [
-          Container(),
-        ],
+      appBar: CustomAppBar(hasDrawer: true),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          children: [
+            ScreenTitle(title: "Badges", isWhiteBackround: true),
+            Container(),
+          ],
+        ),
       ),
     );
   }

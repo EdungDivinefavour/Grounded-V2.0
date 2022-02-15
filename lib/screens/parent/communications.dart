@@ -29,12 +29,12 @@ class CommunicationsState extends State<Communications> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+      appBar: CustomAppBar(title: "Communications"),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Column(
             children: [
-              CustomAppBar(title: "Communications"),
               SizedBox(height: 40),
               Padding(
                 padding: const EdgeInsets.only(left: 10),
@@ -78,7 +78,7 @@ class CommunicationsState extends State<Communications> {
     await _localStorage.storeUserInfoToLocal(_parent!);
 
     EasyLoading.dismiss();
-    EasyLoading.showSuccess("Communicaton preferences successfully set");
+    EasyLoading.showSuccess("Communication preferences successfully set");
   }
 
   void _getParentInfo() async {

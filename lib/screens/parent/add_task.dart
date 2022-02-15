@@ -37,13 +37,13 @@ class _AddTaskState extends State<AddTask> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+        appBar: CustomAppBar(title: "Add New Task"),
         bubblePosition: BackgroundBubblePosition.none,
         body: SingleChildScrollView(
-          child: Container(
-            margin: EdgeInsets.all(20),
+          child: Padding(
+            padding: const EdgeInsets.all(15),
             child: Column(
               children: [
-                CustomAppBar(title: "Add New Task"),
                 InputField(
                     controller: _taskNameController,
                     hintText: "Enter the name of the task",

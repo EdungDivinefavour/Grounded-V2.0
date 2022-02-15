@@ -46,14 +46,14 @@ class _AddChildState extends State<AddChild> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+      appBar: CustomAppBar(title: "Add New Child"),
       bubblePosition: BackgroundBubblePosition.centerRight,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(15),
           child: Column(
             children: [
-              CustomAppBar(title: "Add New Child"),
-              SizedBox(height: 50),
+              SizedBox(height: 35),
               InkWell(
                   onTap: _openPickImageSheet,
                   child: UserImage(imageURL: pickedUploadedPhotoUrl)),

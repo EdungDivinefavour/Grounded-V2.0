@@ -4,6 +4,7 @@ import 'package:grounded/components/clickable_text.dart';
 import 'package:grounded/components/custom_action_button.dart';
 import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
 import 'package:grounded/components/input_field.dart';
+import 'package:grounded/components/screen_title.dart';
 import 'package:grounded/constants/enums/user_type.dart';
 import 'package:grounded/models/grounded_user/grounded_user.dart';
 import 'package:grounded/screens/bottom_tabs.dart';
@@ -30,14 +31,20 @@ class _LoginParentState extends State<LoginParent> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+        appBar: CustomAppBar(
+          theme: CustomAppBarTheme.light,
+          isWhiteBackround: false,
+        ),
         backgroundColor: ThemeColors.primary,
         body: SingleChildScrollView(
           child: Column(
             children: [
-              CustomAppBar(
-                  lowerTitle: "Sign In", theme: CustomAppBarTheme.light),
+              Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: ScreenTitle(title: "Sign In", isWhiteForeground: true),
+              ),
               Container(
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.all(22),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
@@ -52,22 +59,21 @@ class _LoginParentState extends State<LoginParent> {
                       child: Text('Welcome Back !',
                           style: TextStyles.bold.copyWith(fontSize: 26)),
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 5),
                     Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Sign in with your account to proceed',
-                        style: TextStyles.regular,
-                      ),
+                      child: Text('Sign in with your account to proceed',
+                          style: TextStyles.smallRegular
+                              .copyWith(color: ThemeColors.darkBackground)),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 40),
                     InputField(
                       controller: _emailController,
                       hintText: 'Enter your email address',
                       title: 'Email address',
                       inputFieldType: InputFieldType.email,
                     ),
-                    SizedBox(height: 15),
+                    SizedBox(height: 35),
                     InputField(
                       controller: _passwordController,
                       hintText: 'Enter password',
@@ -84,19 +90,20 @@ class _LoginParentState extends State<LoginParent> {
                     CustomActionButton(
                         onPressed: _loginParent, title: 'Sign In'),
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      Text("Don't have an account?"),
+                      Text("Don't have an account?",
+                          style: TextStyles.smallRegular),
                       ClickableText('Sign Up',
                           onPressed: _openRegisterParentScreen)
                     ]),
                     Align(
                         alignment: Alignment.center,
-                        child: Text(
-                          'Or',
-                          style: TextStyles.medium,
-                        )),
-                    SizedBox(height: 5),
+                        child: Text('Or',
+                            style:
+                                TextStyles.smallBold.copyWith(fontSize: 16))),
+                    SizedBox(height: 10),
                     ClickableText('Sign In As Child',
-                        onPressed: _openLoginChildScreen)
+                        onPressed: _openLoginChildScreen),
+                    SizedBox(height: 100)
                   ],
                 ),
               )

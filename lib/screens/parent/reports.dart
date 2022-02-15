@@ -1,7 +1,9 @@
 import 'dart:math';
 import 'package:charts_flutter/flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
 import 'package:grounded/components/custom_scaffold.dart';
+import 'package:grounded/components/screen_title.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';
 import 'package:grounded/models/data_points/daily_data_point.dart';
 
@@ -12,24 +14,29 @@ class Reports extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+        appBar: CustomAppBar(hasDrawer: true),
         bubblePosition: BackgroundBubblePosition.bottomLeft,
-        body: Column(
-          children: [
-            SizedBox(
-              height: 350,
-              child: LineChart(
-                _chartData,
-                domainAxis: NumericAxisSpec(
-                  tickProviderSpec:
-                      BasicNumericTickProviderSpec(desiredTickCount: 7),
-                  tickFormatterSpec: customTickFormatter,
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              ScreenTitle(title: "Reports", isWhiteBackround: true),
+              SizedBox(
+                height: 350,
+                child: LineChart(
+                  _chartData,
+                  domainAxis: NumericAxisSpec(
+                    tickProviderSpec:
+                        BasicNumericTickProviderSpec(desiredTickCount: 7),
+                    tickFormatterSpec: customTickFormatter,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 30),
-            Text(
-                "These are you child's total points per week. A child can get 10 points for a correct answer. -10 points for an incorrect answer. Click the button below to get a breakdown of the points by tasks"),
-          ],
+              SizedBox(height: 30),
+              Text(
+                  "These are you child's total points per week. A child can get 10 points for a correct answer. -10 points for an incorrect answer. Click the button below to get a breakdown of the points by tasks"),
+            ],
+          ),
         ));
   }
 

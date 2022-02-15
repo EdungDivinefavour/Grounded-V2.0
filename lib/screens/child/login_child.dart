@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/constants/enums/user_type.dart';
-import 'package:grounded/models/grounded_user/child/child.dart';
 import 'package:grounded/models/grounded_user/grounded_user.dart';
 import 'package:grounded/screens/bottom_tabs.dart';
 import 'package:grounded/services/firebase/authentication_service.dart';

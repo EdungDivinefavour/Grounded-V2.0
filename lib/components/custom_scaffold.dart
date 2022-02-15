@@ -43,9 +43,10 @@ class _CustomScaffoldState extends State<CustomScaffold> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: widget.appBar,
-      body: Stack(
-        children: [SafeArea(child: widget.body), _buildBubble],
-      ),
+      // body: Stack(
+      //   children: [SafeArea(child: widget.body), _buildBubble],
+      // ),
+      body: widget.body,
       drawer: widget.drawer,
       floatingActionButton: widget.floatingActionButton,
       bottomNavigationBar: widget.bottomNavigationBar,

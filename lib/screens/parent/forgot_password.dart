@@ -3,6 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:grounded/components/custom_action_button.dart';
 import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
 import 'package:grounded/components/input_field.dart';
+import 'package:grounded/components/screen_title.dart';
 import 'package:grounded/services/firebase/authentication_service.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/styles/colors/theme_colors.dart';
@@ -15,13 +16,19 @@ class ForgotPassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+        appBar: CustomAppBar(
+          theme: CustomAppBarTheme.light,
+          isWhiteBackround: false,
+        ),
         backgroundColor: ThemeColors.primary,
         body: SingleChildScrollView(
           child: Column(
             children: [
-              CustomAppBar(
-                  lowerTitle: "Forgot password",
-                  theme: CustomAppBarTheme.light),
+              Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: ScreenTitle(
+                    title: "Forgot password", isWhiteForeground: true),
+              ),
               Container(
                 padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(

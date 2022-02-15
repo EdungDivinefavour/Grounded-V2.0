@@ -4,6 +4,7 @@ import 'package:grounded/components/clickable_text.dart';
 import 'package:grounded/components/custom_action_button.dart';
 import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
 import 'package:grounded/components/input_field.dart';
+import 'package:grounded/components/screen_title.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';
 import 'package:grounded/screens/bottom_tabs.dart';
 import 'package:grounded/screens/parent/login_parent.dart';
@@ -27,13 +28,19 @@ class _RegisterParentState extends State<RegisterParent> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+        appBar: CustomAppBar(
+          theme: CustomAppBarTheme.light,
+          isWhiteBackround: false,
+        ),
         backgroundColor: ThemeColors.primary,
         body: SingleChildScrollView(
             child: Column(
           children: [
-            CustomAppBar(
-                lowerTitle: "Create an account",
-                theme: CustomAppBarTheme.light),
+            Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: ScreenTitle(
+                  title: "Create an account", isWhiteForeground: true),
+            ),
             Container(
                 padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(

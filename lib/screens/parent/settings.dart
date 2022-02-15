@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
 import 'package:grounded/components/custom_scaffold.dart';
+import 'package:grounded/components/screen_title.dart';
 import 'package:grounded/components/svg_icon.dart';
 import 'package:grounded/screens/parent/change_password.dart';
 import 'package:grounded/screens/parent/communications.dart';
@@ -17,11 +19,13 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+      appBar: CustomAppBar(hasDrawer: true),
       bubblePosition: BackgroundBubblePosition.none,
-      body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
+            ScreenTitle(title: "Settings", isWhiteBackround: true),
             _buildSettingsItem(
                 title: "Communications", screenToLaunch: Communications()),
             _buildSettingsItem(

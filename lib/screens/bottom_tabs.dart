@@ -39,8 +39,6 @@ class _BottomTabsState extends State<BottomTabs> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      appBar: CustomAppBar(lowerTitle: _appBarTitle, hasDrawer: true),
-      drawer: NavigationDrawer(groundedUser: widget.groundedUser),
       body: IndexedStack(index: _currentIndex, children: _buildTabs),
       bottomNavigationBar: CustomBottomBar(
         currentIndex: _currentIndex,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:grounded/components/center_text.dart';
+import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
+import 'package:grounded/components/screen_title.dart';
 import 'package:grounded/components/svg_icon.dart';
 import 'package:grounded/components/user_image.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
@@ -12,6 +14,7 @@ import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/icons/app_icons.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/styles/texts/text_styles.dart';
+import 'package:grounded/utils/string_utils.dart';
 
 class HomeParent extends StatefulWidget {
   final Parent parent;
@@ -35,18 +38,16 @@ class _HomeParentState extends State<HomeParent> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+      appBar: CustomAppBar(hasDrawer: true),
       bubblePosition: BackgroundBubblePosition.centerLeft,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Pick a child to asign them tasks",
-                style: TextStyles.regular,
-              ),
-            ),
+            ScreenTitle(
+                title: "Hey " + shortenToFirstOnly(widget.parent.name),
+                subTitle: "Pick a child to asign them tasks",
+                isWhiteBackround: true),
             SizedBox(height: 20),
             children.isEmpty
                 ? CenterText(
