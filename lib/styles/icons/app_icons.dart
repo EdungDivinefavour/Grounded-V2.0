@@ -5,6 +5,7 @@ abstract class AppIcons {
   static const add = 'add.svg';
   static const badges = 'badges.svg';
   static const checkBox = "check_box.svg";
+  static const checkYourEmailPNG = "check_your_email.png";
   static const fetchedImageFailedPNG = 'fetched_image_failed.png';
   static const fetchedImageFailedSVG = 'fetched_image_failed.svg';
   static const home = 'home.svg';

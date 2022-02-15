@@ -3,6 +3,7 @@ import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/components/png_icon.dart';
 import 'package:grounded/models/grounded_user/grounded_user.dart';
 import 'package:grounded/screens/bottom_tabs.dart';
+import 'package:grounded/screens/parent/check_your_email.dart';
 import 'package:grounded/screens/parent/intro.dart';
 import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/icons/app_icons.dart';
@@ -47,7 +48,8 @@ class _SplashState extends State<Splash> {
   void _openNextScreen() {
     final nextScreen = widget.groundedUser == null
         ? Intro()
-        : BottomTabs(groundedUser: widget.groundedUser!);
+        // : BottomTabs(groundedUser: widget.groundedUser!);
+        : CheckYourEmail();
 
     Future.delayed(const Duration(milliseconds: 3800), () {
       Navigator.of(context).pushAndRemoveUntil(
