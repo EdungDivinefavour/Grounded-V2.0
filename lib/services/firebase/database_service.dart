@@ -1,5 +1,12 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:grounded/constants/enums/online_presence.dart';
+import 'package:grounded/constants/enums/user_type.dart';
+import 'package:grounded/services/local_storage/local_storage.dart';
+
+class DatabaseReferences {
+  static const parents = 'parents';
+  static const children = 'children';
+}
 
 class DatabaseService {
   DatabaseService._();
@@ -7,22 +14,31 @@ class DatabaseService {
   static DatabaseService get instance => _instance;
   final DatabaseReference _databaseReference = FirebaseDatabase.instance.ref();
 
-  Future<void> updateRealTimeDbPresence({
-    String? userId,
-    required OnlinePresence onlinePresence,
-  }) {
-    if (userId == null) return Future.value();
+  final _localStorage = LocalStorage.instance;
 
-    return _databaseReference.child("users").child(userId).update({
+  Future<void> updateRealTimeDbPresence({
+    required String userId,
+    required OnlinePresence onlinePresence,
+  }) async {
+    final userInfo = await _localStorage.getUserInfoFromLocal();
+    final reference = userInfo!.userType == UserType.parent
+        ? DatabaseReferences.parents
+        : DatabaseReferences.children;
+
+    return _databaseReference.child(reference).child(userId).update({
       "onlinePresence": onlinePresence.value,
       'lastSeenAt': DateTime.now().millisecondsSinceEpoch,
     });
   }
 
-  Future<void> listenForAppDisconnected({String? userId}) {
-    if (userId == null) return Future.value();
+  Future<void> listenForAppDisconnected({required String userId}) async {
+    final userInfo = await _localStorage.getUserInfoFromLocal();
+    final reference = userInfo!.userType == UserType.parent
+        ? DatabaseReferences.parents
+        : DatabaseReferences.children;
+
     return _databaseReference
-        .child("users")
+        .child(reference)
         .child(userId)
         .onDisconnect()
         .update({

@@ -5,7 +5,7 @@ import 'package:grounded/components/custom_action_button.dart';
 import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
 import 'package:grounded/components/input_field.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';
-import 'package:grounded/screens/parent/home_parent.dart';
+import 'package:grounded/screens/bottom_tabs.dart';
 import 'package:grounded/screens/parent/login_parent.dart';
 import 'package:grounded/services/firebase/authentication_service.dart';
 import 'package:grounded/components/custom_scaffold.dart';
@@ -104,7 +104,7 @@ class _RegisterParentState extends State<RegisterParent> {
       EasyLoading.dismiss();
 
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (_) => HomeParent(parent: parent)),
+          MaterialPageRoute(builder: (_) => BottomTabs(groundedUser: parent)),
           (_) => false);
     }).catchError((onError) {
       EasyLoading.showError(

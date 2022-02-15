@@ -19,13 +19,16 @@ class StorageService {
   Future<String> uploadProfilePhoto(File file) async {
     final imageRef = _firebaseStorage
         .ref(StorageLocation.profilePhotos)
-        .child(_auth.currentUser!.uid + ".jpg");
+        .child(file.path + _auth.currentUser!.uid + ".jpg");
 
     return _uploadAndGetDownloadUrl(imageRef, file);
   }
 
-  Future<String> _uploadAndGetDownloadUrl(Reference reference, File file) {
-    reference.putFile(file);
+  Future<String> _uploadAndGetDownloadUrl(
+    Reference reference,
+    File file,
+  ) async {
+    await reference.putFile(file);
     final downloadUrl = reference.getDownloadURL();
 
     return downloadUrl;

@@ -49,7 +49,7 @@ class CommunicationsState extends State<Communications> {
                     children: [
                       Text('I want to receive offers and \nnewsletters',
                           style: TextStyles.regular),
-                      SizedBox(width: 30.0),
+                      Spacer(),
                       SizedBox(
                           width: 65,
                           height: 50,
@@ -74,7 +74,7 @@ class CommunicationsState extends State<Communications> {
   void setCommunicationPreference() async {
     EasyLoading.show();
 
-    await _firestoreService.storeParentInfo(parent: _parent);
+    await _firestoreService.updateParentInfo(parent: _parent!);
     await _localStorage.storeUserInfoToLocal(_parent!);
 
     EasyLoading.dismiss();

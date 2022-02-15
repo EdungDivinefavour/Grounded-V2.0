@@ -1,9 +1,8 @@
+import 'package:grounded/constants/enums/online_presence.dart';
 import 'package:grounded/constants/enums/user_type.dart';
 import 'package:grounded/models/achievement.dart';
 import 'package:grounded/models/grounded_user/grounded_user.dart';
-import 'package:grounded/utils/string_utils.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:uuid/uuid.dart';
 
 part 'child.g.dart';
 
@@ -13,6 +12,20 @@ class Child extends GroundedUser {
   final String id;
   @override
   final String name;
+  @override
+  final UserType userType;
+  @override
+  final OnlinePresence onlinePresence;
+  @override
+  final int registrationTime;
+  @override
+  final int lastSeenAt;
+  @override
+  final String firebaseToken;
+  @override
+  String profilePhoto;
+  final String email;
+  final String password;
   final String parentID;
   final String loginToken;
   final int age;
@@ -22,24 +35,48 @@ class Child extends GroundedUser {
   Child({
     required this.id,
     required this.name,
+    required this.email,
+    required this.password,
     required this.parentID,
     required this.loginToken,
     required this.age,
     required this.grade,
     required this.achievements,
-  }) : super(id: id, name: name, userType: UserType.child);
+    this.userType = UserType.child,
+    this.registrationTime = 0,
+    this.lastSeenAt = 0,
+    this.firebaseToken = '',
+    this.onlinePresence = OnlinePresence.offline,
+    this.profilePhoto =
+        "https://firebasestorage.googleapis.com/v0/b/sonocare-15c7d.appspot.com/o/user_icon.png?alt=media&token=3de311b3-2b09-4573-949d-3887711f1368",
+  }) : super(
+          id: id,
+          name: name,
+          userType: userType,
+          onlinePresence: onlinePresence,
+          registrationTime: registrationTime,
+          lastSeenAt: lastSeenAt,
+          firebaseToken: firebaseToken,
+          profilePhoto: profilePhoto,
+        );
 
   static Child newChild({
+    required String id,
     required String name,
+    required String password,
+    required String loginToken,
+    required String email,
     required String parentID,
     required int age,
     required int grade,
   }) {
     return Child(
-      id: Uuid().v1(),
+      id: id,
       name: name,
+      email: email,
+      password: password,
       parentID: parentID,
-      loginToken: generateLoginToken,
+      loginToken: loginToken,
       age: age,
       grade: grade,
       achievements: [],
@@ -47,5 +84,9 @@ class Child extends GroundedUser {
   }
 
   factory Child.fromJson(Map<String, dynamic> json) => _$ChildFromJson(json);
+
+  static List<Child> fromJsonList(List<dynamic>? list) =>
+      list?.map((e) => Child.fromJson(e)).toList() ?? [];
+
   Map<String, dynamic> toJson() => _$ChildToJson(this);
 }

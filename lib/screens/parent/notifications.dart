@@ -81,7 +81,7 @@ class NotificationsState extends State<Notifications> {
   void setNotificationPreference() async {
     EasyLoading.show();
 
-    await _firestoreService.storeParentInfo(parent: _parent);
+    await _firestoreService.updateParentInfo(parent: _parent!);
     await _localStorage.storeUserInfoToLocal(_parent!);
 
     EasyLoading.dismiss();

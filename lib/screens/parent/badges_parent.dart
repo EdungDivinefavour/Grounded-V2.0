@@ -88,9 +88,9 @@ class BadgesParent extends StatelessWidget {
 
   List<Achievement> get _setupAchievementLists {
     final List<Achievement> achievements = [];
-    for (final e in parent.children) {
-      achievements.addAll(e.achievements);
-    }
+    // for (final e in parent.children) {
+    //   achievements.addAll(e.achievements);
+    // }
 
     return achievements;
   }

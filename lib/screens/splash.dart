@@ -1,27 +1,31 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/components/png_icon.dart';
 import 'package:grounded/models/grounded_user/grounded_user.dart';
 import 'package:grounded/screens/bottom_tabs.dart';
 import 'package:grounded/screens/parent/intro.dart';
+import 'package:grounded/services/firebase/firestore_service.dart';
 import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/icons/app_icons.dart';
 import 'package:grounded/styles/texts/text_styles.dart';
 
 class Splash extends StatefulWidget {
-  final GroundedUser? groundedUser;
-  const Splash({this.groundedUser});
+  final User? firebaseUser;
+  const Splash({this.firebaseUser});
 
   @override
   State<Splash> createState() => _SplashState();
 }
 
 class _SplashState extends State<Splash> {
+  final _firestoreService = FirestoreService.instance;
+
   @override
   void initState() {
     super.initState();
 
-    _openNextScreen();
+    _getUserInfo();
   }
 
   @override
@@ -44,16 +48,27 @@ class _SplashState extends State<Splash> {
         ));
   }
 
-  void _openNextScreen() {
-    final nextScreen = widget.groundedUser == null
-        ? Intro()
-        : BottomTabs(groundedUser: widget.groundedUser!);
+  void _getUserInfo() async {
+    if (widget.firebaseUser == null) {
+      await Future.delayed(Duration(milliseconds: 3800));
+      _openScreen(Intro());
+      return;
+    }
 
-    Future.delayed(const Duration(milliseconds: 3800), () {
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (_) => nextScreen),
-        (_) => false,
-      );
-    });
+    GroundedUser userInfo;
+    if (!widget.firebaseUser!.email!.contains("fromParent")) {
+      userInfo =
+          await _firestoreService.getParentInfo(widget.firebaseUser!.uid);
+    } else {
+      userInfo = await _firestoreService.getChildInfo(widget.firebaseUser!.uid);
+    }
+
+    await Future.delayed(Duration(milliseconds: 1800));
+    _openScreen(BottomTabs(groundedUser: userInfo));
+  }
+
+  void _openScreen(Widget screen) {
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (_) => screen), (_) => false);
   }
 }

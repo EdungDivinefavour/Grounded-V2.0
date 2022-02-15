@@ -4,7 +4,8 @@ import 'package:grounded/components/clickable_text.dart';
 import 'package:grounded/components/custom_action_button.dart';
 import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
 import 'package:grounded/components/input_field.dart';
-import 'package:grounded/models/grounded_user/parent/parent.dart';
+import 'package:grounded/constants/enums/user_type.dart';
+import 'package:grounded/models/grounded_user/grounded_user.dart';
 import 'package:grounded/screens/bottom_tabs.dart';
 import 'package:grounded/screens/child/login_child.dart';
 import 'package:grounded/screens/parent/forgot_password.dart';
@@ -61,14 +62,18 @@ class _LoginParentState extends State<LoginParent> {
                     ),
                     SizedBox(height: 20),
                     InputField(
-                        controller: _emailController,
-                        hintText: 'Enter your email address',
-                        title: 'Email address'),
+                      controller: _emailController,
+                      hintText: 'Enter your email address',
+                      title: 'Email address',
+                      inputFieldType: InputFieldType.email,
+                    ),
                     SizedBox(height: 15),
                     InputField(
-                        controller: _passwordController,
-                        hintText: 'Enter password',
-                        title: 'Password'),
+                      controller: _passwordController,
+                      hintText: 'Enter password',
+                      title: 'Password',
+                      inputFieldType: InputFieldType.password,
+                    ),
                     Align(
                         alignment: Alignment.centerRight,
                         child: ClickableText(
@@ -103,15 +108,16 @@ class _LoginParentState extends State<LoginParent> {
   void _loginParent() {
     EasyLoading.show();
     _authService
-        .loginParent(
-      email: _emailController.text,
-      password: _passwordController.text,
-    )
-        .then((Parent parent) {
+        .loginUser(
+            email: _emailController.text,
+            password: _passwordController.text,
+            userType: UserType.parent)
+        .then((GroundedUser groundedUser) {
       EasyLoading.dismiss();
 
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (_) => BottomTabs(groundedUser: parent)),
+          MaterialPageRoute(
+              builder: (_) => BottomTabs(groundedUser: groundedUser)),
           (_) => false);
     }).catchError((onError) {
       EasyLoading.showError('Please confirm email and password and try again.');

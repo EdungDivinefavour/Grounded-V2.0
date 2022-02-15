@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:grounded/components/empty_widget.dart';
+import 'package:grounded/components/center_text.dart';
 import 'package:grounded/components/svg_icon.dart';
 import 'package:grounded/components/user_image.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
@@ -49,7 +49,9 @@ class _HomeParentState extends State<HomeParent> {
             ),
             SizedBox(height: 20),
             children.isEmpty
-                ? emptyWidget
+                ? CenterText(
+                    text:
+                        "You haven't added any children yet. Click the button below to add children")
                 : ListView.builder(
                     shrinkWrap: true,
                     itemCount: children.length,
@@ -110,11 +112,11 @@ class _HomeParentState extends State<HomeParent> {
 
   void _getChildren() async {
     EasyLoading.show();
-    final parentInfo = await _firestoreService.getParentInfo(widget.parent.id);
+    final result = await _firestoreService.getChildrenForParent(widget.parent);
 
     EasyLoading.dismiss();
     setState(() {
-      children = parentInfo.children;
+      children = result;
     });
   }
 
@@ -127,6 +129,14 @@ class _HomeParentState extends State<HomeParent> {
   }
 
   void _openAddChildScreen() async {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => AddChild()));
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => AddChild(parent: widget.parent)),
+    );
+    if (result == null) return;
+
+    setState(() {
+      children.add(result as Child);
+    });
   }
 }

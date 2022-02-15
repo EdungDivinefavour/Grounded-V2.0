@@ -66,7 +66,7 @@ class ForgotPassword extends StatelessWidget {
   void _sendPasswordResetEmail() {
     EasyLoading.show();
     _authService
-        .sendPasswordResetEmail(email: _emailController.text)
+        .sendParentPasswordResetEmail(email: _emailController.text)
         .then((_) {})
         .catchError((onError) {});
   }

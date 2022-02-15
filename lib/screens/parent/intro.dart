@@ -13,8 +13,6 @@ class Intro extends StatefulWidget {
 }
 
 class _IntroState extends State<Intro> {
-  int _currentIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     List<Widget> _introScreens = [
@@ -39,11 +37,6 @@ class _IntroState extends State<Intro> {
           viewportFraction: 1.0,
           initialPage: 0,
           autoPlayInterval: const Duration(seconds: 5),
-          onPageChanged: (index, reason) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
           scrollDirection: Axis.horizontal,
         ),
         items: _introScreens,

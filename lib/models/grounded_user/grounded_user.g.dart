@@ -10,14 +10,12 @@ GroundedUser _$GroundedUserFromJson(Map<String, dynamic> json) => GroundedUser(
       name: json['name'] as String,
       id: json['id'] as String,
       userType: $enumDecode(_$UserTypeEnumMap, json['userType']),
-      registrationTime: json['registrationTime'] as int? ?? 0,
-      lastSeenAt: json['lastSeenAt'] as int? ?? 0,
-      firebaseToken: json['firebaseToken'] as String? ?? '',
-      onlinePresence: $enumDecodeNullable(
-              _$OnlinePresenceEnumMap, json['onlinePresence']) ??
-          OnlinePresence.offline,
-      profilePhoto: json['profilePhoto'] as String? ??
-          "https://firebasestorage.googleapis.com/v0/b/sonocare-15c7d.appspot.com/o/user_icon.png?alt=media&token=3de311b3-2b09-4573-949d-3887711f1368",
+      registrationTime: json['registrationTime'] as int,
+      lastSeenAt: json['lastSeenAt'] as int,
+      firebaseToken: json['firebaseToken'] as String,
+      onlinePresence:
+          $enumDecode(_$OnlinePresenceEnumMap, json['onlinePresence']),
+      profilePhoto: json['profilePhoto'] as String,
     );
 
 Map<String, dynamic> _$GroundedUserToJson(GroundedUser instance) =>
