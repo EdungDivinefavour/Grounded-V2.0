@@ -6,9 +6,12 @@ abstract class AppIcons {
   static const back = 'back.svg';
   static const badges = 'badges.svg';
   static const bottomLeftBubble = 'bottom_left_bubble.svg';
+  static const calendar = 'calendar.svg';
   static const centerLeftBubble = 'center_left_bubble.svg';
   static const centerRightBubble = 'center_right_bubble.svg';
   static const checkBox = "check_box.svg";
+  static const clock = 'clock.svg';
+  static const down = 'down.svg';
   static const fetchedImageFailedPNG = 'fetched_image_failed.png';
   static const fetchedImageFailedSVG = 'fetched_image_failed.svg';
   static const forward = 'forward.svg';

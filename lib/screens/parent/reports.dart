@@ -14,7 +14,6 @@ class Reports extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-        appBar: CustomAppBar(hasDrawer: true),
         bubblePosition: BackgroundBubblePosition.bottomLeft,
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:grounded/components/empty_widget.dart';
 import 'package:grounded/components/svg_icon.dart';
 import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/icons/app_icons.dart';

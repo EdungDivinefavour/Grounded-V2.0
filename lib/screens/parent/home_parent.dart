@@ -38,7 +38,6 @@ class _HomeParentState extends State<HomeParent> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      appBar: CustomAppBar(hasDrawer: true),
       bubblePosition: BackgroundBubblePosition.centerLeft,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20),

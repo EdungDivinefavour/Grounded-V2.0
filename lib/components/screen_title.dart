@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:grounded/components/empty_widget.dart';
 import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/texts/text_styles.dart';
 

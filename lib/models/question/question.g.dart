@@ -7,8 +7,7 @@ part of 'question.dart';
 // **************************************************************************
 
 Question _$QuestionFromJson(Map<String, dynamic> json) => Question(
-      questionCategory:
-          $enumDecode(_$QuestionCategoryEnumMap, json['questionCategory']),
+      subject: $enumDecode(_$SubjectTypeEnumMap, json['subject']),
       displayedQuestion: json['displayedQuestion'] as String?,
       pickedAnswer: json['pickedAnswer'] as String?,
       correctAnswer: json['correctAnswer'] as String?,
@@ -16,14 +15,14 @@ Question _$QuestionFromJson(Map<String, dynamic> json) => Question(
     );
 
 Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
-      'questionCategory': _$QuestionCategoryEnumMap[instance.questionCategory],
+      'subject': _$SubjectTypeEnumMap[instance.subject],
       'displayedQuestion': instance.displayedQuestion,
       'pickedAnswer': instance.pickedAnswer,
       'correctAnswer': instance.correctAnswer,
       'completedTimestap': instance.completedTimestap,
     };
 
-const _$QuestionCategoryEnumMap = {
-  QuestionCategory.maths: 'maths',
-  QuestionCategory.english: 'english',
+const _$SubjectTypeEnumMap = {
+  SubjectType.maths: 'maths',
+  SubjectType.english: 'english',
 };

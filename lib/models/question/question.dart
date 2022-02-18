@@ -1,11 +1,11 @@
-import 'package:grounded/constants/enums/question_category.dart';
+import 'package:grounded/constants/enums/subject_type.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'question.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Question {
-  final QuestionCategory questionCategory;
+  final SubjectType subject;
   String? displayedQuestion;
   String? pickedAnswer;
   String? correctAnswer;
@@ -14,7 +14,7 @@ class Question {
   bool get hasBeenAnswered => pickedAnswer != null;
 
   Question({
-    required this.questionCategory,
+    required this.subject,
     this.displayedQuestion,
     this.pickedAnswer,
     this.correctAnswer,

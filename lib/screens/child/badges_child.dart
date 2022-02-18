@@ -5,7 +5,6 @@ import 'package:grounded/components/screen_title.dart';
 import 'package:grounded/models/achievement.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
-import 'package:grounded/utils/string_utils.dart';
 
 class BadgesChild extends StatefulWidget {
   final Child child;

@@ -36,7 +36,7 @@ class _AddChildState extends State<AddChild> {
   File? _pickedImage;
   String? pickedUploadedPhotoUrl;
 
-  double sliderValue = 0;
+  double _sliderValue = 0;
 
   @override
   void initState() {
@@ -48,57 +48,58 @@ class _AddChildState extends State<AddChild> {
     return CustomScaffold(
       appBar: CustomAppBar(title: "Add New Child"),
       bubblePosition: BackgroundBubblePosition.centerRight,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Column(
-            children: [
-              SizedBox(height: 35),
-              InkWell(
-                  onTap: _openPickImageSheet,
-                  child: UserImage(imageURL: pickedUploadedPhotoUrl)),
-              SizedBox(height: 30),
-              InputField(
-                title: "Name",
-                controller: _nameController,
-                hintText: "Enter your child's name",
-              ),
-              InputField(
-                title: "Age",
-                controller: _ageController,
-                hintText: 'Enter the child age',
-              ),
-              SizedBox(height: 10),
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Align(
+      body: Container(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            SizedBox(height: 25),
+            InkWell(
+                onTap: _openPickImageSheet,
+                child: UserImage(imageURL: pickedUploadedPhotoUrl)),
+            SizedBox(height: 30),
+            InputField(
+              title: "Name",
+              hintText: "Enter your child's name",
+              controller: _nameController,
+            ),
+            SizedBox(height: 35),
+            InputField(
+              title: "Age",
+              hintText: 'Enter the child age',
+              controller: _ageController,
+            ),
+            SizedBox(height: 35),
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text('Grade'),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    sliderValue.toInt().toString(),
-                    style: TextStyles.regular,
-                  ),
-                  Slider(
-                      thumbColor: ThemeColors.primary,
-                      activeColor: ThemeColors.primary,
-                      inactiveColor: ThemeColors.lightBackground,
-                      divisions: 10,
-                      value: sliderValue,
-                      max: 10,
-                      onChanged: (value) {
-                        setState(() => sliderValue = value);
-                      }),
-                ],
-              ),
-              SizedBox(height: 60),
-              CustomActionButton(onPressed: _addChild, title: "Proceed")
-            ],
-          ),
+                      child: Text(
+                        'Grade',
+                        style: TextStyles.semiBold.copyWith(
+                          color: ThemeColors.darkBackground,
+                          fontSize: 15,
+                        ),
+                      )),
+                ),
+                Text("$_sliderValue", style: TextStyles.regular),
+                Slider(
+                    thumbColor: ThemeColors.primary,
+                    activeColor: ThemeColors.primary,
+                    inactiveColor: ThemeColors.lightBackground,
+                    divisions: 10,
+                    value: _sliderValue,
+                    max: 10,
+                    onChanged: (value) {
+                      setState(() => _sliderValue = value);
+                    }),
+              ],
+            ),
+            Spacer(),
+            CustomActionButton(onPressed: _addChild, title: "Proceed"),
+            SizedBox(height: 20),
+          ],
         ),
       ),
     );
@@ -157,7 +158,7 @@ class _AddChildState extends State<AddChild> {
         name: _nameController.text,
         parentID: _authService.currentUser!.uid,
         age: int.parse(_ageController.text),
-        grade: sliderValue.toInt());
+        grade: _sliderValue.toInt());
 
     // This signs in the parent again  because firebase auth by default signs in a new user upon creation
     // TODO: Make firebase functions to create user instead

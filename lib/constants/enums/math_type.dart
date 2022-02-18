@@ -8,9 +8,13 @@ enum MathType {
 }
 
 extension MathTypeExtension on MathType {
-  String get value => describeEnum(this);
+  String get stringValue => describeEnum(this);
+
+  String get value =>
+      "${stringValue[0].toUpperCase()}${stringValue.substring(1).toLowerCase()}";
 }
 
 extension MathTypeExtensionStringExtension on String {
-  MathType get toMathType => MathType.values.firstWhere((e) => e.value == this);
+  MathType get toMathType =>
+      MathType.values.firstWhere((e) => e.value.toLowerCase() == toLowerCase());
 }

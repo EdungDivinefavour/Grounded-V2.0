@@ -22,7 +22,7 @@ Parent _$ParentFromJson(Map<String, dynamic> json) => Parent(
       lastSeenAt: json['lastSeenAt'] as int? ?? 0,
       firebaseToken: json['firebaseToken'] as String? ?? '',
       profilePhoto: json['profilePhoto'] as String? ??
-          'https://firebasestorage.googleapis.com/v0/b/sonocare-15c7d.appspot.com/o/user_icon.png?alt=media&token=3de311b3-2b09-4573-949d-3887711f1368',
+          'https://firebasestorage.googleapis.com/v0/b/grounded-440dc.appspot.com/o/placeholders%2Fno_profile_photo.png?alt=media&token=f7f210f9-8cc8-42ed-81d6-55a4679c260b',
       wantsNewsletters: json['wantsNewsletters'] as bool? ?? false,
     );
 

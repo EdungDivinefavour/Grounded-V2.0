@@ -1,7 +1,7 @@
 import 'package:dart_date/dart_date.dart';
 import 'package:grounded/constants/enums/english_type.dart';
 import 'package:grounded/constants/enums/math_type.dart';
-import 'package:grounded/constants/enums/question_category.dart';
+import 'package:grounded/constants/enums/subject_type.dart';
 import 'package:grounded/utils/int_utils.dart';
 import 'package:grounded/models/managers/question_manager.dart';
 import 'package:grounded/models/question/question.dart';
@@ -18,7 +18,7 @@ class GroundedTask {
   final String childID;
   final int creationTimestamp;
   final int expectedCompletionTimestamp;
-  final QuestionCategory questionCategoryToCreate;
+  final SubjectType subjectType;
   final MathType? mathTypeToCreate;
   final EnglishType? englishTypeToCreate;
   List<Question> questions;
@@ -44,7 +44,7 @@ class GroundedTask {
     required this.childID,
     required this.creationTimestamp,
     required this.expectedCompletionTimestamp,
-    required this.questionCategoryToCreate,
+    required this.subjectType,
     required this.questions,
     this.mathTypeToCreate,
     this.englishTypeToCreate,
@@ -54,7 +54,7 @@ class GroundedTask {
     required String name,
     required String parentID,
     required String childID,
-    required QuestionCategory questionCategoryToCreate,
+    required SubjectType subjectType,
     required int expectedCompletionTimestamp,
     MathType? mathTypeToCreate,
     EnglishType? englishTypeToCreate,
@@ -66,13 +66,13 @@ class GroundedTask {
       name: name,
       creationTimestamp: DateTime.now().millisecondsSinceEpoch,
       expectedCompletionTimestamp: expectedCompletionTimestamp,
-      questionCategoryToCreate: questionCategoryToCreate,
+      subjectType: subjectType,
       questions: [],
       mathTypeToCreate: mathTypeToCreate,
       englishTypeToCreate: englishTypeToCreate,
     );
 
-    if (questionCategoryToCreate == QuestionCategory.maths) {
+    if (subjectType == SubjectType.maths) {
       QuestionManager.instance.buildMathList(task);
     } else {
       QuestionManager.instance.buildEnglishList(task);

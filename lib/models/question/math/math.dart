@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:grounded/constants/enums/math_type.dart';
-import 'package:grounded/constants/enums/question_category.dart';
+import 'package:grounded/constants/enums/subject_type.dart';
 import 'package:grounded/models/question/question.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -10,8 +10,7 @@ part 'math.g.dart';
 class Math extends Question {
   final MathType mathType;
 
-  Math({required this.mathType})
-      : super(questionCategory: QuestionCategory.maths);
+  Math({required this.mathType}) : super(subject: SubjectType.maths);
 
   static Math regularMath(MathType mathType) {
     final math = Math(mathType: mathType);

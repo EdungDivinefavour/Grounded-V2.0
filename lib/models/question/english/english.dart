@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:grounded/constants/enums/question_category.dart';
+import 'package:grounded/constants/enums/subject_type.dart';
 import 'package:grounded/constants/enums/word_type.dart';
 import 'package:grounded/models/question/english/word/word.dart';
 import 'package:grounded/models/question/question.dart';
@@ -16,7 +16,7 @@ class English extends Question {
   List<String> suggestedAnswers;
 
   English({required this.word, required this.suggestedAnswers})
-      : super(questionCategory: QuestionCategory.english);
+      : super(subject: SubjectType.english);
 
   static English regularEnglish() {
     final r = Random();

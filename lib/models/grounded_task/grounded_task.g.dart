@@ -13,8 +13,7 @@ GroundedTask _$GroundedTaskFromJson(Map<String, dynamic> json) => GroundedTask(
       childID: json['childID'] as String,
       creationTimestamp: json['creationTimestamp'] as int,
       expectedCompletionTimestamp: json['expectedCompletionTimestamp'] as int,
-      questionCategoryToCreate: $enumDecode(
-          _$QuestionCategoryEnumMap, json['questionCategoryToCreate']),
+      subjectType: $enumDecode(_$SubjectTypeEnumMap, json['subjectType']),
       questions: (json['questions'] as List<dynamic>)
           .map((e) => Question.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -32,16 +31,15 @@ Map<String, dynamic> _$GroundedTaskToJson(GroundedTask instance) =>
       'childID': instance.childID,
       'creationTimestamp': instance.creationTimestamp,
       'expectedCompletionTimestamp': instance.expectedCompletionTimestamp,
-      'questionCategoryToCreate':
-          _$QuestionCategoryEnumMap[instance.questionCategoryToCreate],
+      'subjectType': _$SubjectTypeEnumMap[instance.subjectType],
       'mathTypeToCreate': _$MathTypeEnumMap[instance.mathTypeToCreate],
       'englishTypeToCreate': _$EnglishTypeEnumMap[instance.englishTypeToCreate],
       'questions': instance.questions.map((e) => e.toJson()).toList(),
     };
 
-const _$QuestionCategoryEnumMap = {
-  QuestionCategory.maths: 'maths',
-  QuestionCategory.english: 'english',
+const _$SubjectTypeEnumMap = {
+  SubjectType.maths: 'maths',
+  SubjectType.english: 'english',
 };
 
 const _$MathTypeEnumMap = {
