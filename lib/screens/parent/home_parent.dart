@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:grounded/components/center_text.dart';
-import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
 import 'package:grounded/components/screen_title.dart';
 import 'package:grounded/components/svg_icon.dart';
 import 'package:grounded/components/user_image.dart';
@@ -26,7 +25,7 @@ class HomeParent extends StatefulWidget {
 
 class _HomeParentState extends State<HomeParent> {
   final _firestoreService = FirestoreService.instance;
-  List<Child> children = [];
+  List<Child> _children = [];
 
   @override
   void initState() {
@@ -48,15 +47,15 @@ class _HomeParentState extends State<HomeParent> {
                 subTitle: "Pick a child to asign them tasks",
                 isWhiteBackround: true),
             SizedBox(height: 20),
-            children.isEmpty
+            _children.isEmpty
                 ? CenterText(
                     text:
                         "You haven't added any children yet. Click the button below to add children")
                 : ListView.builder(
                     shrinkWrap: true,
-                    itemCount: children.length,
+                    itemCount: _children.length,
                     itemBuilder: (_, index) {
-                      return _buildEachChild(children[index]);
+                      return _buildEachChild(_children[index]);
                     }),
           ],
         ),
@@ -116,7 +115,7 @@ class _HomeParentState extends State<HomeParent> {
 
     EasyLoading.dismiss();
     setState(() {
-      children = result;
+      _children = result;
     });
   }
 
@@ -136,7 +135,7 @@ class _HomeParentState extends State<HomeParent> {
     if (result == null) return;
 
     setState(() {
-      children.add(result as Child);
+      _children.add(result as Child);
     });
   }
 }

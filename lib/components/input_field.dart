@@ -77,7 +77,7 @@ class _InputFieldState extends State<InputField> {
                       ),
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.only(
-                            left: widget.leftIcon == null ? 10 : 45),
+                            left: widget.leftIcon == null ? 10 : 50),
                         border: InputBorder.none,
                         focusedBorder: InputBorder.none,
                         enabledBorder: InputBorder.none,
@@ -96,7 +96,6 @@ class _InputFieldState extends State<InputField> {
               ),
             ),
             _buildLeftIcon,
-            // _buildRightIcon
             _buildDropDownIcon
           ],
         ),
@@ -108,8 +107,8 @@ class _InputFieldState extends State<InputField> {
     return widget.leftIcon == null
         ? emptyWidget
         : Container(
-            height: 60,
-            width: 60,
+            height: 40,
+            width: 40,
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.only(left: 10, top: 10),
             child: SVGIcon(

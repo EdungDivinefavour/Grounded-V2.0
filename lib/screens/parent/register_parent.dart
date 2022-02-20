@@ -3,6 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:grounded/components/clickable_text.dart';
 import 'package:grounded/components/custom_action_button.dart';
 import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
+import 'package:grounded/components/custom_check_box.dart';
 import 'package:grounded/components/input_field.dart';
 import 'package:grounded/components/screen_title.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';
@@ -24,6 +25,8 @@ class _RegisterParentState extends State<RegisterParent> {
   final _passwordController = TextEditingController();
 
   final _authService = AuthenticationService.instance;
+
+  bool _hasAcceptedTermsOfService = false;
 
   @override
   Widget build(BuildContext context) {
@@ -50,13 +53,13 @@ class _RegisterParentState extends State<RegisterParent> {
                   color: ThemeColors.lightElement,
                 ),
                 child: Column(children: [
-                  SizedBox(height: 30),
+                  SizedBox(height: 25),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text('Welcome!',
                         style: TextStyles.bold.copyWith(fontSize: 26)),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 5),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -64,37 +67,42 @@ class _RegisterParentState extends State<RegisterParent> {
                       style: TextStyles.regular,
                     ),
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 35),
                   InputField(
                       controller: _nameController,
                       hintText: 'Enter your full name',
                       title: 'Name'),
+                  SizedBox(height: 35),
                   InputField(
                       controller: _emailController,
                       hintText: 'Enter your email',
                       title: 'Email address'),
+                  SizedBox(height: 35),
                   InputField(
                       controller: _passwordController,
                       hintText: 'Enter password',
                       title: 'Password'),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        padding: EdgeInsets.only(left: 20),
-                        child: Column(
-                          children: [
-                            Text('By creating an account, you agree to our'),
-                            ClickableText('Terms and Conditions',
-                                onPressed: () {}),
-                          ],
-                        ),
-                      )),
+                  SizedBox(height: 15),
+                  CustomCheckBox(
+                    title:
+                        'By creating an account, you agree to \n our Terms of service',
+                    value: _hasAcceptedTermsOfService,
+                    onChanged: (value) {
+                      setState(() {
+                        _hasAcceptedTermsOfService = value!;
+                      });
+                    },
+                  ),
+                  SizedBox(height: 25),
                   CustomActionButton(
-                      onPressed: _registerParent, title: 'Sign Up'),
+                    onPressed: _registerParent,
+                    title: 'Sign Up',
+                  ),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     Text("Already have an account?"),
                     ClickableText('Sign In', onPressed: _openLoginParentScreen)
                   ]),
+                  SizedBox(height: 150)
                 ])),
           ],
         )));

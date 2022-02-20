@@ -11,6 +11,8 @@ class DrawerListItem extends StatelessWidget {
   final String? adminEmail;
   final String? adminPhoneNumber;
 
+  final _authService = AuthenticationService.instance;
+
   DrawerListItem({
     required this.title,
     required this.leftIcon,
@@ -19,7 +21,6 @@ class DrawerListItem extends StatelessWidget {
     this.adminPhoneNumber,
   });
 
-  final _authService = AuthenticationService.instance;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -38,11 +39,13 @@ class DrawerListItem extends StatelessWidget {
                               height: 30,
                               width: 30,
                               child: SVGIcon(
-                                  icon: leftIcon, color: ThemeColors.primary),
+                                icon: leftIcon,
+                                color: ThemeColors.darkElement.withOpacity(0.8),
+                              ),
                             ),
                             Padding(
                                 padding: const EdgeInsets.only(left: 20),
-                                child: Text(title, style: TextStyles.bold))
+                                child: Text(title, style: TextStyles.semiBold))
                           ],
                         ))
                   ],

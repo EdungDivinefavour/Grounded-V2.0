@@ -78,7 +78,7 @@ class CommunicationsState extends State<Communications> {
     await _localStorage.storeUserInfoToLocal(_parent!);
 
     EasyLoading.dismiss();
-    EasyLoading.showSuccess("Communication preferences successfully set");
+    EasyLoading.showSuccess("Communication preferences set successfully");
   }
 
   void _getParentInfo() async {

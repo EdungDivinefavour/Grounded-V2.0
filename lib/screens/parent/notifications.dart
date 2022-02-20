@@ -85,7 +85,7 @@ class NotificationsState extends State<Notifications> {
     await _localStorage.storeUserInfoToLocal(_parent!);
 
     EasyLoading.dismiss();
-    EasyLoading.showSuccess("Communicaton preferences successfully set");
+    EasyLoading.showSuccess("Notification preference set successfully");
   }
 
   void _getParentInfo() async {

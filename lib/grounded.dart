@@ -54,6 +54,7 @@ class _GroundedState extends State<Grounded> with WidgetsBindingObserver {
       title: 'Grounded',
       builder: EasyLoading.init(),
       home: _buildHome(),
+      debugShowCheckedModeBanner: false,
     );
   }
 

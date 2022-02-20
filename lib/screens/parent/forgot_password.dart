@@ -4,13 +4,20 @@ import 'package:grounded/components/custom_action_button.dart';
 import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
 import 'package:grounded/components/input_field.dart';
 import 'package:grounded/components/screen_title.dart';
+import 'package:grounded/screens/parent/login_parent.dart';
 import 'package:grounded/services/firebase/authentication_service.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/texts/text_styles.dart';
 
-class ForgotPassword extends StatelessWidget {
+class ForgotPassword extends StatefulWidget {
+  @override
+  State<ForgotPassword> createState() => _ForgotPasswordState();
+}
+
+class _ForgotPasswordState extends State<ForgotPassword> {
   final _emailController = TextEditingController();
+
   final _authService = AuthenticationService.instance;
 
   @override
@@ -39,13 +46,13 @@ class ForgotPassword extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    SizedBox(height: 30),
+                    SizedBox(height: 25),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text('Uh-oh! did someone forget their password',
-                          style: TextStyles.bold.copyWith(fontSize: 26)),
+                          style: TextStyles.bold.copyWith(fontSize: 22)),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 25),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
@@ -53,15 +60,17 @@ class ForgotPassword extends StatelessWidget {
                         style: TextStyles.regular,
                       ),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 35),
                     InputField(
                         controller: _emailController,
                         hintText: 'Enter your recovery email address',
                         title: 'Email address'),
                     SizedBox(height: 160),
                     CustomActionButton(
-                        onPressed: _sendPasswordResetEmail,
-                        title: 'Reset Password'),
+                      onPressed: _sendPasswordResetEmail,
+                      title: 'Reset Password',
+                    ),
+                    SizedBox(height: 200),
                   ],
                 ),
               )
@@ -74,7 +83,10 @@ class ForgotPassword extends StatelessWidget {
     EasyLoading.show();
     _authService
         .sendParentPasswordResetEmail(email: _emailController.text)
-        .then((_) {})
-        .catchError((onError) {});
+        .then((_) {
+      EasyLoading.dismiss();
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (_) => LoginParent()));
+    }).catchError((onError) {});
   }
 }

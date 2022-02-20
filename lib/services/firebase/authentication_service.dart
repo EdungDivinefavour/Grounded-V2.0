@@ -125,8 +125,8 @@ class AuthenticationService {
     return;
   }
 
-  void signOutUser() {
-    _auth.signOut();
+  void signOutUser() async {
+    await _auth.signOut();
     _localStorage.clearUserInfoFromLocal();
   }
 

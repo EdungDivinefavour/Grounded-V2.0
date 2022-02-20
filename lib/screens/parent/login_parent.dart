@@ -66,7 +66,7 @@ class _LoginParentState extends State<LoginParent> {
                           style: TextStyles.smallRegular
                               .copyWith(color: ThemeColors.darkBackground)),
                     ),
-                    SizedBox(height: 40),
+                    SizedBox(height: 35),
                     InputField(
                       controller: _emailController,
                       hintText: 'Enter your email address',
@@ -86,7 +86,7 @@ class _LoginParentState extends State<LoginParent> {
                           'Forgot Password?',
                           onPressed: _openForgotPasswordScreen,
                         )),
-                    SizedBox(height: 10),
+                    SizedBox(height: 20),
                     CustomActionButton(
                         onPressed: _loginParent, title: 'Sign In'),
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -103,7 +103,7 @@ class _LoginParentState extends State<LoginParent> {
                     SizedBox(height: 10),
                     ClickableText('Sign In As Child',
                         onPressed: _openLoginChildScreen),
-                    SizedBox(height: 100)
+                    SizedBox(height: 150)
                   ],
                 ),
               )

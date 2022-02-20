@@ -2,6 +2,7 @@ import 'package:dart_date/dart_date.dart';
 import 'package:grounded/constants/enums/english_type.dart';
 import 'package:grounded/constants/enums/math_type.dart';
 import 'package:grounded/constants/enums/subject_type.dart';
+import 'package:grounded/styles/icons/app_icons.dart';
 import 'package:grounded/utils/int_utils.dart';
 import 'package:grounded/models/managers/question_manager.dart';
 import 'package:grounded/models/question/question.dart';
@@ -22,6 +23,8 @@ class GroundedTask {
   final MathType? mathTypeToCreate;
   final EnglishType? englishTypeToCreate;
   List<Question> questions;
+
+  String get taskIcon => _buildTaskIcon;
 
   List<Question> get completedQuestions =>
       questions.where((x) => x.hasBeenAnswered).toList();
@@ -90,6 +93,22 @@ class GroundedTask {
     } else {
       return completionTimestamp!.toDateTime.day == dateTime.day;
     }
+  }
+
+  String get _buildTaskIcon {
+    if (subjectType == SubjectType.maths) {
+      if (mathTypeToCreate == MathType.addition) {
+        return AppIcons.additionPNG;
+      } else if (mathTypeToCreate == MathType.subtraction) {
+        return AppIcons.subtractionPNG;
+      } else if (mathTypeToCreate == MathType.multiplication) {
+        return AppIcons.multiplicationPNG;
+      } else if (mathTypeToCreate == MathType.division) {
+        return AppIcons.divisionPNG;
+      }
+    }
+
+    return AppIcons.englishPNG;
   }
 
   factory GroundedTask.fromJson(Map<String, dynamic> json) =>
