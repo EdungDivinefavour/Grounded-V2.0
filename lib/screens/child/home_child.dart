@@ -63,7 +63,7 @@ class _HomeChildState extends State<HomeChild> {
 
   Widget _buildTasksList() {
     return SizedBox(
-      height: 1000,
+      height: 2000,
       child: _tasks.isEmpty
           ? Text("No tasks yet!. Your parents haven't assigned any to you")
           : GridView.builder(

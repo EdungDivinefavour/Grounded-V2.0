@@ -62,13 +62,18 @@ class _SolveTaskMathsState extends State<SolveTaskMaths> {
                     SVGIcon(
                         icon: AppIcons.clock,
                         size: 25,
-                        color: ThemeColors.darkBackground),
+                        color: _remainingTimeForQuestion > 5
+                            ? ThemeColors.darkBackground
+                            : ThemeColors.error),
                     SizedBox(width: 5),
                     Text(
                         '0:${_remainingTimeForQuestion == 10 ? "" : 0}$_remainingTimeForQuestion',
                         style: TextStyles.smallBold
                             .copyWith(fontSize: 18)
-                            .copyWith(color: ThemeColors.darkBackground)),
+                            .copyWith(
+                                color: _remainingTimeForQuestion > 5
+                                    ? ThemeColors.darkBackground
+                                    : ThemeColors.error)),
                   ],
                 ),
                 SizedBox(height: 30),
