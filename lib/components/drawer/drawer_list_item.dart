@@ -36,11 +36,10 @@ class DrawerListItem extends StatelessWidget {
                         child: Row(
                           children: [
                             SizedBox(
-                              height: 30,
-                              width: 30,
                               child: SVGIcon(
                                 icon: leftIcon,
                                 color: ThemeColors.darkElement.withOpacity(0.8),
+                                size: 27.5,
                               ),
                             ),
                             Padding(

@@ -106,7 +106,7 @@ class FirestoreService {
     await _firestore
         .collection(FirebaseDocuments.tasks)
         .doc(task.id)
-        .update(task.toJson());
+        .set(task.toJson());
   }
 
   Future<void> storeToken(
