@@ -50,6 +50,8 @@ class _GroundedState extends State<Grounded> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    // AuthenticationService.instance.signOutUser();
+
     return MaterialApp(
       title: 'Grounded',
       builder: EasyLoading.init(),

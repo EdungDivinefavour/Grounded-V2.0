@@ -17,8 +17,10 @@ abstract class AppIcons {
   static const logoPNG = 'logo.png';
   static const menu = 'menu.svg';
   static const notification = 'notification.svg';
+  static const phoneInHandPNG = 'phone_in_hand.png';
   static const profile = 'profile.svg';
   static const reports = 'reports.svg';
   static const settings = 'settings.svg';
   static const topRightBubble = 'top_right_bubble.svg';
+  static const trumpetPNG = 'trumpet.png';
 }

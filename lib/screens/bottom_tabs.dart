@@ -1,6 +1,4 @@
-import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
 import 'package:grounded/components/custom_bottom_bar.dart';
-import 'package:grounded/components/drawer/navigation_drawer.dart';
 import 'package:grounded/constants/enums/user_type.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
 import 'package:grounded/models/grounded_user/grounded_user.dart';

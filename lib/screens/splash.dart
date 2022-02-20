@@ -1,9 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/components/png_icon.dart';
 import 'package:grounded/models/grounded_user/grounded_user.dart';
 import 'package:grounded/screens/bottom_tabs.dart';
+import 'package:grounded/screens/child/solve_task_english.dart';
+import 'package:grounded/screens/child/solve_task_maths.dart';
 import 'package:grounded/screens/parent/intro.dart';
 import 'package:grounded/services/firebase/firestore_service.dart';
 import 'package:grounded/styles/colors/theme_colors.dart';
@@ -49,22 +52,22 @@ class _SplashState extends State<Splash> {
   }
 
   void _getUserInfo() async {
-    if (widget.firebaseUser == null) {
-      await Future.delayed(Duration(milliseconds: 3800));
-      _openScreen(Intro());
-      return;
-    }
+    // if (widget.firebaseUser == null) {
+    await Future.delayed(Duration(milliseconds: 3800));
+    _openScreen(SolveTaskMaths());
+    //   return;
+    // }
 
-    GroundedUser userInfo;
-    if (!widget.firebaseUser!.email!.contains("fromParent")) {
-      userInfo =
-          await _firestoreService.getParentInfo(widget.firebaseUser!.uid);
-    } else {
-      userInfo = await _firestoreService.getChildInfo(widget.firebaseUser!.uid);
-    }
+    // GroundedUser userInfo;
+    // if (!widget.firebaseUser!.email!.contains("fromparent")) {
+    //   userInfo =
+    //       await _firestoreService.getParentInfo(widget.firebaseUser!.uid);
+    // } else {
+    //   userInfo = await _firestoreService.getChildInfo(widget.firebaseUser!.uid);
+    // }
 
-    await Future.delayed(Duration(milliseconds: 1800));
-    _openScreen(BottomTabs(groundedUser: userInfo));
+    // await Future.delayed(Duration(milliseconds: 1800));
+    // _openScreen(BottomTabs(groundedUser: userInfo));
   }
 
   void _openScreen(Widget screen) {

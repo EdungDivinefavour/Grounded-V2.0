@@ -1,3 +1,4 @@
+import 'package:charts_flutter/flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:grounded/components/achieved_badge.dart';
 import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
@@ -5,6 +6,7 @@ import 'package:grounded/components/screen_title.dart';
 import 'package:grounded/models/achievement.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
+import 'package:grounded/styles/texts/text_styles.dart';
 import 'package:grounded/utils/string_utils.dart';
 
 class BadgesChild extends StatefulWidget {
@@ -33,8 +35,74 @@ class _BadgesChildState extends State<BadgesChild> {
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
-            ScreenTitle(title: "Badges", isWhiteBackround: true),
-            Container(),
+            ScreenTitle(
+              title: "You Rock!",
+              isWhiteBackround: true,
+              subTitle:
+                  "Your parents will see these great \nachievements and you might just get a reward!",
+            ),
+            SizedBox(height: 60),
+            Container(
+                child: Align(
+              alignment: Alignment.center,
+              child: Column(
+                children: [
+                  Text('Latest Badge', style: TextStyles.extraBold),
+                  SizedBox(height: 10),
+                  Icon(
+                    Icons.notifications_active_sharp,
+                    size: 80,
+                    color: Colors.purple,
+                  ),
+                  SizedBox(height: 5),
+                  Text('Champion', style: TextStyles.smallBold)
+                ],
+              ),
+            )),
+            SizedBox(height: 35),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Achievements",
+                style: TextStyles.bold.copyWith(fontSize: 18),
+              ),
+            ),
+            SizedBox(height: 20),
+            Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Icon(Icons.ac_unit_rounded,
+                      size: 40, color: Colors.orangeAccent),
+                ),
+                Text('You completed 10 maths \nassignments in a row',
+                    style: TextStyles.smallRegular)
+              ],
+            ),
+            SizedBox(height: 40),
+            Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Icon(Icons.ac_unit_rounded,
+                      size: 40, color: Colors.orangeAccent),
+                ),
+                Text('Yesterday you accomplished 10 \nenglish assignments',
+                    style: TextStyles.smallRegular)
+              ],
+            ),
+            SizedBox(height: 40),
+            Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Icon(Icons.ac_unit_rounded,
+                      size: 40, color: Colors.orangeAccent),
+                ),
+                Text('Completed 10 maths assignments \nin a row',
+                    style: TextStyles.smallRegular)
+              ],
+            )
           ],
         ),
       ),

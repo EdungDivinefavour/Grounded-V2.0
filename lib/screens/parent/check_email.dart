@@ -32,7 +32,7 @@ class _CheckEmailState extends State<CheckEmail> {
               Padding(
                 padding: EdgeInsets.only(left: 20),
                 child: ScreenTitle(
-                    title: "Forgot password", isWhiteForeground: true),
+                    title: "Check your email", isWhiteForeground: true),
               ),
               Container(
                 padding: EdgeInsets.all(20),
