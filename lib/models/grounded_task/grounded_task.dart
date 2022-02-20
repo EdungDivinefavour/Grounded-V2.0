@@ -29,9 +29,13 @@ class GroundedTask {
   List<Question> get completedQuestions =>
       questions.where((x) => x.hasBeenAnswered).toList();
 
-  int get totalPointsGotten => completedQuestions.length * 10;
-  int get completedPercentage =>
-      (completedQuestions.length ~/ questions.length) * 100;
+  int get totalPointsGotten =>
+      completedQuestions.where((x) => x.wasAnsweredCorrectly).length * 10;
+
+  double get completedPercentage =>
+      (completedQuestions.length / questions.length) * 100;
+  String get completedQuestionsRatio =>
+      "${completedQuestions.length}/${questions.length}";
 
   bool get hasBeenCompleted => completedQuestions.length == questions.length;
   int? get completionTimestamp => completedQuestions.last.completedTimestap;
@@ -39,6 +43,9 @@ class GroundedTask {
   bool get wasCompletedThisWeek => completionTimestamp == null
       ? false
       : completionTimestamp?.toDateTime.getWeek == DateTime.now().getWeek;
+
+  Question? get lastCompletedQuestion =>
+      completedQuestions.isEmpty ? null : completedQuestions.last;
 
   GroundedTask({
     required this.id,

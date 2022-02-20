@@ -5,6 +5,7 @@ abstract class AppIcons {
   static const add = 'add.svg';
   static const additionPNG = 'addition.png';
   static const back = 'back.svg';
+  static const backSpace = 'backspace.svg';
   static const badges = 'badges.svg';
   static const bottomLeftBubble = 'bottom_left_bubble.svg';
   static const calendar = 'calendar.svg';
@@ -30,6 +31,7 @@ abstract class AppIcons {
   static const profile = 'profile.svg';
   static const reports = 'reports.svg';
   static const settings = 'settings.svg';
+  static const star = 'star.svg';
   static const support = 'support.svg';
   static const subtractionPNG = 'subtraction.png';
   static const tasks = 'tasks.svg';

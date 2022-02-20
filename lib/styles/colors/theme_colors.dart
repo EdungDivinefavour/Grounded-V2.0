@@ -7,7 +7,7 @@ class ThemeColors {
   static const accent = Color.fromRGBO(232, 176, 0, 1);
   static const transparent = Colors.transparent;
   static const success = Color.fromRGBO(25, 170, 90, 1);
-  static const error = Color.fromRGBO(252, 61, 34, 1);
+  static const error = Color.fromRGBO(248, 48, 55, 1);
   static const link = Colors.orange;
   static const lightBackground = Color.fromRGBO(246, 247, 250, 1);
   static const darkBackground = Color.fromRGBO(122, 134, 154, 1);

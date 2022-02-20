@@ -103,13 +103,14 @@ class _HomeChildState extends State<HomeChild> {
             lineHeight: 8.0,
             percent: task.completedPercentage / 100,
             progressColor: ThemeColors.primary,
+            backgroundColor: ThemeColors.primaryLight,
           ),
           SizedBox(height: 5),
           Padding(
             padding: EdgeInsets.only(left: 10),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Text("${task.completedPercentage}%",
+              child: Text("${task.completedPercentage.toInt()}%",
                   style: TextStyles.smallBold),
             ),
           ),
@@ -159,6 +160,14 @@ class _HomeChildState extends State<HomeChild> {
         ? SolveTaskMaths(task: task)
         : SolveTaskEnglish(task: task);
 
-    Navigator.push(context, MaterialPageRoute(builder: (_) => taskScreen));
+    await Navigator.push(
+        context, MaterialPageRoute(builder: (_) => taskScreen));
+    setState(() {});
+
+    EasyLoading.show();
+    await _firestoreService.storeTask(task: task);
+
+    EasyLoading.dismiss();
+    EasyLoading.showSuccess("Progress saved");
   }
 }

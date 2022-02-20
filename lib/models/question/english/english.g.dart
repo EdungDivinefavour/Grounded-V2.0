@@ -21,13 +21,15 @@ English _$EnglishFromJson(Map<String, dynamic> json) => English(
       ..displayedQuestion = json['displayedQuestion'] as String?
       ..pickedAnswer = json['pickedAnswer'] as String?
       ..correctAnswer = json['correctAnswer'] as String?
-      ..completedTimestap = json['completedTimestap'] as int?;
+      ..completedTimestap = json['completedTimestap'] as int?
+      ..hasBeenAnswered = json['hasBeenAnswered'] as bool;
 
 Map<String, dynamic> _$EnglishToJson(English instance) => <String, dynamic>{
       'displayedQuestion': instance.displayedQuestion,
       'pickedAnswer': instance.pickedAnswer,
       'correctAnswer': instance.correctAnswer,
       'completedTimestap': instance.completedTimestap,
+      'hasBeenAnswered': instance.hasBeenAnswered,
       'subjectType': _$SubjectTypeEnumMap[instance.subjectType],
       'englishType': _$EnglishTypeEnumMap[instance.englishType],
       'word': instance.word.toJson(),

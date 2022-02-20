@@ -15,13 +15,15 @@ Math _$MathFromJson(Map<String, dynamic> json) => Math(
       ..displayedQuestion = json['displayedQuestion'] as String?
       ..pickedAnswer = json['pickedAnswer'] as String?
       ..correctAnswer = json['correctAnswer'] as String?
-      ..completedTimestap = json['completedTimestap'] as int?;
+      ..completedTimestap = json['completedTimestap'] as int?
+      ..hasBeenAnswered = json['hasBeenAnswered'] as bool;
 
 Map<String, dynamic> _$MathToJson(Math instance) => <String, dynamic>{
       'displayedQuestion': instance.displayedQuestion,
       'pickedAnswer': instance.pickedAnswer,
       'correctAnswer': instance.correctAnswer,
       'completedTimestap': instance.completedTimestap,
+      'hasBeenAnswered': instance.hasBeenAnswered,
       'subjectType': _$SubjectTypeEnumMap[instance.subjectType],
       'mathType': _$MathTypeEnumMap[instance.mathType],
     };

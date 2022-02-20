@@ -8,6 +8,7 @@ part of 'question.dart';
 
 Question _$QuestionFromJson(Map<String, dynamic> json) => Question(
       subjectType: $enumDecode(_$SubjectTypeEnumMap, json['subjectType']),
+      hasBeenAnswered: json['hasBeenAnswered'] as bool? ?? false,
       displayedQuestion: json['displayedQuestion'] as String?,
       pickedAnswer: json['pickedAnswer'] as String?,
       correctAnswer: json['correctAnswer'] as String?,
@@ -25,6 +26,7 @@ Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
       'pickedAnswer': instance.pickedAnswer,
       'correctAnswer': instance.correctAnswer,
       'completedTimestap': instance.completedTimestap,
+      'hasBeenAnswered': instance.hasBeenAnswered,
     };
 
 const _$SubjectTypeEnumMap = {

@@ -1,9 +1,18 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
+import 'package:grounded/components/custom_num_pad.dart';
 import 'package:grounded/components/custom_scaffold.dart';
+import 'package:grounded/components/empty_widget.dart';
+import 'package:grounded/components/svg_icon.dart';
 import 'package:grounded/models/grounded_task/grounded_task.dart';
+import 'package:grounded/models/question/question.dart';
 import 'package:grounded/styles/colors/theme_colors.dart';
+import 'package:grounded/styles/icons/app_icons.dart';
 import 'package:grounded/styles/texts/text_styles.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class SolveTaskMaths extends StatefulWidget {
   final GroundedTask task;
@@ -14,167 +23,175 @@ class SolveTaskMaths extends StatefulWidget {
 }
 
 class _SolveTaskMathsState extends State<SolveTaskMaths> {
+  int _currentQuestionIndex = 0;
+  int _remainingTimeForQuestion = 10;
+
+  String? _pickedAnswer;
+
+  Question get _currentQuestion => _getCurrentQuestion();
+
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _setCurrentQuestionIndex();
+    _startCountDownTimer();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    _timer?.cancel();
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
         appBar: CustomAppBar(),
         bubblePosition: BackgroundBubblePosition.centerRight,
-        body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Column(children: [
-              Row(
-                children: [
-                  Spacer(),
-                  Icon(Icons.alarm_add_outlined,
-                      color: ThemeColors.darkBackground),
-                  SizedBox(width: 5),
-                  Text('0:03',
-                      style: TextStyles.smallBold
-                          .copyWith(fontSize: 18)
-                          .copyWith(color: ThemeColors.darkBackground)),
-                ],
-              ),
-              SizedBox(height: 30),
-              Row(
-                children: [
-                  SizedBox(width: 5),
-                  Text('7/5',
-                      style: TextStyles.smallBold.copyWith(fontSize: 20)),
-                  Spacer(),
-                  Icon(
-                    Icons.star,
-                    color: Colors.orangeAccent,
-                  ),
-                  SizedBox(width: 6),
-                  Text('0 points',
-                      style: TextStyles.smallBold.copyWith(fontSize: 20)),
-                ],
-              ),
-              SizedBox(height: 5),
-              Divider(color: ThemeColors.primary, thickness: 8),
-              SizedBox(height: 60),
-              Text('Answer this question',
-                  style: TextStyles.bold.copyWith(fontSize: 18)),
-              SizedBox(height: 20),
-              Text('2 x 5', style: TextStyles.smallBold.copyWith(fontSize: 80)),
-              SizedBox(height: 80),
-              Row(
-                children: [
-                  Container(
-                    color: Colors.grey[200],
-                    margin: EdgeInsets.fromLTRB(5, 2, 0, 10),
-                    height: 60,
-                    width: 85,
-                    alignment: Alignment.center,
-                  ),
-                  SizedBox(width: 20),
-                  Container(
-                    color: Colors.grey[200],
-                    margin: EdgeInsets.fromLTRB(5, 2, 0, 10),
-                    height: 60,
-                    width: 85,
-                    alignment: Alignment.center,
-                  ),
-                  SizedBox(width: 20),
-                  Container(
-                    color: Colors.grey[200],
-                    margin: EdgeInsets.fromLTRB(5, 2, 0, 10),
-                    height: 60,
-                    width: 85,
-                    alignment: Alignment.center,
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  Container(
-                    color: Colors.grey[200],
-                    margin: EdgeInsets.fromLTRB(5, 2, 0, 10),
-                    height: 60,
-                    width: 85,
-                    alignment: Alignment.center,
-                  ),
-                  SizedBox(width: 20),
-                  Container(
-                    color: Colors.grey[200],
-                    margin: EdgeInsets.fromLTRB(5, 2, 0, 10),
-                    height: 60,
-                    width: 85,
-                    alignment: Alignment.center,
-                  ),
-                  SizedBox(width: 20),
-                  Container(
-                    color: Colors.grey[200],
-                    margin: EdgeInsets.fromLTRB(5, 2, 0, 10),
-                    height: 60,
-                    width: 85,
-                    alignment: Alignment.center,
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  Container(
-                    color: Colors.grey[200],
-                    margin: EdgeInsets.fromLTRB(5, 2, 0, 10),
-                    height: 60,
-                    width: 85,
-                    alignment: Alignment.center,
-                  ),
-                  SizedBox(width: 20),
-                  Container(
-                    color: Colors.grey[200],
-                    margin: EdgeInsets.fromLTRB(5, 2, 0, 10),
-                    height: 60,
-                    width: 85,
-                    alignment: Alignment.center,
-                  ),
-                  SizedBox(width: 20),
-                  Container(
-                    color: Colors.grey[200],
-                    margin: EdgeInsets.fromLTRB(5, 2, 0, 10),
-                    height: 60,
-                    width: 85,
-                    alignment: Alignment.center,
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  Container(
-                    child: Icon(
-                      Icons.backspace,
-                      size: 40,
-                      color: ThemeColors.lightElement,
-                    ),
-                    padding: EdgeInsets.only(right: 5),
-                    color: Colors.red,
-                    margin: EdgeInsets.fromLTRB(5, 2, 0, 10),
-                    height: 60,
-                    width: 85,
-                    alignment: Alignment.center,
-                  ),
-                  SizedBox(width: 20),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(5, 2, 0, 10),
-                    color: Colors.grey[200],
-                    height: 60,
-                    width: 85,
-                    alignment: Alignment.center,
-                  ),
-                  SizedBox(width: 20),
-                  Container(
-                    child: Text('Enter',
-                        style: TextStyles.bold.copyWith(
-                            color: ThemeColors.lightElement, fontSize: 18)),
-                    color: ThemeColors.primary,
-                    margin: EdgeInsets.fromLTRB(5, 2, 0, 10),
-                    height: 60,
-                    width: 85,
-                    alignment: Alignment.center,
-                  )
-                ],
-              ),
-            ])));
+        body: SizedBox(
+          child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Column(children: [
+                Row(
+                  children: [
+                    Spacer(),
+                    SVGIcon(
+                        icon: AppIcons.clock,
+                        size: 25,
+                        color: ThemeColors.darkBackground),
+                    SizedBox(width: 5),
+                    Text(
+                        '0:${_remainingTimeForQuestion == 10 ? "" : 0}$_remainingTimeForQuestion',
+                        style: TextStyles.smallBold
+                            .copyWith(fontSize: 18)
+                            .copyWith(color: ThemeColors.darkBackground)),
+                  ],
+                ),
+                SizedBox(height: 30),
+                Row(
+                  children: [
+                    SizedBox(width: 5),
+                    Text(widget.task.completedQuestionsRatio,
+                        style: TextStyles.smallBold.copyWith(fontSize: 20)),
+                    Spacer(),
+                    SVGIcon(icon: AppIcons.star, size: 25),
+                    SizedBox(width: 6),
+                    Text('${widget.task.totalPointsGotten} points',
+                        style: TextStyles.smallBold.copyWith(fontSize: 20)),
+                  ],
+                ),
+                SizedBox(height: 15),
+                LinearPercentIndicator(
+                  barRadius: Radius.circular(5),
+                  lineHeight: 8.0,
+                  percent: widget.task.completedPercentage / 100,
+                  progressColor: ThemeColors.primary,
+                  backgroundColor: ThemeColors.primaryLight,
+                ),
+                SizedBox(height: 40),
+                Text('Answer this question',
+                    style: TextStyles.bold.copyWith(fontSize: 18)),
+                Text(_currentQuestion.displayedQuestion!,
+                    style: TextStyles.smallBold.copyWith(
+                        fontSize: _currentQuestion.displayedQuestion!.length < 8
+                            ? 80
+                            : 60)),
+                Spacer(),
+                _currentQuestion.pickedAnswer == null
+                    ? emptyWidget
+                    : Container(
+                        padding: EdgeInsets.only(right: 30),
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          _currentQuestion.pickedAnswer!,
+                          style: TextStyles.semiBold.copyWith(fontSize: 40),
+                        )),
+                Spacer(),
+                CustomNumPad(
+                  onKeyPressed: _appendToAnswer,
+                  onEnter: _confirmAnswer,
+                  onDelete: _deleteFromAnswer,
+                )
+              ])),
+        ));
+  }
+
+  Question _getCurrentQuestion() {
+    return widget.task.questions[_currentQuestionIndex];
+  }
+
+  void _appendToAnswer(String value) {
+    if (_pickedAnswer == null) {
+      _pickedAnswer = value;
+      setState(() {
+        _currentQuestion.pickedAnswer = _pickedAnswer;
+      });
+    } else {
+      _pickedAnswer = _pickedAnswer! + value;
+      setState(() {
+        _currentQuestion.pickedAnswer = _pickedAnswer;
+      });
+    }
+  }
+
+  void _confirmAnswer() {
+    if (_pickedAnswer == null) {
+      EasyLoading.showError("Please enter an answer to proceed");
+      return;
+    }
+    // PlaySound();
+
+    _currentQuestion.setHasBeenAnswered();
+    if (widget.task.hasBeenCompleted) {
+      // ShowPOPUP congratulating them
+      Navigator.pop(context);
+      return;
+    }
+
+    setState(() {
+      _currentQuestionIndex++;
+      _pickedAnswer = null;
+      _remainingTimeForQuestion = 10;
+    });
+  }
+
+  void _deleteFromAnswer() {
+    if (_pickedAnswer == null) {
+      EasyLoading.showError("Unable to delete as no input has been entered");
+      return;
+    }
+
+    final lastIndex = _pickedAnswer!.length;
+    _pickedAnswer = _pickedAnswer!.substring(0, lastIndex - 1);
+
+    setState(() {
+      _currentQuestion.pickedAnswer = _pickedAnswer;
+    });
+  }
+
+  void _setCurrentQuestionIndex() {
+    if (widget.task.lastCompletedQuestion == null) {
+      _currentQuestionIndex = 0;
+      return;
+    }
+
+    _currentQuestionIndex =
+        widget.task.questions.indexOf(widget.task.lastCompletedQuestion!) + 1;
+  }
+
+  void _startCountDownTimer() {
+    _timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
+      setState(() => _remainingTimeForQuestion--);
+
+      if (_remainingTimeForQuestion == 0) {
+        _appendToAnswer("");
+        _confirmAnswer();
+        _remainingTimeForQuestion = 10;
+      }
+    });
   }
 }

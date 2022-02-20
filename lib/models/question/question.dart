@@ -15,10 +15,13 @@ class Question {
   String? correctAnswer;
   int? completedTimestap;
 
-  bool get hasBeenAnswered => pickedAnswer != null;
+  bool hasBeenAnswered;
+
+  bool get wasAnsweredCorrectly => pickedAnswer == correctAnswer;
 
   Question({
     required this.subjectType,
+    this.hasBeenAnswered = false,
     this.displayedQuestion,
     this.pickedAnswer,
     this.correctAnswer,
@@ -26,6 +29,10 @@ class Question {
     this.mathType,
     this.englishType,
   });
+
+  void setHasBeenAnswered() {
+    hasBeenAnswered = pickedAnswer != null;
+  }
 
   factory Question.fromJson(Map<String, dynamic> json) =>
       _$QuestionFromJson(json);
