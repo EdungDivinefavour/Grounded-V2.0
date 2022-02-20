@@ -60,12 +60,14 @@ class FirestoreService {
         .then((snapshot) => Child.fromJson(snapshot.data()!));
   }
 
-  Future<Child> getChildInfoFromLoginToken(String loginToken) {
-    return _firestore
+  Future<Child?> getChildInfoFromLoginToken(String loginToken) async {
+    final querySnapshot = await _firestore
         .collection(FirebaseDocuments.children)
         .where("loginToken", isEqualTo: loginToken)
-        .get()
-        .then((snapshot) => Child.fromJson(snapshot.docs[0].data()));
+        .get();
+    if (querySnapshot.docs.isEmpty) return null;
+
+    return Child.fromJson(querySnapshot.docs[0].data());
   }
 
   Future<List<Child>> getChildrenForParent(Parent parent) {

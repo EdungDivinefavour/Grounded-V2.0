@@ -95,8 +95,8 @@ class _RegisterParentState extends State<RegisterParent> {
                   ),
                   SizedBox(height: 25),
                   CustomActionButton(
-                    onPressed: _registerParent,
                     title: 'Sign Up',
+                    onPressed: _registerParent,
                   ),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     Text("Already have an account?"),

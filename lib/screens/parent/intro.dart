@@ -67,8 +67,8 @@ class _IntroState extends State<Intro> {
             Padding(
               padding: const EdgeInsets.only(
                   left: 20.0, right: 20.0, top: 15.0, bottom: 15.0),
-              child:
-                  Image.asset(imagePath + sliderImage, height: 400, width: 500),
+              child: Image.asset("${imagePath}intro/$sliderImage",
+                  height: 400, width: 500),
             ),
             const Spacer(),
             Container(

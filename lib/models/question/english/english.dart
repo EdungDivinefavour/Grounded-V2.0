@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:grounded/constants/enums/english_type.dart';
 import 'package:grounded/constants/enums/subject_type.dart';
 import 'package:grounded/constants/enums/word_type.dart';
 import 'package:grounded/models/question/english/word/word.dart';
@@ -12,11 +13,22 @@ const allLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 @JsonSerializable(explicitToJson: true)
 class English extends Question {
+  @override
+  final SubjectType subjectType;
+  @override
+  final EnglishType englishType;
   Word word;
   List<String> suggestedAnswers;
 
-  English({required this.word, required this.suggestedAnswers})
-      : super(subject: SubjectType.english);
+  English({
+    required this.word,
+    required this.suggestedAnswers,
+    this.subjectType = SubjectType.english,
+    this.englishType = EnglishType.general,
+  }) : super(
+          subjectType: subjectType,
+          englishType: englishType,
+        );
 
   static English regularEnglish() {
     final r = Random();

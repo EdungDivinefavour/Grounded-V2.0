@@ -56,7 +56,7 @@ class _SplashState extends State<Splash> {
     }
 
     GroundedUser userInfo;
-    if (!widget.firebaseUser!.email!.contains("fromParent")) {
+    if (!widget.firebaseUser!.email!.contains("fromparent")) {
       userInfo =
           await _firestoreService.getParentInfo(widget.firebaseUser!.uid);
     } else {

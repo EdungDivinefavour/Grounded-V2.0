@@ -4,7 +4,7 @@ import 'package:grounded/components/custom_action_button.dart';
 import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
 import 'package:grounded/components/input_field.dart';
 import 'package:grounded/components/screen_title.dart';
-import 'package:grounded/screens/parent/login_parent.dart';
+import 'package:grounded/screens/parent/check_email.dart';
 import 'package:grounded/services/firebase/authentication_service.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/styles/colors/theme_colors.dart';
@@ -67,8 +67,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         title: 'Email address'),
                     SizedBox(height: 160),
                     CustomActionButton(
-                      onPressed: _sendPasswordResetEmail,
                       title: 'Reset Password',
+                      onPressed: _sendPasswordResetEmail,
                     ),
                     SizedBox(height: 200),
                   ],
@@ -86,7 +86,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         .then((_) {
       EasyLoading.dismiss();
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (_) => LoginParent()));
+          context, MaterialPageRoute(builder: (_) => CheckEmail()));
     }).catchError((onError) {});
   }
 }

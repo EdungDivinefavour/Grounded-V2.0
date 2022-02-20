@@ -68,7 +68,6 @@ class _HomeParentState extends State<HomeParent> {
     );
   }
 
-  // TODO: Delete text widget and properly build the actual widget here
   Widget _buildEachChild(Child child) {
     return Column(
       children: [

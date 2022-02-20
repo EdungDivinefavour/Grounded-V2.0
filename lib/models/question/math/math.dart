@@ -8,9 +8,13 @@ part 'math.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Math extends Question {
+  @override
+  final SubjectType subjectType;
+  @override
   final MathType mathType;
 
-  Math({required this.mathType}) : super(subject: SubjectType.maths);
+  Math({required this.mathType, this.subjectType = SubjectType.maths})
+      : super(subjectType: subjectType, mathType: mathType);
 
   static Math regularMath(MathType mathType) {
     final math = Math(mathType: mathType);

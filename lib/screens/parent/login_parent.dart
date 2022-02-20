@@ -88,7 +88,9 @@ class _LoginParentState extends State<LoginParent> {
                         )),
                     SizedBox(height: 20),
                     CustomActionButton(
-                        onPressed: _loginParent, title: 'Sign In'),
+                      title: 'Sign In',
+                      onPressed: _loginParent,
+                    ),
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                       Text("Don't have an account?",
                           style: TextStyles.smallRegular),
@@ -137,12 +139,11 @@ class _LoginParentState extends State<LoginParent> {
   }
 
   void _openLoginChildScreen() async {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (_) => LoginChild()));
+    Navigator.push(context, MaterialPageRoute(builder: (_) => LoginChild()));
   }
 
   void _openForgotPasswordScreen() async {
-    Navigator.pushReplacement(
+    Navigator.push(
         context, MaterialPageRoute(builder: (_) => ForgotPassword()));
   }
 }

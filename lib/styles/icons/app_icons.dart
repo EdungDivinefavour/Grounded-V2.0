@@ -11,6 +11,7 @@ abstract class AppIcons {
   static const centerLeftBubble = 'center_left_bubble.svg';
   static const centerRightBubble = 'center_right_bubble.svg';
   static const checkBox = "check_box.svg";
+  static const checkYourEmailPNG = "check_your_email.png";
   static const clock = 'clock.svg';
   static const divisionPNG = 'division.png';
   static const down = 'down.svg';
@@ -25,6 +26,7 @@ abstract class AppIcons {
   static const menu = 'menu.svg';
   static const multiplicationPNG = 'multiplication.png';
   static const notification = 'notification.svg';
+  static const phoneInHandPNG = 'phone_in_hand.png';
   static const profile = 'profile.svg';
   static const reports = 'reports.svg';
   static const settings = 'settings.svg';
