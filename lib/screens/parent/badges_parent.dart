@@ -5,6 +5,7 @@ import 'package:grounded/models/achievement.dart';
 import 'package:grounded/models/badge.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';
 import 'package:grounded/components/custom_scaffold.dart';
+import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/texts/text_styles.dart';
 
 class BadgesParent extends StatelessWidget {
@@ -17,27 +18,42 @@ class BadgesParent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-        body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Column(children: [
-              ScreenTitle(title: "Badges", isWhiteBackround: true),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Below are the achievements and badges of your kids this week",
-                  style: TextStyles.regular,
-                ),
+        body: Column(children: [
+      Container(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          children: [
+            ScreenTitle(title: "Badges", isWhiteBackround: true),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Below are the achievements and badges of your kids this week",
+                style: TextStyles.regular,
               ),
-              SizedBox(height: 40),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Badges",
-                  style: TextStyles.extraBold.copyWith(fontSize: 20),
-                ),
+            ),
+            SizedBox(height: 40),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Badges",
+                style: TextStyles.extraBold.copyWith(fontSize: 20),
               ),
-              _buildBadgeList(),
-              Align(
+            ),
+            _buildBadgeList(),
+          ],
+        ),
+      ),
+      Expanded(
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+            color: ThemeColors.primaryLight,
+          ),
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.all(20),
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "Achievements",
@@ -45,7 +61,11 @@ class BadgesParent extends StatelessWidget {
                 ),
               ),
               _buildAchievementsList()
-            ])));
+            ],
+          ),
+        ),
+      ),
+    ]));
   }
 
 // TODO: Call this widget when you need the list of badges

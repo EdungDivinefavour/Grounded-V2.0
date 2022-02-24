@@ -29,6 +29,7 @@ class CommunicationsState extends State<Communications> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+      bubblePosition: BackgroundBubblePosition.centerLeft,
       appBar: CustomAppBar(title: "Communications"),
       body: SingleChildScrollView(
         child: Padding(

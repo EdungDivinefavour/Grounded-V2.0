@@ -54,14 +54,14 @@ class _CustomNumPadState extends State<CustomNumPad> {
           borderRadius: BorderRadius.circular(15),
           color: buttonText == "Enter"
               ? ThemeColors.primary
-              : buttonText == "delete"
+              : buttonText == "Delete"
                   ? ThemeColors.error
                   : ThemeColors.lightBackground,
         ),
         height: MediaQuery.of(context).size.height / 14.75,
         width: MediaQuery.of(context).size.width / 3.85,
         alignment: Alignment.center,
-        child: buttonText == "delete"
+        child: buttonText == "Delete"
             ? SVGIcon(icon: AppIcons.backSpace, size: 35)
             : Text(buttonText,
                 style: TextStyles.semiBold.copyWith(
@@ -74,7 +74,7 @@ class _CustomNumPadState extends State<CustomNumPad> {
   }
 
   void _handleNumPressed(String buttonText) {
-    if (buttonText == "delete") {
+    if (buttonText == "Delete") {
       widget.onDelete?.call();
       return;
     } else if (buttonText == "Enter") {

@@ -18,7 +18,7 @@ class _SolveTaskEnglishState extends State<SolveTaskEnglish> {
   Widget build(BuildContext context) {
     return CustomScaffold(
         appBar: CustomAppBar(),
-        bubblePosition: BackgroundBubblePosition.centerRight,
+        bubblePosition: BackgroundBubblePosition.topRight,
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20),
         ));

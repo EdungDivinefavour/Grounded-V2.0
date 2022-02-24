@@ -44,7 +44,7 @@ class _AddTaskState extends State<AddTask> {
   Widget build(BuildContext context) {
     return CustomScaffold(
         appBar: CustomAppBar(title: "Add New Task"),
-        bubblePosition: BackgroundBubblePosition.none,
+        bubblePosition: BackgroundBubblePosition.topRight,
         body: Container(
           padding: const EdgeInsets.all(20),
           child: Column(

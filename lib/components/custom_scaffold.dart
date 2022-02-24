@@ -30,7 +30,7 @@ class CustomScaffold extends StatefulWidget {
     this.drawer,
     this.floatingActionButton,
     this.bottomNavigationBar,
-    this.bubblePosition,
+    this.bubblePosition = BackgroundBubblePosition.none,
     this.backgroundColor = ThemeColors.lightElement,
   });
 
@@ -41,42 +41,50 @@ class CustomScaffold extends StatefulWidget {
 class _CustomScaffoldState extends State<CustomScaffold> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: widget.appBar,
-      // body: Stack(
-      //   children: [SafeArea(child: widget.body), _buildBubble],
-      // ),
-      body: widget.body,
-      drawer: widget.drawer,
-      floatingActionButton: widget.floatingActionButton,
-      bottomNavigationBar: widget.bottomNavigationBar,
-      backgroundColor: widget.backgroundColor,
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: widget.appBar,
+          body: widget.body,
+          drawer: widget.drawer,
+          floatingActionButton: widget.floatingActionButton,
+          bottomNavigationBar: widget.bottomNavigationBar,
+          backgroundColor: widget.backgroundColor,
+        ),
+        _buildBubble
+      ],
     );
   }
 
   Widget get _buildBubble {
     if (widget.bubblePosition == BackgroundBubblePosition.bottomLeft) {
       return Positioned(
-        bottom: 0,
+        bottom: -30,
         left: 0,
-        child: SVGIcon(icon: AppIcons.bottomLeftBubble),
+        child: SVGIcon(
+            icon: AppIcons.bottomLeftBubble, color: ThemeColors.primary),
       );
     } else if (widget.bubblePosition == BackgroundBubblePosition.centerLeft) {
       return Positioned(
-        top: getDeviceHeight(context) / 2,
+        top: getDeviceHeight(context) / 3.5,
         left: 0,
-        child: SVGIcon(icon: AppIcons.centerLeftBubble),
+        child: SVGIcon(
+            icon: AppIcons.centerLeftBubble, color: ThemeColors.primary),
       );
     } else if (widget.bubblePosition == BackgroundBubblePosition.centerRight) {
       return Positioned(
-          top: getDeviceHeight(context) / 2,
+          top: getDeviceHeight(context) / 3.5,
           right: 0,
-          child: SVGIcon(icon: AppIcons.centerRightBubble));
-    } else if (widget.bubblePosition == BackgroundBubblePosition.none) {
-      return emptyWidget;
+          child: SVGIcon(
+              icon: AppIcons.centerRightBubble, color: ThemeColors.primary));
+    } else if (widget.bubblePosition == BackgroundBubblePosition.topRight) {
+      return Positioned(
+          top: 0,
+          right: 0,
+          child: SVGIcon(
+              icon: AppIcons.topRightBubble, color: ThemeColors.primary));
     }
 
-    return Positioned(
-        top: 0, right: 0, child: SVGIcon(icon: AppIcons.topRightBubble));
+    return emptyWidget;
   }
 }

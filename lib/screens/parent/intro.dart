@@ -30,6 +30,7 @@ class _IntroState extends State<Intro> {
     ];
 
     return CustomScaffold(
+      bubblePosition: BackgroundBubblePosition.topRight,
       body: CarouselSlider(
         options: CarouselOptions(
           height: MediaQuery.of(context).size.height,

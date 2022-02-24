@@ -18,7 +18,7 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      bubblePosition: BackgroundBubblePosition.none,
+      bubblePosition: BackgroundBubblePosition.centerRight,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: Column(

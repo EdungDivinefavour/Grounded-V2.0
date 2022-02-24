@@ -38,6 +38,7 @@ class _HomeChildState extends State<HomeChild> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+      bubblePosition: BackgroundBubblePosition.bottomLeft,
       body: SingleChildScrollView(
         child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),

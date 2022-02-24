@@ -28,6 +28,7 @@ class NotificationsState extends State<Notifications> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+      bubblePosition: BackgroundBubblePosition.topRight,
       appBar: CustomAppBar(title: "Notifications"),
       body: SingleChildScrollView(
         child: Padding(
