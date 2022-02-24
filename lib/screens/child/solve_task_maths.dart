@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
@@ -7,12 +8,16 @@ import 'package:grounded/components/custom_num_pad.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/components/empty_widget.dart';
 import 'package:grounded/components/svg_icon.dart';
+import 'package:grounded/constants/strings/paths.dart';
 import 'package:grounded/models/grounded_task/grounded_task.dart';
 import 'package:grounded/models/question/question.dart';
 import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/icons/app_icons.dart';
 import 'package:grounded/styles/texts/text_styles.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+
+const correctTone = "correct.mp3";
+const inCorrectTone = "incorrect.mp3";
 
 class SolveTaskMaths extends StatefulWidget {
   final GroundedTask task;
@@ -23,6 +28,8 @@ class SolveTaskMaths extends StatefulWidget {
 }
 
 class _SolveTaskMathsState extends State<SolveTaskMaths> {
+  final _audioPlayer = AudioCache(prefix: audioPath);
+
   int _currentQuestionIndex = 0;
   int _remainingTimeForQuestion = 10;
 
@@ -36,6 +43,7 @@ class _SolveTaskMathsState extends State<SolveTaskMaths> {
   void initState() {
     super.initState();
 
+    _initializeAudioPlayer();
     _setCurrentQuestionIndex();
     _startCountDownTimer();
   }
@@ -45,6 +53,7 @@ class _SolveTaskMathsState extends State<SolveTaskMaths> {
     super.dispose();
 
     _timer?.cancel();
+    _audioPlayer.clearAll();
   }
 
   @override
@@ -144,11 +153,18 @@ class _SolveTaskMathsState extends State<SolveTaskMaths> {
   }
 
   void _confirmAnswer() {
+    // if no answer was picked
     if (_pickedAnswer == null) {
       EasyLoading.showError("Please enter an answer to proceed");
       return;
     }
-    // PlaySound();
+
+    // Play audio after answer is selected
+    if (_pickedAnswer == _currentQuestion.correctAnswer) {
+      _audioPlayer.play(correctTone);
+    } else {
+      _audioPlayer.play(inCorrectTone);
+    }
 
     _currentQuestion.setHasBeenAnswered();
     if (widget.task.hasBeenCompleted) {
@@ -198,5 +214,9 @@ class _SolveTaskMathsState extends State<SolveTaskMaths> {
         _remainingTimeForQuestion = 10;
       }
     });
+  }
+
+  void _initializeAudioPlayer() {
+    _audioPlayer.loadAll([correctTone, inCorrectTone]);
   }
 }

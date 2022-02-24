@@ -31,6 +31,7 @@ dependencies:
   dots_indicator: 2.1.0
   open_mail_app: 0.4.4
   percent_indicator: 4.0.0
+  audioplayers: 0.20.1
 
 dev_dependencies:
   flutter_test:
@@ -57,6 +58,7 @@ flutter:
     - assets/images/intro/
     - assets/images/questions/
     - assets/data/
+    - assets/audio/
 
   fonts:
     - family: Poppins-Light
