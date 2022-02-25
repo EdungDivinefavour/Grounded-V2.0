@@ -29,7 +29,7 @@ class _CustomNumPadState extends State<CustomNumPad> {
           _buildNumRows(["1", "2", "3"]),
           _buildNumRows(["4", "5", "6"]),
           _buildNumRows(["7", "8", "9"]),
-          _buildNumRows(["delete", "0", "Enter"]),
+          _buildNumRows(["Delete", "0", "Enter"]),
         ],
       ),
     );

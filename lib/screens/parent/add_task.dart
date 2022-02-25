@@ -170,7 +170,7 @@ class _AddTaskState extends State<AddTask> {
       expectedCompletionTimestamp: compiledDateAndTime!.millisecondsSinceEpoch,
     );
 
-    await _firestoreService.storeTask(task: task);
+    await _firestoreService.storeTask(task: task, child: widget.child);
     await EasyLoading.showSuccess(
         "${_subjectController.text} task created and assigned to ${widget.child.name}");
 

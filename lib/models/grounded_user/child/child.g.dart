@@ -18,6 +18,9 @@ Child _$ChildFromJson(Map<String, dynamic> json) => Child(
       achievements: (json['achievements'] as List<dynamic>)
           .map((e) => Achievement.fromJson(e as Map<String, dynamic>))
           .toList(),
+      tasks: (json['tasks'] as List<dynamic>)
+          .map((e) => GroundedTask.fromJson(e as Map<String, dynamic>))
+          .toList(),
       userType: $enumDecodeNullable(_$UserTypeEnumMap, json['userType']) ??
           UserType.child,
       registrationTime: json['registrationTime'] as int? ?? 0,
@@ -45,6 +48,7 @@ Map<String, dynamic> _$ChildToJson(Child instance) => <String, dynamic>{
       'loginToken': instance.loginToken,
       'age': instance.age,
       'grade': instance.grade,
+      'tasks': instance.tasks.map((e) => e.toJson()).toList(),
       'achievements': instance.achievements.map((e) => e.toJson()).toList(),
     };
 

@@ -8,7 +8,6 @@ import 'package:grounded/services/local_storage/local_storage.dart';
 class FirebaseDocuments {
   static const parents = 'parents';
   static const children = 'children';
-  static const tasks = 'tasks';
 }
 
 class FirestoreService {
@@ -80,16 +79,6 @@ class FirestoreService {
             ));
   }
 
-  Future<List<GroundedTask>> getTasksForChild(Child child) {
-    return _firestore
-        .collection(FirebaseDocuments.tasks)
-        .where("childID", isEqualTo: child.id)
-        .get()
-        .then((snapshot) => GroundedTask.fromJsonList(
-              snapshot.docs.map((x) => x.data()).toList(),
-            ));
-  }
-
   Future<void> updateChildProfilePhoto({
     required String photoUrl,
     required String parentID,
@@ -102,11 +91,28 @@ class FirestoreService {
     await _localStorage.storeUserInfoToLocal(parent);
   }
 
-  Future<void> storeTask({required GroundedTask task}) async {
+  Future<void> storeTask({
+    required GroundedTask task,
+    required Child child,
+  }) async {
     await _firestore
-        .collection(FirebaseDocuments.tasks)
-        .doc(task.id)
-        .set(task.toJson());
+        .collection(FirebaseDocuments.children)
+        .doc(child.id)
+        .update({
+      "tasks": FieldValue.arrayUnion([task.toJson()])
+    });
+  }
+
+  Future<void> updateTasks({
+    required List<GroundedTask> tasks,
+    required Child child,
+  }) async {
+    await _firestore
+        .collection(FirebaseDocuments.children)
+        .doc(child.id)
+        .update({
+      "tasks": tasks.map((x) => x.toJson()).toList(),
+    });
   }
 
   Future<void> storeToken(

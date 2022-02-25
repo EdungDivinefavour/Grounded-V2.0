@@ -1,6 +1,7 @@
 import 'package:grounded/constants/enums/online_presence.dart';
 import 'package:grounded/constants/enums/user_type.dart';
 import 'package:grounded/models/achievement.dart';
+import 'package:grounded/models/grounded_task/grounded_task.dart';
 import 'package:grounded/models/grounded_user/grounded_user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -30,6 +31,7 @@ class Child extends GroundedUser {
   final String loginToken;
   final int age;
   final int grade;
+  final List<GroundedTask> tasks;
   final List<Achievement> achievements;
 
   Child({
@@ -42,6 +44,7 @@ class Child extends GroundedUser {
     required this.age,
     required this.grade,
     required this.achievements,
+    required this.tasks,
     this.userType = UserType.child,
     this.registrationTime = 0,
     this.lastSeenAt = 0,
@@ -80,6 +83,7 @@ class Child extends GroundedUser {
       age: age,
       grade: grade,
       achievements: [],
+      tasks: [],
     );
   }
 

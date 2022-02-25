@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:charts_flutter/flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -20,7 +18,7 @@ class Reports extends StatefulWidget {
 
 class _ReportsState extends State<Reports> {
   final _firestoreService = FirestoreService.instance;
-  List<Child> children = [];
+  final _children = <Child>[];
 
   @override
   void initState() {
@@ -61,64 +59,47 @@ class _ReportsState extends State<Reports> {
   }
 
   List<Series<DailyDataPoint, int>> get _chartData {
-    final random = Random();
-
-    final data = [
-      DailyDataPoint(dayOfWeek: 1, completedTasks: random.nextInt(10)),
-      DailyDataPoint(dayOfWeek: 2, completedTasks: random.nextInt(10)),
-      DailyDataPoint(dayOfWeek: 3, completedTasks: random.nextInt(10)),
-      DailyDataPoint(dayOfWeek: 4, completedTasks: random.nextInt(10)),
-      DailyDataPoint(dayOfWeek: 5, completedTasks: random.nextInt(10)),
-      DailyDataPoint(dayOfWeek: 6, completedTasks: random.nextInt(10)),
-      DailyDataPoint(dayOfWeek: 7, completedTasks: random.nextInt(10)),
-    ];
-
-    final data2 = [
-      DailyDataPoint(dayOfWeek: 1, completedTasks: random.nextInt(10)),
-      DailyDataPoint(dayOfWeek: 2, completedTasks: random.nextInt(10)),
-      DailyDataPoint(dayOfWeek: 3, completedTasks: random.nextInt(10)),
-      DailyDataPoint(dayOfWeek: 4, completedTasks: random.nextInt(10)),
-      DailyDataPoint(dayOfWeek: 5, completedTasks: random.nextInt(10)),
-      DailyDataPoint(dayOfWeek: 6, completedTasks: random.nextInt(10)),
-      DailyDataPoint(dayOfWeek: 7, completedTasks: random.nextInt(10)),
-    ];
-
-    final data3 = [
-      DailyDataPoint(dayOfWeek: 1, completedTasks: random.nextInt(10)),
-      DailyDataPoint(dayOfWeek: 2, completedTasks: random.nextInt(10)),
-      DailyDataPoint(dayOfWeek: 3, completedTasks: random.nextInt(10)),
-      DailyDataPoint(dayOfWeek: 4, completedTasks: random.nextInt(10)),
-      DailyDataPoint(dayOfWeek: 5, completedTasks: random.nextInt(10)),
-      DailyDataPoint(dayOfWeek: 6, completedTasks: random.nextInt(10)),
-      DailyDataPoint(dayOfWeek: 7, completedTasks: random.nextInt(10)),
-    ];
-    // final List<Series<DailyDataPoint, int>> _chartPoints = [];
+    // final data3 = [
+    //   DailyDataPoint(dayOfWeek: 1, completedTasks: random.nextInt(10)),
+    //   DailyDataPoint(dayOfWeek: 2, completedTasks: random.nextInt(10)),
+    //   DailyDataPoint(dayOfWeek: 3, completedTasks: random.nextInt(10)),
+    //   DailyDataPoint(dayOfWeek: 4, completedTasks: random.nextInt(10)),
+    //   DailyDataPoint(dayOfWeek: 5, completedTasks: random.nextInt(10)),
+    //   DailyDataPoint(dayOfWeek: 6, completedTasks: random.nextInt(10)),
+    //   DailyDataPoint(dayOfWeek: 7, completedTasks: random.nextInt(10)),
+    // ];
+    final List<Series<DailyDataPoint, int>> points = [];
     // chartPoints.add(value);
-    return [
-      Series<DailyDataPoint, int>(
-        id: 'Sales',
-        colorFn: (_, __) => MaterialPalette.blue.shadeDefault,
-        domainFn: (DailyDataPoint assignment, _) => assignment.dayOfWeek,
-        measureFn: (DailyDataPoint assignment, _) => assignment.completedTasks,
-        data: data,
-      ),
-      Series<DailyDataPoint, int>(
-        id: 'Sales',
-        colorFn: (_, __) => MaterialPalette.red.shadeDefault,
-        domainFn: (DailyDataPoint assignment, _) => assignment.dayOfWeek,
-        measureFn: (DailyDataPoint assignment, _) => assignment.completedTasks,
-        data: data2,
-      ),
-      Series<DailyDataPoint, int>(
-        id: 'Sales',
-        colorFn: (_, __) => MaterialPalette.green.shadeDefault,
-        domainFn: (DailyDataPoint assignment, _) => assignment.dayOfWeek,
-        measureFn: (DailyDataPoint assignment, _) => assignment.completedTasks,
-        data: data3,
-      )
-    ];
 
-    // return _chartPoints;
+    // final xx =  _children.map((x)  =>
+    //   // x.
+    // ).toList();
+
+    // return [
+    //   Series<DailyDataPoint, int>(
+    //     id: 'Sales',
+    //     colorFn: (_, __) => MaterialPalette.blue.shadeDefault,
+    //     domainFn: (DailyDataPoint assignment, _) => assignment.dayOfWeek,
+    //     measureFn: (DailyDataPoint assignment, _) => assignment.completedTasks,
+    //     data: data,
+    //   ),
+    //   Series<DailyDataPoint, int>(
+    //     id: 'Sales',
+    //     colorFn: (_, __) => MaterialPalette.red.shadeDefault,
+    //     domainFn: (DailyDataPoint assignment, _) => assignment.dayOfWeek,
+    //     measureFn: (DailyDataPoint assignment, _) => assignment.completedTasks,
+    //     data: data2,
+    //   ),
+    //   Series<DailyDataPoint, int>(
+    //     id: 'Sales',
+    //     colorFn: (_, __) => MaterialPalette.green.shadeDefault,
+    //     domainFn: (DailyDataPoint assignment, _) => assignment.dayOfWeek,
+    //     measureFn: (DailyDataPoint assignment, _) => assignment.completedTasks,
+    //     data: data3,
+    //   )
+    // ];
+
+    return points;
   }
 
   final _customTickFormatter = BasicNumericTickFormatterSpec((num? value) {
@@ -147,7 +128,7 @@ class _ReportsState extends State<Reports> {
 
     EasyLoading.dismiss();
     setState(() {
-      children = result;
+      _children.addAll(result);
     });
   }
 }

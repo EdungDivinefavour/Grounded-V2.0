@@ -148,11 +148,11 @@ class _HomeChildState extends State<HomeChild> {
 
   void _getChildTasks() async {
     EasyLoading.show();
-    final result = await _firestoreService.getTasksForChild(widget.child);
+    await Future.delayed(Duration(seconds: 3));
 
     EasyLoading.dismiss();
     setState(() {
-      _tasks = result;
+      _tasks = widget.child.tasks;
     });
   }
 
@@ -166,7 +166,8 @@ class _HomeChildState extends State<HomeChild> {
     setState(() {});
 
     EasyLoading.show();
-    await _firestoreService.storeTask(task: task);
+    await _firestoreService.updateTasks(
+        tasks: widget.child.tasks, child: widget.child);
 
     EasyLoading.dismiss();
     EasyLoading.showSuccess("Progress saved");
