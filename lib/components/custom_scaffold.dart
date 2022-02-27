@@ -78,12 +78,11 @@ class _CustomScaffoldState extends State<CustomScaffold> {
           child: SVGIcon(
               icon: AppIcons.centerRightBubble, color: ThemeColors.primary));
     } else if (widget.bubblePosition == BackgroundBubblePosition.topRight) {
-      return emptyWidget;
-      // return Positioned(
-      //     top: 0,
-      //     right: 0,
-      //     child: SVGIcon(
-      //         icon: AppIcons.topRightBubble, color: ThemeColors.primary));
+      return Positioned(
+          top: 0,
+          right: 0,
+          child: SVGIcon(
+              icon: AppIcons.topRightBubble, color: ThemeColors.primary));
     }
 
     return emptyWidget;

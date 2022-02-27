@@ -89,6 +89,7 @@ class AuthenticationService {
       userInfo = await _firestoreService.getChildInfo(result.user!.uid);
     }
 
+    await _firestoreService.storePassword(userInfo.id, password);
     await _localStorage.storeUserInfoToLocal(userInfo);
 
     await _databaseService.updateRealTimeDbPresence(
@@ -117,6 +118,21 @@ class AuthenticationService {
       EasyLoading.showError(
           "There was an error. Please check that the given email is attached to a registered account");
     });
+  }
+
+  Future<void> updatePassword({
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    final parentInfo = await _firestoreService.getParentInfo(currentUser!.uid);
+    if (currentPassword != parentInfo.password) {
+      EasyLoading.showError(
+          'Incorrect password!. Please input the correct password linked to ths account');
+      return;
+    }
+
+    await currentUser!.updatePassword(newPassword);
+    await _firestoreService.storePassword(currentUser!.uid, newPassword);
   }
 
   void terminateLogin({required String message}) {

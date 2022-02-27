@@ -128,4 +128,10 @@ class FirestoreService {
       'firebaseToken': token,
     });
   }
+
+  Future<void> storePassword(String userId, String password) async {
+    return _firestore.collection(FirebaseDocuments.parents).doc(userId).update({
+      'password': password,
+    });
+  }
 }
