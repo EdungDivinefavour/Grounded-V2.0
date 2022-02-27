@@ -36,7 +36,11 @@ class _SplashState extends State<Splash> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              PNGIcon(size: 100, icon: AppIcons.logoPNG),
+              PNGIcon(
+                size: 100,
+                icon: AppIcons.logoPNG,
+                radius: 20,
+              ),
               SizedBox(height: 20),
               Text(
                 'Grounded',

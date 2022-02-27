@@ -8,23 +8,26 @@ class AchievedBadge extends StatelessWidget {
   final Badge badge;
   final bool showTitle;
   final double? size;
+  final double? titleFontSize;
 
-  AchievedBadge({required this.badge, this.size = 65, this.showTitle = true});
+  AchievedBadge({
+    required this.badge,
+    this.size = 65,
+    this.titleFontSize = 13,
+    this.showTitle = true,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: showTitle ? EdgeInsets.only(right: 40) : EdgeInsets.zero,
-      child: Column(
-        children: [
-          PNGIcon(icon: badge.image, pngSource: PNGSource.images, size: size),
-          showTitle ? SizedBox(height: 7.5) : emptyWidget,
-          showTitle
-              ? Text(badge.name,
-                  style: TextStyles.smallBold.copyWith(fontSize: 13))
-              : emptyWidget
-        ],
-      ),
+    return Column(
+      children: [
+        PNGIcon(icon: badge.image, pngSource: PNGSource.images, size: size),
+        showTitle ? SizedBox(height: 7.5) : emptyWidget,
+        showTitle
+            ? Text(badge.name,
+                style: TextStyles.smallBold.copyWith(fontSize: titleFontSize))
+            : emptyWidget
+      ],
     );
   }
 }

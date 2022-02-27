@@ -57,7 +57,7 @@ class _InputFieldState extends State<InputField> {
             Container(
               height: 50,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0),
+                borderRadius: BorderRadius.circular(10.0),
                 color: ThemeColors.lightBackground,
               ),
               child: InkWell(
@@ -77,7 +77,7 @@ class _InputFieldState extends State<InputField> {
                       ),
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.only(
-                            left: widget.leftIcon == null ? 10 : 50),
+                            left: widget.leftIcon == null ? 15 : 50),
                         border: InputBorder.none,
                         focusedBorder: InputBorder.none,
                         enabledBorder: InputBorder.none,

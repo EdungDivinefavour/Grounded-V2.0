@@ -41,23 +41,25 @@ class _HomeChildState extends State<HomeChild> {
       bubblePosition: BackgroundBubblePosition.bottomLeft,
       body: SingleChildScrollView(
         child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Column(children: [
-              ScreenTitle(
-                  title: "Hey " + shortenToFirstOnly(widget.child.name),
-                  subTitle: "Ready to make your parents proud today?",
-                  isWhiteBackround: true),
-              SizedBox(height: 40),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Pending Tasks",
-                  style: TextStyles.extraBold.copyWith(fontSize: 20),
-                ),
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Column(children: [
+            ScreenTitle(
+              title: "Hey " + shortenToFirstOnly(widget.child.name),
+              subTitle: "Ready to make your parents proud today?",
+              isWhiteBackround: true,
+            ),
+            SizedBox(height: 40),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Pending Tasks",
+                style: TextStyles.extraBold.copyWith(fontSize: 20),
               ),
-              SizedBox(height: 20),
-              _buildTasksList(),
-            ])),
+            ),
+            SizedBox(height: 20),
+            _buildTasksList(),
+          ]),
+        ),
       ),
     );
   }

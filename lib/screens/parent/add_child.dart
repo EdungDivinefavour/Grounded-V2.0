@@ -161,8 +161,6 @@ class _AddChildState extends State<AddChild> {
       grade: _sliderValue.toInt(),
     );
 
-    // This signs in the parent again  because firebase auth by default signs in a new user upon creation
-    // TODO: Make firebase functions to create user instead
     await _authService.loginUser(
         email: widget.parent.email,
         password: widget.parent.password,

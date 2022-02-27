@@ -8,21 +8,28 @@ class PNGIcon extends StatelessWidget {
   final double? size;
   final Color? color;
   final PNGSource? pngSource;
+  final double? radius;
 
   const PNGIcon({
     required this.icon,
     this.pngSource = PNGSource.icons,
     this.size,
     this.color,
+    this.radius,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      '${pngSource == PNGSource.icons ? iconPath : imagePath}$icon',
-      height: size,
-      width: size,
-      color: color,
+    return ClipRRect(
+      borderRadius: BorderRadius.all(
+        Radius.circular(radius == null ? 0 : radius!),
+      ),
+      child: Image.asset(
+        '${pngSource == PNGSource.icons ? iconPath : imagePath}$icon',
+        height: size,
+        width: size,
+        color: color,
+      ),
     );
   }
 }
