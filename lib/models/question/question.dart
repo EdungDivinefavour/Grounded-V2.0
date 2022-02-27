@@ -1,6 +1,7 @@
 import 'package:grounded/constants/enums/english_type.dart';
 import 'package:grounded/constants/enums/math_type.dart';
 import 'package:grounded/constants/enums/subject_type.dart';
+import 'package:grounded/models/question/english/word/word.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'question.g.dart';
@@ -14,6 +15,8 @@ class Question {
   String? pickedAnswer;
   String? correctAnswer;
   int? completedTimestamp;
+  List<String>? suggestedAnswers;
+  Word? word;
 
   bool hasBeenAnswered;
 
@@ -23,11 +26,13 @@ class Question {
     required this.subjectType,
     this.hasBeenAnswered = false,
     this.displayedQuestion,
+    this.suggestedAnswers,
     this.pickedAnswer,
     this.correctAnswer,
     this.completedTimestamp,
     this.mathType,
     this.englishType,
+    this.word,
   });
 
   void setHasBeenAnswered() {

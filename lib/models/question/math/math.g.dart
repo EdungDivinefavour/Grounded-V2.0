@@ -11,20 +11,28 @@ Math _$MathFromJson(Map<String, dynamic> json) => Math(
       subjectType:
           $enumDecodeNullable(_$SubjectTypeEnumMap, json['subjectType']) ??
               SubjectType.maths,
+      displayedQuestion: json['displayedQuestion'] as String?,
+      pickedAnswer: json['pickedAnswer'] as String?,
+      completedTimestamp: json['completedTimestamp'] as int?,
     )
-      ..displayedQuestion = json['displayedQuestion'] as String?
-      ..pickedAnswer = json['pickedAnswer'] as String?
-      ..correctAnswer = json['correctAnswer'] as String?
-      ..completedTimestamp = json['completedTimestamp'] as int?
-      ..hasBeenAnswered = json['hasBeenAnswered'] as bool;
+      ..suggestedAnswers = (json['suggestedAnswers'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList()
+      ..word = json['word'] == null
+          ? null
+          : Word.fromJson(json['word'] as Map<String, dynamic>)
+      ..hasBeenAnswered = json['hasBeenAnswered'] as bool
+      ..correctAnswer = json['correctAnswer'] as String?;
 
 Map<String, dynamic> _$MathToJson(Math instance) => <String, dynamic>{
+      'suggestedAnswers': instance.suggestedAnswers,
+      'word': instance.word?.toJson(),
+      'hasBeenAnswered': instance.hasBeenAnswered,
+      'subjectType': _$SubjectTypeEnumMap[instance.subjectType],
       'displayedQuestion': instance.displayedQuestion,
       'pickedAnswer': instance.pickedAnswer,
       'correctAnswer': instance.correctAnswer,
       'completedTimestamp': instance.completedTimestamp,
-      'hasBeenAnswered': instance.hasBeenAnswered,
-      'subjectType': _$SubjectTypeEnumMap[instance.subjectType],
       'mathType': _$MathTypeEnumMap[instance.mathType],
     };
 

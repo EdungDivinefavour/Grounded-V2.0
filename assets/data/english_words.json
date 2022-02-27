@@ -1,12 +1,14 @@
 [
     {
-        "word": "Lion",
-        "type": "animal",
-        "image": "https://blablabla"
+        "text": "trumpet",
+        "type": "thing"
     },
     {
-        "word": "Lion",
-        "type": "animal",
-        "image": "https://blablabla"
+        "text": "house",
+        "type": "thing"
+    },
+    {
+        "text": "ball",
+        "type": "thing"
     }
 ]

@@ -59,79 +59,80 @@ class _SolveTaskMathsState extends State<SolveTaskMaths> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-        appBar: CustomAppBar(),
-        bubblePosition: BackgroundBubblePosition.centerRight,
-        body: SizedBox(
-          child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Column(children: [
-                Row(
-                  children: [
-                    Spacer(),
-                    SVGIcon(
-                        icon: AppIcons.clock,
-                        size: 25,
-                        color: _remainingTimeForQuestion > 5
-                            ? ThemeColors.darkBackground
-                            : ThemeColors.error),
-                    SizedBox(width: 5),
-                    Text(
-                        '0:${_remainingTimeForQuestion == 10 ? "" : 0}$_remainingTimeForQuestion',
-                        style: TextStyles.smallBold
-                            .copyWith(fontSize: 18)
-                            .copyWith(
-                                color: _remainingTimeForQuestion > 5
-                                    ? ThemeColors.darkBackground
-                                    : ThemeColors.error)),
-                  ],
-                ),
-                SizedBox(height: 30),
-                Row(
-                  children: [
-                    SizedBox(width: 5),
-                    Text(widget.task.completedQuestionsRatio,
-                        style: TextStyles.smallBold.copyWith(fontSize: 20)),
-                    Spacer(),
-                    SVGIcon(icon: AppIcons.star, size: 25),
-                    SizedBox(width: 6),
-                    Text('${widget.task.totalPointsGotten} points',
-                        style: TextStyles.smallBold.copyWith(fontSize: 20)),
-                  ],
-                ),
-                SizedBox(height: 15),
-                LinearPercentIndicator(
-                  barRadius: Radius.circular(5),
-                  lineHeight: 8.0,
-                  percent: widget.task.completedPercentage / 100,
-                  progressColor: ThemeColors.primary,
-                  backgroundColor: ThemeColors.primaryLight,
-                ),
-                SizedBox(height: 40),
-                Text('Answer this question',
-                    style: TextStyles.bold.copyWith(fontSize: 18)),
-                Text(_currentQuestion.displayedQuestion!,
-                    style: TextStyles.smallBold.copyWith(
-                        fontSize: _currentQuestion.displayedQuestion!.length < 8
-                            ? 80
-                            : 60)),
-                Spacer(),
-                _currentQuestion.pickedAnswer == null
-                    ? emptyWidget
-                    : Container(
-                        padding: EdgeInsets.only(right: 30),
-                        alignment: Alignment.centerRight,
-                        child: Text(
-                          _currentQuestion.pickedAnswer!,
-                          style: TextStyles.semiBold.copyWith(fontSize: 40),
-                        )),
-                Spacer(),
-                CustomNumPad(
-                  onKeyPressed: _appendToAnswer,
-                  onEnter: _confirmAnswer,
-                  onDelete: _deleteFromAnswer,
-                )
-              ])),
-        ));
+      appBar: CustomAppBar(),
+      bubblePosition: BackgroundBubblePosition.centerRight,
+      body: SizedBox(
+        child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(children: [
+              Row(
+                children: [
+                  Spacer(),
+                  SVGIcon(
+                      icon: AppIcons.clock,
+                      size: 25,
+                      color: _remainingTimeForQuestion > 5
+                          ? ThemeColors.darkBackground
+                          : ThemeColors.error),
+                  SizedBox(width: 5),
+                  Text(
+                      '0:${_remainingTimeForQuestion == 10 ? "" : 0}$_remainingTimeForQuestion',
+                      style: TextStyles.smallBold
+                          .copyWith(fontSize: 18)
+                          .copyWith(
+                              color: _remainingTimeForQuestion > 5
+                                  ? ThemeColors.darkBackground
+                                  : ThemeColors.error)),
+                ],
+              ),
+              SizedBox(height: 30),
+              Row(
+                children: [
+                  SizedBox(width: 5),
+                  Text(widget.task.completedQuestionsRatio,
+                      style: TextStyles.smallBold.copyWith(fontSize: 20)),
+                  Spacer(),
+                  SVGIcon(icon: AppIcons.star, size: 25),
+                  SizedBox(width: 6),
+                  Text('${widget.task.totalPointsGotten} points',
+                      style: TextStyles.smallBold.copyWith(fontSize: 20)),
+                ],
+              ),
+              SizedBox(height: 15),
+              LinearPercentIndicator(
+                barRadius: Radius.circular(5),
+                lineHeight: 8.0,
+                percent: widget.task.completedPercentage / 100,
+                progressColor: ThemeColors.primary,
+                backgroundColor: ThemeColors.primaryLight,
+              ),
+              SizedBox(height: 40),
+              Text('Answer this question',
+                  style: TextStyles.bold.copyWith(fontSize: 18)),
+              Text(_currentQuestion.displayedQuestion!,
+                  style: TextStyles.smallBold.copyWith(
+                      fontSize: _currentQuestion.displayedQuestion!.length < 8
+                          ? 80
+                          : 60)),
+              Spacer(),
+              _currentQuestion.pickedAnswer == null
+                  ? emptyWidget
+                  : Container(
+                      padding: EdgeInsets.only(right: 30),
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        _currentQuestion.pickedAnswer!,
+                        style: TextStyles.semiBold.copyWith(fontSize: 40),
+                      )),
+              Spacer(),
+              CustomNumPad(
+                onKeyPressed: _appendToAnswer,
+                onEnter: _confirmAnswer,
+                onDelete: _deleteFromAnswer,
+              )
+            ])),
+      ),
+    );
   }
 
   Question _getCurrentQuestion() {
@@ -141,15 +142,13 @@ class _SolveTaskMathsState extends State<SolveTaskMaths> {
   void _appendToAnswer(String value) {
     if (_pickedAnswer == null) {
       _pickedAnswer = value;
-      setState(() {
-        _currentQuestion.pickedAnswer = _pickedAnswer;
-      });
     } else {
       _pickedAnswer = _pickedAnswer! + value;
-      setState(() {
-        _currentQuestion.pickedAnswer = _pickedAnswer;
-      });
     }
+
+    setState(() {
+      _currentQuestion.pickedAnswer = _pickedAnswer;
+    });
   }
 
   void _confirmAnswer() {
@@ -202,7 +201,6 @@ class _SolveTaskMathsState extends State<SolveTaskMaths> {
       if (_remainingTimeForQuestion == 0) {
         _appendToAnswer("");
         _confirmAnswer();
-        _remainingTimeForQuestion = 10;
       }
     });
   }

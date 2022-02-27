@@ -8,13 +8,11 @@ part of 'word.dart';
 
 Word _$WordFromJson(Map<String, dynamic> json) => Word(
       text: json['text'] as String,
-      imageUrl: json['imageUrl'] as String,
-      wordType: $enumDecode(_$WordTypeEnumMap, json['wordType']),
+      type: $enumDecode(_$WordTypeEnumMap, json['type']),
     );
 
 Map<String, dynamic> _$WordToJson(Word instance) => <String, dynamic>{
-      'imageUrl': instance.imageUrl,
-      'wordType': _$WordTypeEnumMap[instance.wordType],
+      'type': _$WordTypeEnumMap[instance.type],
       'text': instance.text,
     };
 
@@ -31,4 +29,5 @@ const _$WordTypeEnumMap = {
   WordType.country: 'country',
   WordType.vehicle: 'vehicle',
   WordType.household: 'household',
+  WordType.thing: 'thing',
 };

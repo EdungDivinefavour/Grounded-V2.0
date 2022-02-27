@@ -12,7 +12,8 @@ enum WordType {
   fruits,
   country,
   vehicle,
-  household
+  household,
+  thing,
 }
 
 extension WordTypeExtension on WordType {

@@ -85,11 +85,11 @@ class AuthenticationService {
     GroundedUser userInfo;
     if (userType == UserType.parent) {
       userInfo = await _firestoreService.getParentInfo(result.user!.uid);
+      await _firestoreService.storePassword(userInfo.id, password);
     } else {
       userInfo = await _firestoreService.getChildInfo(result.user!.uid);
     }
 
-    await _firestoreService.storePassword(userInfo.id, password);
     await _localStorage.storeUserInfoToLocal(userInfo);
 
     await _databaseService.updateRealTimeDbPresence(

@@ -10,12 +10,18 @@ Question _$QuestionFromJson(Map<String, dynamic> json) => Question(
       subjectType: $enumDecode(_$SubjectTypeEnumMap, json['subjectType']),
       hasBeenAnswered: json['hasBeenAnswered'] as bool? ?? false,
       displayedQuestion: json['displayedQuestion'] as String?,
+      suggestedAnswers: (json['suggestedAnswers'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       pickedAnswer: json['pickedAnswer'] as String?,
       correctAnswer: json['correctAnswer'] as String?,
       completedTimestamp: json['completedTimestamp'] as int?,
       mathType: $enumDecodeNullable(_$MathTypeEnumMap, json['mathType']),
       englishType:
           $enumDecodeNullable(_$EnglishTypeEnumMap, json['englishType']),
+      word: json['word'] == null
+          ? null
+          : Word.fromJson(json['word'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
@@ -26,6 +32,8 @@ Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
       'pickedAnswer': instance.pickedAnswer,
       'correctAnswer': instance.correctAnswer,
       'completedTimestamp': instance.completedTimestamp,
+      'suggestedAnswers': instance.suggestedAnswers,
+      'word': instance.word?.toJson(),
       'hasBeenAnswered': instance.hasBeenAnswered,
     };
 

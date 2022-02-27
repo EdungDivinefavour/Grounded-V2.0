@@ -5,14 +5,12 @@ part 'word.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Word {
-  final String imageUrl;
-  final WordType wordType;
+  final WordType type;
   String text;
 
   Word({
     required this.text,
-    required this.imageUrl,
-    required this.wordType,
+    required this.type,
   }) {
     text = text.toUpperCase();
   }

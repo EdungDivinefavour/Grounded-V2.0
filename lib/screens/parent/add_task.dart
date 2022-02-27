@@ -5,6 +5,7 @@ import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/components/empty_widget.dart';
 import 'package:grounded/components/input_field.dart';
+import 'package:grounded/constants/enums/english_type.dart';
 import 'package:grounded/constants/enums/math_type.dart';
 import 'package:grounded/constants/enums/subject_type.dart';
 import 'package:grounded/models/grounded_task/grounded_task.dart';
@@ -160,13 +161,19 @@ class _AddTaskState extends State<AddTask> {
       return;
     }
     EasyLoading.show();
-
     final task = GroundedTask.newTask(
       name: _taskNameController.text,
       parentID: widget.parent.id,
       childID: widget.child.id,
       subjectType: _subjectController.text.toSubjectType,
-      mathTypeToCreate: _mathTypeController.text.toMathType,
+      mathTypeToCreate:
+          _subjectController.text.toSubjectType == SubjectType.maths
+              ? _mathTypeController.text.toMathType
+              : null,
+      englishTypeToCreate:
+          _subjectController.text.toSubjectType == SubjectType.maths
+              ? null
+              : EnglishType.general,
       expectedCompletionTimestamp: compiledDateAndTime!.millisecondsSinceEpoch,
     );
 
