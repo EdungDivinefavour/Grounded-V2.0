@@ -1,6 +1,8 @@
+import 'package:grounded/constants/enums/badge_type.dart';
 import 'package:grounded/constants/enums/online_presence.dart';
 import 'package:grounded/constants/enums/user_type.dart';
 import 'package:grounded/models/achievement.dart';
+import 'package:grounded/models/badge.dart';
 import 'package:grounded/models/grounded_task/grounded_task.dart';
 import 'package:grounded/models/grounded_user/grounded_user.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -82,7 +84,33 @@ class Child extends GroundedUser {
       loginToken: loginToken,
       age: age,
       grade: grade,
-      achievements: [],
+      achievements: [
+        Achievement(
+          title: name + " completed 50 english assignments",
+          badge: Badge(type: BadgeType.veteran),
+          dateEarned: DateTime.now().millisecondsSinceEpoch,
+        ),
+        Achievement(
+          title: name + " completed 10 maths assignments",
+          badge: Badge(type: BadgeType.champion),
+          dateEarned: DateTime.now().millisecondsSinceEpoch,
+        ),
+        Achievement(
+          title: name + " completed 10 english assignments",
+          badge: Badge(type: BadgeType.expert),
+          dateEarned: DateTime.now().millisecondsSinceEpoch,
+        ),
+        Achievement(
+          title: name + " completed 5 tasks",
+          badge: Badge(type: BadgeType.learner),
+          dateEarned: DateTime.now().millisecondsSinceEpoch,
+        ),
+        Achievement(
+          title: name + " completed 3 tasks",
+          badge: Badge(type: BadgeType.student),
+          dateEarned: DateTime.now().millisecondsSinceEpoch,
+        )
+      ],
       tasks: [],
     );
   }
@@ -92,5 +120,6 @@ class Child extends GroundedUser {
   static List<Child> fromJsonList(List<dynamic>? list) =>
       list?.map((e) => Child.fromJson(e)).toList() ?? [];
 
+  @override
   Map<String, dynamic> toJson() => _$ChildToJson(this);
 }

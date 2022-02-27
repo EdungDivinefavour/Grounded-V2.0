@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grounded/components/svg_icon.dart';
+import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/texts/text_styles.dart';
 
 class CustomBottomBar extends StatelessWidget {
@@ -35,7 +36,8 @@ class CustomBottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Padding(
+    return Container(
+      color: ThemeColors.bottomBarColor,
       padding: margin,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -71,5 +71,7 @@ class Parent extends GroundedUser {
   }
 
   factory Parent.fromJson(Map<String, dynamic> json) => _$ParentFromJson(json);
+
+  @override
   Map<String, dynamic> toJson() => _$ParentToJson(this);
 }

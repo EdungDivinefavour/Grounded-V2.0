@@ -61,5 +61,7 @@ class English extends Question {
 
   factory English.fromJson(Map<String, dynamic> json) =>
       _$EnglishFromJson(json);
+
+  @override
   Map<String, dynamic> toJson() => _$EnglishToJson(this);
 }

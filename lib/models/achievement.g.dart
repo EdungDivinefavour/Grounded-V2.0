@@ -9,7 +9,7 @@ part of 'achievement.dart';
 Achievement _$AchievementFromJson(Map<String, dynamic> json) => Achievement(
       title: json['title'] as String,
       badge: Badge.fromJson(json['badge'] as Map<String, dynamic>),
-      dateEarned: json['dateEarned'] as int?,
+      dateEarned: json['dateEarned'] as int,
     );
 
 Map<String, dynamic> _$AchievementToJson(Achievement instance) =>

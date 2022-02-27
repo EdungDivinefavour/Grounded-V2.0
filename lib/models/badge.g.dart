@@ -7,12 +7,10 @@ part of 'badge.dart';
 // **************************************************************************
 
 Badge _$BadgeFromJson(Map<String, dynamic> json) => Badge(
-      name: json['name'] as String,
       type: $enumDecode(_$BadgeTypeEnumMap, json['type']),
     );
 
 Map<String, dynamic> _$BadgeToJson(Badge instance) => <String, dynamic>{
-      'name': instance.name,
       'type': _$BadgeTypeEnumMap[instance.type],
     };
 

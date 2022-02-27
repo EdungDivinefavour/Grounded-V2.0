@@ -95,13 +95,14 @@ class _HomeParentState extends State<HomeParent> {
           ],
         ),
         SizedBox(height: 20),
-        FlatButton(
+        TextButton(
             onPressed: () {
               _openAddTaskScreen(child);
             },
             child: Text(
               'Assign New Task',
-              style: TextStyles.bold.copyWith(fontSize: 16),
+              style: TextStyles.bold
+                  .copyWith(fontSize: 16, color: ThemeColors.darkElement),
             )),
         Divider(height: 5, thickness: 1)
       ],

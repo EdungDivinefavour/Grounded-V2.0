@@ -149,16 +149,17 @@ class _AddChildState extends State<AddChild> {
     EasyLoading.show();
     final parentID = _authService.currentUser!.uid;
     final loginToken = generateLoginToken;
-    final email = loginToken + "fromParent" + parentID + "@gmail.com";
+    final email = '${loginToken}fromParent$parentID@gmail.com';
 
     final child = await _authService.registerChild(
-        email: email,
-        password: loginToken,
-        loginToken: loginToken,
-        name: _nameController.text,
-        parentID: _authService.currentUser!.uid,
-        age: int.parse(_ageController.text),
-        grade: _sliderValue.toInt());
+      email: email,
+      password: 'x$loginToken',
+      loginToken: loginToken,
+      name: _nameController.text,
+      parentID: _authService.currentUser!.uid,
+      age: int.parse(_ageController.text),
+      grade: _sliderValue.toInt(),
+    );
 
     // This signs in the parent again  because firebase auth by default signs in a new user upon creation
     // TODO: Make firebase functions to create user instead

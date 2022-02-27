@@ -67,5 +67,6 @@ class Math extends Question {
   }
 
   factory Math.fromJson(Map<String, dynamic> json) => _$MathFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$MathToJson(this);
 }

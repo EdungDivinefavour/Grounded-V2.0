@@ -119,9 +119,9 @@ class _BadgesChildState extends State<BadgesChild> {
     return Container();
   }
 
-  Widget _buildLatestBadge() {
-    return AchievedBadge(badge: _achievements.first.badge);
-  }
+  // Widget _buildLatestBadge() {
+  //   return AchievedBadge(badge: _achievements.first.badge);
+  // }
 
   void _getAchievements() {
     _achievements = widget.child.achievements.reversed.toList();

@@ -27,10 +27,13 @@ class GroundedTask {
   String get taskIcon => _buildTaskIcon;
 
   List<Question> get completedQuestions =>
-      questions.where((x) => x.hasBeenAnswered).toList();
+      questions.any((x) => x.hasBeenAnswered)
+          ? questions.where((x) => x.hasBeenAnswered).toList()
+          : [];
 
-  int get totalPointsGotten =>
-      completedQuestions.where((x) => x.wasAnsweredCorrectly).length * 10;
+  int get totalPointsGotten => completedQuestions.isEmpty
+      ? 0
+      : completedQuestions.where((x) => x.wasAnsweredCorrectly).length * 10;
 
   double get completedPercentage =>
       (completedQuestions.length / questions.length) * 100;
@@ -38,14 +41,14 @@ class GroundedTask {
       "${completedQuestions.length}/${questions.length}";
 
   bool get hasBeenCompleted => completedQuestions.length == questions.length;
-  int? get completionTimestamp => completedQuestions.last.completedTimestap;
+  Question? get lastCompletedQuestion =>
+      completedQuestions.isEmpty ? null : completedQuestions.last;
+
+  int? get completionTimestamp => lastCompletedQuestion?.completedTimestamp;
 
   bool get wasCompletedThisWeek => completionTimestamp == null
       ? false
       : completionTimestamp?.toDateTime.getWeek == DateTime.now().getWeek;
-
-  Question? get lastCompletedQuestion =>
-      completedQuestions.isEmpty ? null : completedQuestions.last;
 
   GroundedTask({
     required this.id,

@@ -6,6 +6,7 @@ import 'package:grounded/components/screen_title.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';
 import 'package:grounded/models/data_points/daily_data_point.dart';
+import 'package:grounded/models/managers/grounded_task_manager.dart';
 import 'package:grounded/services/firebase/firestore_service.dart';
 
 class Reports extends StatefulWidget {
@@ -19,6 +20,14 @@ class Reports extends StatefulWidget {
 class _ReportsState extends State<Reports> {
   final _firestoreService = FirestoreService.instance;
   final _children = <Child>[];
+
+  final _chartLineColors = [
+    MaterialPalette.blue.shadeDefault,
+    MaterialPalette.red.shadeDefault,
+    MaterialPalette.green.shadeDefault,
+    MaterialPalette.yellow.shadeDefault,
+    MaterialPalette.pink.shadeDefault,
+  ];
 
   @override
   void initState() {
@@ -37,13 +46,12 @@ class _ReportsState extends State<Reports> {
           children: [
             ScreenTitle(title: "Reports", isWhiteBackround: true),
             SizedBox(
-              height: 350,
+              height: 320,
               child: LineChart(
                 _chartData,
                 domainAxis: NumericAxisSpec(
-                  tickProviderSpec: BasicNumericTickProviderSpec(
-                    desiredTickCount: 7,
-                  ),
+                  tickProviderSpec:
+                      BasicNumericTickProviderSpec(desiredTickCount: 7),
                   tickFormatterSpec: _customTickFormatter,
                 ),
               ),
@@ -59,63 +67,38 @@ class _ReportsState extends State<Reports> {
   }
 
   List<Series<DailyDataPoint, int>> get _chartData {
-    // final data3 = [
-    //   DailyDataPoint(dayOfWeek: 1, completedTasks: random.nextInt(10)),
-    //   DailyDataPoint(dayOfWeek: 2, completedTasks: random.nextInt(10)),
-    //   DailyDataPoint(dayOfWeek: 3, completedTasks: random.nextInt(10)),
-    //   DailyDataPoint(dayOfWeek: 4, completedTasks: random.nextInt(10)),
-    //   DailyDataPoint(dayOfWeek: 5, completedTasks: random.nextInt(10)),
-    //   DailyDataPoint(dayOfWeek: 6, completedTasks: random.nextInt(10)),
-    //   DailyDataPoint(dayOfWeek: 7, completedTasks: random.nextInt(10)),
-    // ];
-    final List<Series<DailyDataPoint, int>> points = [];
-    // chartPoints.add(value);
+    final List<List<DailyDataPoint>> dataPointList = [];
+    for (var child in _children) {
+      dataPointList.add(
+        GroundedTaskManager.instance.getDailyDataPointsThisWeek(child.tasks),
+      );
+    }
 
-    // final xx =  _children.map((x)  =>
-    //   // x.
-    // ).toList();
-
-    // return [
-    //   Series<DailyDataPoint, int>(
-    //     id: 'Sales',
-    //     colorFn: (_, __) => MaterialPalette.blue.shadeDefault,
-    //     domainFn: (DailyDataPoint assignment, _) => assignment.dayOfWeek,
-    //     measureFn: (DailyDataPoint assignment, _) => assignment.completedTasks,
-    //     data: data,
-    //   ),
-    //   Series<DailyDataPoint, int>(
-    //     id: 'Sales',
-    //     colorFn: (_, __) => MaterialPalette.red.shadeDefault,
-    //     domainFn: (DailyDataPoint assignment, _) => assignment.dayOfWeek,
-    //     measureFn: (DailyDataPoint assignment, _) => assignment.completedTasks,
-    //     data: data2,
-    //   ),
-    //   Series<DailyDataPoint, int>(
-    //     id: 'Sales',
-    //     colorFn: (_, __) => MaterialPalette.green.shadeDefault,
-    //     domainFn: (DailyDataPoint assignment, _) => assignment.dayOfWeek,
-    //     measureFn: (DailyDataPoint assignment, _) => assignment.completedTasks,
-    //     data: data3,
-    //   )
-    // ];
-
-    return points;
+    return dataPointList.map((x) {
+      return Series<DailyDataPoint, int>(
+        id: 'Sales',
+        colorFn: (_, __) => _chartLineColors[dataPointList.indexOf(x)],
+        domainFn: (DailyDataPoint assignment, _) => assignment.dayOfWeek,
+        measureFn: (DailyDataPoint assignment, _) => assignment.completedTasks,
+        data: x,
+      );
+    }).toList();
   }
 
   final _customTickFormatter = BasicNumericTickFormatterSpec((num? value) {
     if (value == 0) {
       return "Mon";
-    } else if (value == 1) {
-      return "Tue";
     } else if (value == 2) {
-      return "Wed";
-    } else if (value == 3) {
-      return "Thr";
+      return "Tue";
     } else if (value == 4) {
-      return "Fri";
-    } else if (value == 5) {
-      return "Sat";
+      return "Wed";
     } else if (value == 6) {
+      return "Thr";
+    } else if (value == 8) {
+      return "Fri";
+    } else if (value == 10) {
+      return "Sat";
+    } else if (value == 12) {
       return "Sun";
     }
 

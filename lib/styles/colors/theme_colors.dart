@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ThemeColors {
   // static const primary = Color.fromRGBO(52, 108, 220, 1);
   static const primary = Color.fromRGBO(25, 196, 140, 1);
-  static get primaryLight => primary.withOpacity(0.05);
+  static get primaryLight => primary.withOpacity(0.1);
   static const accent = Color.fromRGBO(232, 176, 0, 1);
   static const transparent = Colors.transparent;
   static const success = Color.fromRGBO(25, 170, 90, 1);
@@ -13,4 +13,5 @@ class ThemeColors {
   static const darkBackground = Color.fromRGBO(122, 134, 154, 1);
   static const darkElement = Colors.black;
   static const lightElement = Colors.white;
+  static const bottomBarColor = Color.fromRGBO(250, 250, 250, 1);
 }

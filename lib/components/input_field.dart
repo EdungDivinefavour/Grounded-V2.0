@@ -118,22 +118,6 @@ class _InputFieldState extends State<InputField> {
           );
   }
 
-  Widget get _buildRightIcon {
-    return widget.rightIcon == null
-        ? emptyWidget
-        : SizedBox(
-            height: 60,
-            width: 60,
-            child: Padding(
-              padding: EdgeInsets.only(left: 10, top: 10),
-              child: SVGIcon(
-                  icon: widget.rightIcon!,
-                  color: ThemeColors.darkBackground,
-                  size: 50),
-            ),
-          );
-  }
-
   Widget get _buildDropDownIcon {
     return widget.dropDownList == null
         ? emptyWidget

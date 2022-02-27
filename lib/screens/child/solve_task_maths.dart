@@ -153,31 +153,22 @@ class _SolveTaskMathsState extends State<SolveTaskMaths> {
   }
 
   void _confirmAnswer() {
-    // if no answer was picked
     if (_pickedAnswer == null) {
       EasyLoading.showError("Please enter an answer to proceed");
       return;
     }
 
-    // Play audio after answer is selected
-    if (_pickedAnswer == _currentQuestion.correctAnswer) {
-      _audioPlayer.play(correctTone);
-    } else {
-      _audioPlayer.play(inCorrectTone);
-    }
-
     _currentQuestion.setHasBeenAnswered();
+    _audioPlayer.play(_pickedAnswer == _currentQuestion.correctAnswer
+        ? correctTone
+        : inCorrectTone);
+
     if (widget.task.hasBeenCompleted) {
-      // ShowPOPUP congratulating them
       Navigator.pop(context);
       return;
     }
 
-    setState(() {
-      _currentQuestionIndex++;
-      _pickedAnswer = null;
-      _remainingTimeForQuestion = 10;
-    });
+    _resetScreenVariables();
   }
 
   void _deleteFromAnswer() {
@@ -218,5 +209,13 @@ class _SolveTaskMathsState extends State<SolveTaskMaths> {
 
   void _initializeAudioPlayer() {
     _audioPlayer.loadAll([correctTone, inCorrectTone]);
+  }
+
+  void _resetScreenVariables() {
+    setState(() {
+      _currentQuestionIndex++;
+      _pickedAnswer = null;
+      _remainingTimeForQuestion = 10;
+    });
   }
 }

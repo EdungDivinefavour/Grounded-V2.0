@@ -5,10 +5,13 @@ part 'badge.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Badge {
-  final String name;
   final BadgeType type;
+  Badge({required this.type});
 
-  Badge({required this.name, required this.type});
+  String get name =>
+      '${type.value[0].toUpperCase()}${type.value.substring(1).toLowerCase()}';
+
+  String get image => 'badges/${type.value}.png';
 
   factory Badge.fromJson(Map<String, dynamic> json) => _$BadgeFromJson(json);
   Map<String, dynamic> toJson() => _$BadgeToJson(this);

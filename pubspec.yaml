@@ -54,9 +54,10 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/icons/
     - assets/images/intro/
     - assets/images/questions/
+    - assets/images/badges/
+    - assets/icons/
     - assets/data/
     - assets/audio/
 

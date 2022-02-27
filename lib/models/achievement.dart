@@ -7,9 +7,13 @@ part 'achievement.g.dart';
 class Achievement {
   final String title;
   final Badge badge;
-  int? dateEarned;
+  final int dateEarned;
 
-  Achievement({required this.title, required this.badge, this.dateEarned});
+  Achievement({
+    required this.title,
+    required this.badge,
+    required this.dateEarned,
+  });
 
   factory Achievement.fromJson(Map<String, dynamic> json) =>
       _$AchievementFromJson(json);

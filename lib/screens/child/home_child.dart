@@ -165,7 +165,14 @@ class _HomeChildState extends State<HomeChild> {
         context, MaterialPageRoute(builder: (_) => taskScreen));
     setState(() {});
 
+    _updateTasks();
+  }
+
+  void _updateTasks() async {
     EasyLoading.show();
+    await _firestoreService.updateTasks(
+        tasks: widget.child.tasks, child: widget.child);
+
     await _firestoreService.updateTasks(
         tasks: widget.child.tasks, child: widget.child);
 

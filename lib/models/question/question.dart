@@ -13,7 +13,7 @@ class Question {
   String? displayedQuestion;
   String? pickedAnswer;
   String? correctAnswer;
-  int? completedTimestap;
+  int? completedTimestamp;
 
   bool hasBeenAnswered;
 
@@ -25,13 +25,14 @@ class Question {
     this.displayedQuestion,
     this.pickedAnswer,
     this.correctAnswer,
-    this.completedTimestap,
+    this.completedTimestamp,
     this.mathType,
     this.englishType,
   });
 
   void setHasBeenAnswered() {
     hasBeenAnswered = pickedAnswer != null;
+    completedTimestamp = DateTime.now().millisecondsSinceEpoch;
   }
 
   factory Question.fromJson(Map<String, dynamic> json) =>
