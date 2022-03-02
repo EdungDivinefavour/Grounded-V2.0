@@ -6,8 +6,7 @@ import 'package:grounded/components/screen_title.dart';
 import 'package:grounded/constants/enums/subject_type.dart';
 import 'package:grounded/models/grounded_task/grounded_task.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
-import 'package:grounded/screens/child/solve_task_english.dart';
-import 'package:grounded/screens/child/solve_task_maths.dart';
+import 'package:grounded/screens/child/solve_task.dart';
 import 'package:grounded/services/firebase/firestore_service.dart';
 import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/texts/text_styles.dart';
@@ -159,12 +158,8 @@ class _HomeChildState extends State<HomeChild> {
   }
 
   void _openSolveTaskScreen(GroundedTask task) async {
-    final taskScreen = task.subjectType == SubjectType.maths
-        ? SolveTaskMaths(task: task)
-        : SolveTaskEnglish(task: task);
-
     await Navigator.push(
-        context, MaterialPageRoute(builder: (_) => taskScreen));
+        context, MaterialPageRoute(builder: (_) => SolveTask(task: task)));
     setState(() {});
 
     _updateTasks();

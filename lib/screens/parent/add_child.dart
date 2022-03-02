@@ -15,6 +15,7 @@ import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/texts/text_styles.dart';
 import 'package:grounded/utils/string_utils.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:number_picker_dialog/number_picker_dialog.dart';
 
 class AddChild extends StatefulWidget {
   final Parent parent;
@@ -33,15 +34,12 @@ class _AddChildState extends State<AddChild> {
   final _storageService = StorageService.instance;
 
   final _imagePicker = ImagePicker();
+
   File? _pickedImage;
   String? pickedUploadedPhotoUrl;
 
-  double _sliderValue = 0;
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  int _ageValue = 1;
+  double _gradeValue = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +52,9 @@ class _AddChildState extends State<AddChild> {
           children: [
             SizedBox(height: 25),
             InkWell(
-                onTap: _openPickImageSheet,
-                child: UserImage(imageURL: pickedUploadedPhotoUrl)),
+              onTap: _openPickImageSheet,
+              child: UserImage(imageURL: pickedUploadedPhotoUrl),
+            ),
             SizedBox(height: 30),
             InputField(
               title: "Name",
@@ -67,6 +66,7 @@ class _AddChildState extends State<AddChild> {
               title: "Age",
               hintText: 'Enter the child age',
               controller: _ageController,
+              onTap: _showAgeDialog,
             ),
             SizedBox(height: 35),
             Column(
@@ -83,16 +83,16 @@ class _AddChildState extends State<AddChild> {
                         ),
                       )),
                 ),
-                Text("$_sliderValue", style: TextStyles.regular),
+                Text("$_gradeValue", style: TextStyles.regular),
                 Slider(
                     thumbColor: ThemeColors.primary,
                     activeColor: ThemeColors.primary,
                     inactiveColor: ThemeColors.lightBackground,
                     divisions: 10,
-                    value: _sliderValue,
-                    max: 10,
+                    value: _gradeValue,
+                    max: 12,
                     onChanged: (value) {
-                      setState(() => _sliderValue = value);
+                      setState(() => _gradeValue = value);
                     }),
               ],
             ),
@@ -102,6 +102,30 @@ class _AddChildState extends State<AddChild> {
           ],
         ),
       ),
+    );
+  }
+
+  void _showAgeDialog() {
+    showMaterialNumberPicker(
+      context: context,
+      title: "Pick your child's age",
+      headerColor: ThemeColors.primary,
+      headerTextStyle: TextStyles.bold
+          .copyWith(fontSize: 22.0, color: ThemeColors.lightElement),
+      scrollItemTextStyle: TextStyles.regular,
+      selectedItemTextStyle:
+          TextStyles.bold.copyWith(color: ThemeColors.primary, fontSize: 20),
+      confirmTextStyle: TextStyles.regular.copyWith(color: ThemeColors.primary),
+      cancelTextStyle: TextStyles.regular.copyWith(color: ThemeColors.primary),
+      bottomBorderColor: ThemeColors.darkBackground,
+      maxNumber: 20,
+      minNumber: 1,
+      maxLongSide: 370,
+      selectedNumber: _ageValue,
+      onChanged: (value) => setState(() {
+        _ageValue = value;
+        _ageController.text = _ageValue.toString();
+      }),
     );
   }
 
@@ -158,7 +182,7 @@ class _AddChildState extends State<AddChild> {
       name: _nameController.text,
       parentID: _authService.currentUser!.uid,
       age: int.parse(_ageController.text),
-      grade: _sliderValue.toInt(),
+      grade: _gradeValue.toInt(),
     );
 
     await _authService.loginUser(

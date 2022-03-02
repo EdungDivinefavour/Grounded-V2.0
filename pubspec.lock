@@ -562,6 +562,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  number_picker_dialog:
+    dependency: "direct main"
+    description:
+      name: number_picker_dialog
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1"
   open_mail_app:
     dependency: "direct main"
     description:
@@ -944,7 +951,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.8"
+    version: "2.4.1"
   xdg_directories:
     dependency: transitive
     description:

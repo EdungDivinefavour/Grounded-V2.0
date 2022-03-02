@@ -44,7 +44,9 @@ class DrawerListItem extends StatelessWidget {
                             ),
                             Padding(
                                 padding: const EdgeInsets.only(left: 20),
-                                child: Text(title, style: TextStyles.semiBold))
+                                child: Text(title,
+                                    style: TextStyles.semiBold
+                                        .copyWith(fontSize: 17)))
                           ],
                         ))
                   ],
@@ -54,8 +56,7 @@ class DrawerListItem extends StatelessWidget {
   void _launchScreen(BuildContext context, String title) {
     Navigator.pop(context);
 
-    if (title == "Contact Us") {
-    } else if (title == "Log Out") {
+    if (title == "Log Out") {
       _authService.signOutUser();
 
       Navigator.of(context).pushAndRemoveUntil(

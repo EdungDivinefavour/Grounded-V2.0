@@ -7,7 +7,7 @@ import 'package:grounded/styles/texts/text_styles.dart';
 
 enum InputFieldType { name, email, password, phone, number }
 
-class InputField extends StatefulWidget {
+class InputField extends StatelessWidget {
   final TextEditingController controller;
   final bool enabled;
   final InputFieldType? inputFieldType;
@@ -33,22 +33,15 @@ class InputField extends StatefulWidget {
   });
 
   @override
-  State<InputField> createState() => _InputFieldState();
-}
-
-class _InputFieldState extends State<InputField> {
-  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            widget.title,
-            style: TextStyles.semiBold.copyWith(
-              color: ThemeColors.darkBackground,
-              fontSize: 15,
-            ),
+            title,
+            style: TextStyles.semiBold
+                .copyWith(color: ThemeColors.darkBackground, fontSize: 15),
           ),
         ),
         SizedBox(height: 10),
@@ -61,37 +54,30 @@ class _InputFieldState extends State<InputField> {
                 color: ThemeColors.lightBackground,
               ),
               child: InkWell(
-                onTap: widget.onTap,
+                onTap: onTap,
                 child: IgnorePointer(
                   ignoring: false,
                   child: TextField(
-                      enabled: _isEnabled,
-                      keyboardType: _buildTextInputType,
-                      controller: widget.controller,
-                      obscureText:
-                          widget.inputFieldType == InputFieldType.password,
-                      autocorrect: false,
-                      style: TextStyles.regular.copyWith(
-                        color: ThemeColors.darkBackground,
-                        fontSize: 14,
-                      ),
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(
-                            left: widget.leftIcon == null ? 15 : 50),
-                        border: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                        disabledBorder: InputBorder.none,
-                        hintText: widget.hintText,
-                        hintStyle: TextStyles.regular.copyWith(
-                          color: ThemeColors.darkBackground,
-                          fontSize: 14,
-                        ),
-                      ),
-                      onChanged: (_) {
-                        setState(() {});
-                      }),
+                    enabled: _isEnabled,
+                    keyboardType: _buildTextInputType,
+                    controller: controller,
+                    obscureText: inputFieldType == InputFieldType.password,
+                    autocorrect: false,
+                    style: TextStyles.regular.copyWith(
+                        color: ThemeColors.darkBackground, fontSize: 14),
+                    decoration: InputDecoration(
+                      contentPadding:
+                          EdgeInsets.only(left: leftIcon == null ? 15 : 50),
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                      hintText: hintText,
+                      hintStyle: TextStyles.regular.copyWith(
+                          color: ThemeColors.darkBackground, fontSize: 14),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -104,7 +90,7 @@ class _InputFieldState extends State<InputField> {
   }
 
   Widget get _buildLeftIcon {
-    return widget.leftIcon == null
+    return leftIcon == null
         ? emptyWidget
         : Container(
             height: 40,
@@ -112,21 +98,19 @@ class _InputFieldState extends State<InputField> {
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.only(left: 10, top: 10),
             child: SVGIcon(
-                icon: widget.leftIcon!,
-                color: ThemeColors.darkBackground,
-                size: 50),
+                icon: leftIcon!, color: ThemeColors.darkBackground, size: 50),
           );
   }
 
   Widget get _buildDropDownIcon {
-    return widget.dropDownList == null
+    return dropDownList == null
         ? emptyWidget
         : Positioned(
             right: 0,
             child: DropdownButton(
               underline: emptyWidget,
-              onChanged: widget.onDropDownChange,
-              items: widget.dropDownList?.map((e) {
+              onChanged: onDropDownChange,
+              items: dropDownList?.map((e) {
                 return DropdownMenuItem(value: e, child: Text(e));
               }).toList(),
               icon: Container(
@@ -144,23 +128,23 @@ class _InputFieldState extends State<InputField> {
   }
 
   TextInputType get _buildTextInputType {
-    if (widget.inputFieldType == InputFieldType.email) {
+    if (inputFieldType == InputFieldType.email) {
       return TextInputType.emailAddress;
-    } else if (widget.inputFieldType == InputFieldType.name) {
-      return TextInputType.name;
-    } else if (widget.inputFieldType == InputFieldType.password) {
-      return TextInputType.name;
+    } else if (inputFieldType == InputFieldType.name) {
+      return TextInputType.text;
+    } else if (inputFieldType == InputFieldType.password) {
+      return TextInputType.text;
     }
 
-    return TextInputType.name;
+    return TextInputType.text;
   }
 
   bool get _isEnabled {
-    if (!widget.enabled) {
+    if (!enabled) {
       return false;
-    } else if (widget.onTap != null) {
+    } else if (onTap != null) {
       return false;
-    } else if (widget.dropDownList != null) {
+    } else if (dropDownList != null) {
       return false;
     }
 

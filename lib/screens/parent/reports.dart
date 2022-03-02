@@ -8,6 +8,7 @@ import 'package:grounded/models/grounded_user/parent/parent.dart';
 import 'package:grounded/models/data_points/daily_data_point.dart';
 import 'package:grounded/models/managers/grounded_task_manager.dart';
 import 'package:grounded/services/firebase/firestore_service.dart';
+import 'package:grounded/styles/texts/text_styles.dart';
 
 class Reports extends StatefulWidget {
   final Parent parent;
@@ -40,29 +41,73 @@ class _ReportsState extends State<Reports> {
   Widget build(BuildContext context) {
     return CustomScaffold(
       bubblePosition: BackgroundBubblePosition.bottomLeft,
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
-            ScreenTitle(title: "Reports", isWhiteBackround: true),
-            SizedBox(
-              height: 320,
-              child: LineChart(
-                _chartData,
-                domainAxis: NumericAxisSpec(
-                  tickProviderSpec:
-                      BasicNumericTickProviderSpec(desiredTickCount: 7),
-                  tickFormatterSpec: _customTickFormatter,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              ScreenTitle(title: "Reports", isWhiteBackround: true),
+              SizedBox(
+                height: 300,
+                child: LineChart(
+                  _chartData,
+                  domainAxis: NumericAxisSpec(
+                    tickProviderSpec:
+                        BasicNumericTickProviderSpec(desiredTickCount: 7),
+                    tickFormatterSpec: _customTickFormatter,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 30),
-            Text(
-              "These are you child's total points per week. A child can get 10 points for a correct answer. -10 points for an incorrect answer. Click the button below to get a breakdown of the points by tasks",
-            ),
-          ],
+              SizedBox(height: 30),
+              Text(
+                "These are you child's total points per week. A child can get 10 points for a correct answer. -10 points for an incorrect answer. Click the button below to get a breakdown of the points by tasks.",
+                style: TextStyles.regular.copyWith(fontSize: 15),
+              ),
+              SizedBox(height: 30),
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _buildEachTaskReporter('Assigned Tasks', _assignedTasks),
+                      VerticalDivider(),
+                      _buildEachTaskReporter(
+                          'Completed Tasks', _completedTasks),
+                    ],
+                  ),
+                  Divider(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _buildEachTaskReporter('Correct Tasks', _correctTasks),
+                      VerticalDivider(),
+                      _buildEachTaskReporter(
+                          'Incorrect Tasks', _incorrectTasks),
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(height: 100)
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  Widget _buildEachTaskReporter(String title, int count) {
+    return Column(
+      children: [
+        Text(
+          title,
+          style: TextStyles.medium.copyWith(fontSize: 15),
+        ),
+        SizedBox(height: 2),
+        Text(
+          '$count',
+          style: TextStyles.bold.copyWith(fontSize: 25),
+        )
+      ],
     );
   }
 
@@ -104,6 +149,46 @@ class _ReportsState extends State<Reports> {
 
     return "empty";
   });
+
+  int get _assignedTasks {
+    int assignedTasks = 0;
+    for (var x in _children) {
+      assignedTasks += x.tasks.length;
+    }
+
+    return assignedTasks;
+  }
+
+  int get _completedTasks {
+    int completedTasks = 0;
+    for (var x in _children) {
+      if (x.tasks.isEmpty) continue;
+
+      completedTasks += x.tasks.where((t) => t.hasBeenCompleted).length;
+    }
+
+    return completedTasks;
+  }
+
+  int get _correctTasks {
+    int correctTasks = 0;
+    for (var x in _children) {
+      correctTasks += x.tasks.where((t) => t.totalPointsGotten == 100).length;
+    }
+
+    return correctTasks;
+  }
+
+  int get _incorrectTasks {
+    int inCorrectTasks = 0;
+    for (var x in _children) {
+      inCorrectTasks += x.tasks
+          .where((t) => t.hasBeenCompleted && t.totalPointsGotten < 100)
+          .length;
+    }
+
+    return inCorrectTasks;
+  }
 
   void _getChildren() async {
     EasyLoading.show();
