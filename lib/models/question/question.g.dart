@@ -22,6 +22,7 @@ Question _$QuestionFromJson(Map<String, dynamic> json) => Question(
       word: json['word'] == null
           ? null
           : Word.fromJson(json['word'] as Map<String, dynamic>),
+      timeSpentOnQuestion: json['timeSpentOnQuestion'] as int?,
     );
 
 Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
@@ -34,6 +35,7 @@ Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
       'completedTimestamp': instance.completedTimestamp,
       'suggestedAnswers': instance.suggestedAnswers,
       'word': instance.word?.toJson(),
+      'timeSpentOnQuestion': instance.timeSpentOnQuestion,
       'hasBeenAnswered': instance.hasBeenAnswered,
     };
 

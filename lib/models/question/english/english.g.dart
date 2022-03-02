@@ -23,10 +23,12 @@ English _$EnglishFromJson(Map<String, dynamic> json) => English(
       pickedAnswer: json['pickedAnswer'] as String?,
       completedTimestamp: json['completedTimestamp'] as int?,
     )
+      ..timeSpentOnQuestion = json['timeSpentOnQuestion'] as int?
       ..hasBeenAnswered = json['hasBeenAnswered'] as bool
       ..correctAnswer = json['correctAnswer'] as String?;
 
 Map<String, dynamic> _$EnglishToJson(English instance) => <String, dynamic>{
+      'timeSpentOnQuestion': instance.timeSpentOnQuestion,
       'hasBeenAnswered': instance.hasBeenAnswered,
       'subjectType': _$SubjectTypeEnumMap[instance.subjectType],
       'displayedQuestion': instance.displayedQuestion,

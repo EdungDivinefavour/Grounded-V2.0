@@ -17,6 +17,7 @@ class Question {
   int? completedTimestamp;
   List<String>? suggestedAnswers;
   Word? word;
+  int? timeSpentOnQuestion;
 
   bool hasBeenAnswered;
 
@@ -33,6 +34,7 @@ class Question {
     this.mathType,
     this.englishType,
     this.word,
+    this.timeSpentOnQuestion,
   });
 
   void setHasBeenAnswered() {

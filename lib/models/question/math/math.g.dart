@@ -21,12 +21,14 @@ Math _$MathFromJson(Map<String, dynamic> json) => Math(
       ..word = json['word'] == null
           ? null
           : Word.fromJson(json['word'] as Map<String, dynamic>)
+      ..timeSpentOnQuestion = json['timeSpentOnQuestion'] as int?
       ..hasBeenAnswered = json['hasBeenAnswered'] as bool
       ..correctAnswer = json['correctAnswer'] as String?;
 
 Map<String, dynamic> _$MathToJson(Math instance) => <String, dynamic>{
       'suggestedAnswers': instance.suggestedAnswers,
       'word': instance.word?.toJson(),
+      'timeSpentOnQuestion': instance.timeSpentOnQuestion,
       'hasBeenAnswered': instance.hasBeenAnswered,
       'subjectType': _$SubjectTypeEnumMap[instance.subjectType],
       'displayedQuestion': instance.displayedQuestion,

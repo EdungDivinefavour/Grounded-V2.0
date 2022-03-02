@@ -34,11 +34,9 @@ class _SolveTaskState extends State<SolveTask> {
   final _audioPlayer = AudioCache(prefix: audioPath);
 
   int _currentQuestionIndex = 0;
-  int _remainingTimeForQuestion = 10;
 
+  int _timeSpentOnQuestion = 0;
   String? _pickedAnswer;
-
-  Question get _currentQuestion => _getCurrentQuestion();
 
   Timer? _timer;
 
@@ -46,9 +44,10 @@ class _SolveTaskState extends State<SolveTask> {
   void initState() {
     super.initState();
 
-    _initializeAudioPlayer();
     _setCurrentQuestionIndex();
     _startCountDownTimer();
+
+    _audioPlayer.loadAll([correctTone, inCorrectTone]);
   }
 
   @override
@@ -82,14 +81,13 @@ class _SolveTaskState extends State<SolveTask> {
           SVGIcon(
               icon: AppIcons.clock,
               size: 25,
-              color: _remainingTimeForQuestion > 5
+              color: _timeSpentOnQuestion < 60
                   ? ThemeColors.darkBackground
                   : ThemeColors.error),
           SizedBox(width: 5),
-          Text(
-              '0:${_remainingTimeForQuestion == 10 ? "" : 0}$_remainingTimeForQuestion',
+          Text(_buildDisplayedTime,
               style: TextStyles.smallBold.copyWith(fontSize: 18).copyWith(
-                  color: _remainingTimeForQuestion > 5
+                  color: _timeSpentOnQuestion < 60
                       ? ThemeColors.darkBackground
                       : ThemeColors.error)),
         ],
@@ -201,8 +199,27 @@ class _SolveTaskState extends State<SolveTask> {
     ];
   }
 
-  Question _getCurrentQuestion() {
+  Question get _currentQuestion {
     return widget.task.questions[_currentQuestionIndex];
+  }
+
+  String get _buildDisplayedTime {
+    final timeSpentOnQuestionMinutePart = _timeSpentOnQuestion ~/ 60;
+    final timeSpentOnQuestionSecondPart =
+        _timeSpentOnQuestion - (timeSpentOnQuestionMinutePart * 60);
+
+    bool shouldAttachZeroAsPrefixToLeftSide = false;
+    bool shouldAttachZeroAsPrefixToRightSide = false;
+
+    if (_timeSpentOnQuestion % 60 < 10) {
+      shouldAttachZeroAsPrefixToRightSide = true;
+    }
+
+    if (_timeSpentOnQuestion < 600) {
+      shouldAttachZeroAsPrefixToLeftSide = true;
+    }
+
+    return '${shouldAttachZeroAsPrefixToLeftSide ? '0' : ''}$timeSpentOnQuestionMinutePart:${shouldAttachZeroAsPrefixToRightSide ? '0' : ''}$timeSpentOnQuestionSecondPart';
   }
 
   void _appendToAnswer(String value) {
@@ -222,15 +239,17 @@ class _SolveTaskState extends State<SolveTask> {
   }
 
   void _confirmAnswer() {
+    final wasAnswerCorrect = _pickedAnswer == _currentQuestion.correctAnswer;
+
     if (_pickedAnswer == null) {
       EasyLoading.showError("Please enter an answer to proceed");
       return;
     }
+    _audioPlayer.play(wasAnswerCorrect ? correctTone : inCorrectTone);
+    if (!wasAnswerCorrect) return;
 
+    _currentQuestion.timeSpentOnQuestion = _timeSpentOnQuestion;
     _currentQuestion.setHasBeenAnswered();
-    _audioPlayer.play(_pickedAnswer == _currentQuestion.correctAnswer
-        ? correctTone
-        : inCorrectTone);
 
     if (widget.task.hasBeenCompleted) {
       Navigator.pop(context);
@@ -266,24 +285,15 @@ class _SolveTaskState extends State<SolveTask> {
 
   void _startCountDownTimer() {
     _timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
-      setState(() => _remainingTimeForQuestion--);
-
-      if (_remainingTimeForQuestion == 0) {
-        _appendToAnswer("");
-        _confirmAnswer();
-      }
+      setState(() => _timeSpentOnQuestion++);
     });
-  }
-
-  void _initializeAudioPlayer() {
-    _audioPlayer.loadAll([correctTone, inCorrectTone]);
   }
 
   void _resetScreenVariables() {
     setState(() {
       _currentQuestionIndex++;
       _pickedAnswer = null;
-      _remainingTimeForQuestion = 10;
+      _timeSpentOnQuestion = 0;
     });
   }
 }
