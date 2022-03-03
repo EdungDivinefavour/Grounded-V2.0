@@ -61,30 +61,34 @@ class _CustomScaffoldState extends State<CustomScaffold> {
       return Positioned(
         bottom: -30,
         left: 0,
-        child: SVGIcon(
-            icon: AppIcons.bottomLeftBubble, color: ThemeColors.primary),
+        child: _buildSVG(AppIcons.bottomLeftBubble),
       );
     } else if (widget.bubblePosition == BackgroundBubblePosition.centerLeft) {
       return Positioned(
         top: getDeviceHeight(context) / 3.5,
         left: 0,
-        child: SVGIcon(
-            icon: AppIcons.centerLeftBubble, color: ThemeColors.primary),
+        child: _buildSVG(AppIcons.centerLeftBubble),
       );
     } else if (widget.bubblePosition == BackgroundBubblePosition.centerRight) {
       return Positioned(
-          top: getDeviceHeight(context) / 3.5,
-          right: 0,
-          child: SVGIcon(
-              icon: AppIcons.centerRightBubble, color: ThemeColors.primary));
+        top: getDeviceHeight(context) / 3.5,
+        right: 0,
+        child: _buildSVG(AppIcons.centerRightBubble),
+      );
     } else if (widget.bubblePosition == BackgroundBubblePosition.topRight) {
       return Positioned(
-          top: 0,
-          right: 0,
-          child: SVGIcon(
-              icon: AppIcons.topRightBubble, color: ThemeColors.primary));
+        top: 0,
+        right: 0,
+        child: _buildSVG(AppIcons.topRightBubble),
+      );
     }
 
     return emptyWidget;
+  }
+
+  Widget _buildSVG(String icon) {
+    return IgnorePointer(
+      child: SVGIcon(icon: icon, color: ThemeColors.primary),
+    );
   }
 }
