@@ -10,5 +10,793 @@
     {
         "text": "ball",
         "type": "thing"
+    },
+    {
+        "text": "apple",
+        "type": "thing"
+    },
+    {
+        "text": "ambulance",
+        "type": "thing"
+    },
+    {
+        "text": "bed",
+        "type": "thing"
+    },
+    {
+        "text": "basket",
+        "type": "thing"
+    },
+    {
+        "text": "bicycle",
+        "type": "thing"
+    },
+    {
+        "text": "boat",
+        "type": "thing"
+    },
+    {
+        "text": "book",
+        "type": "thing"
+    },
+    {
+        "text": "bulb",
+        "type": "thing"
+    },
+    {
+        "text": "bus",
+        "type": "thing"
+    },
+    {
+        "text": "cake",
+        "type": "thing"
+    },
+    {
+        "text": "camera",
+        "type": "thing"
+    },
+    {
+        "text": "candle",
+        "type": "thing"
+    },
+    {
+        "text": "cap",
+        "type": "thing"
+    },
+    {
+        "text": "car",
+        "type": "thing"
+    },
+    {
+        "text": "cup",
+        "type": "thing"
+    },
+    {
+        "text": "cutlery",
+        "type": "thing"
+    },
+    {
+        "text": "dustpan",
+        "type": "thing"
+    },
+    {
+        "text": "facemask",
+        "type": "thing"
+    },
+    {
+        "text": "feather",
+        "type": "thing"
+    },
+    {
+        "text": "first-aid_box",
+        "type": "thing"
+    },
+    {
+        "text": "glasses",
+        "type": "thing"
+    },
+    {
+        "text": "gloves",
+        "type": "thing"
+    },
+    {
+        "text": "guitar",
+        "type": "thing"
+    },
+    {
+        "text": "headphone",
+        "type": "thing"
+    },
+    {
+        "text": "ice_cream",
+        "type": "thing"
+    },
+    {
+        "text": "jar",
+        "type": "thing"
+    },
+    {
+        "text": "jersey",
+        "type": "thing"
+    },
+    {
+        "text": "jug",
+        "type": "thing"
+    },
+    {
+        "text": "laptop",
+        "type": "thing"
+    },
+    {
+        "text": "microphone",
+        "type": "thing"
+    },
+    {
+        "text": "motorcycle",
+        "type": "thing"
+    },
+    {
+        "text": "net",
+        "type": "thing"
+    },
+    {
+        "text": "racket",
+        "type": "thing"
+    },
+    {
+        "text": "ribbon",
+        "type": "thing"
+    },
+    {
+        "text": "rocket",
+        "type": "thing"
+    },
+    {
+        "text": "sneakers",
+        "type": "thing"
+    },
+    {
+        "text": "sofa",
+        "type": "thing"
+    },
+    {
+        "text": "star",
+        "type": "thing"
+    },
+    {
+        "text": "stethoscope",
+        "type": "thing"
+    },
+    {
+        "text": "swing",
+        "type": "thing"
+    },
+    {
+        "text": "teddy_bear",
+        "type": "thing"
+    },
+    {
+        "text": "television",
+        "type": "thing"
+    },
+    {
+        "text": "tie",
+        "type": "thing"
+    },
+    {
+        "text": "traffic_light",
+        "type": "thing"
+    },
+    {
+        "text": "train",
+        "type": "thing"
+    },
+    {
+        "text": "tree",
+        "type": "thing"
+    },
+    {
+        "text": "van",
+        "type": "thing"
+    },
+    {
+        "text": "ant",
+        "type": "animal"
+    },
+    {
+        "text": "bat",
+        "type": "animal"
+    },
+    {
+        "text": "bear",
+        "type": "animal"
+    },
+    {
+        "text": "butterfly",
+        "type": "animal"
+    },
+    {
+        "text": "camel",
+        "type": "animal"
+    },
+    {
+        "text": "cat",
+        "type": "animal"
+    },
+    {
+        "text": "cheetah",
+        "type": "animal"
+    },
+    {
+        "text": "cow",
+        "type": "animal"
+    },
+    {
+        "text": "crocodile",
+        "type": "animal"
+    },
+    {
+        "text": "dog",
+        "type": "animal"
+    },
+    {
+        "text": "dolphin",
+        "type": "animal"
+    },
+    {
+        "text": "donkey",
+        "type": "animal"
+    },
+    {
+        "text": "duck",
+        "type": "animal"
+    },
+    {
+        "text": "eagle",
+        "type": "animal"
+    },
+    {
+        "text": "elephant",
+        "type": "animal"
+    },
+    {
+        "text": "frog",
+        "type": "animal"
+    },
+    {
+        "text": "gecko",
+        "type": "animal"
+    },
+    {
+        "text": "giraffe",
+        "type": "animal"
+    },
+    {
+        "text": "goat",
+        "type": "animal"
+    },
+    {
+        "text": "hedgehog",
+        "type": "animal"
+    },
+    {
+        "text": "hen",
+        "type": "animal"
+    },
+    {
+        "text": "hippopotamus",
+        "type": "animal"
+    },
+    {
+        "text": "horse",
+        "type": "animal"
+    },
+    {
+        "text": "hyena",
+        "type": "animal"
+    },
+    {
+        "text": "iguana",
+        "type": "animal"
+    },
+    {
+        "text": "jellyfish",
+        "type": "animal"
+    },
+    {
+        "text": "kangaroo",
+        "type": "animal"
+    },
+    {
+        "text": "ladybug",
+        "type": "animal"
+    },
+    {
+        "text": "leopard",
+        "type": "animal"
+    },
+    {
+        "text": "lion",
+        "type": "animal"
+    },
+    {
+        "text": "lizard",
+        "type": "animal"
+    },
+    {
+        "text": "monkey",
+        "type": "animal"
+    },
+    {
+        "text": "octopus",
+        "type": "animal"
+    },
+    {
+        "text": "ostrich",
+        "type": "animal"
+    },
+    {
+        "text": "owl",
+        "type": "animal"
+    },
+    {
+        "text": "panther",
+        "type": "animal"
+    },
+    {
+        "text": "parrot",
+        "type": "animal"
+    },
+    {
+        "text": "peacock",
+        "type": "animal"
+    },
+    {
+        "text": "penguin",
+        "type": "animal"
+    },
+    {
+        "text": "pig",
+        "type": "animal"
+    },
+    {
+        "text": "pigeon",
+        "type": "animal"
+    },
+    {
+        "text": "rat",
+        "type": "animal"
+    },
+    {
+        "text": "rhinoceros",
+        "type": "animal"
+    },
+    {
+        "text": "shark",
+        "type": "animal"
+    },
+    {
+        "text": "snail",
+        "type": "animal"
+    },
+    {
+        "text": "snake",
+        "type": "animal"
+    },
+    {
+        "text": "squirell",
+        "type": "animal"
+    },
+    {
+        "text": "tiger",
+        "type": "animal"
+    },
+    {
+        "text": "tortoise",
+        "type": "animal"
+    },
+    {
+        "text": "wolf",
+        "type": "animal"
+    },
+    {
+        "text": "accountant",
+        "type": "person"
+    },
+    {
+        "text": "air_hostess",
+        "type": "person"
+    },
+    {
+        "text": "astronaut",
+        "type": "person"
+    },
+    {
+        "text": "athlete",
+        "type": "person"
+    },
+    {
+        "text": "basketball_plyer",
+        "type": "person"
+    },
+    {
+        "text": "bishop",
+        "type": "person"
+    },
+    {
+        "text": "blacksmith",
+        "type": "person"
+    },
+    {
+        "text": "bouncer",
+        "type": "person"
+    },
+    {
+        "text": "boxer",
+        "type": "person"
+    },
+    {
+        "text": "bricklayer",
+        "type": "person"
+    },
+    {
+        "text": "business_man",
+        "type": "person"
+    },
+    {
+        "text": "chef",
+        "type": "person"
+    },
+    {
+        "text": "clown",
+        "type": "person"
+    },
+    {
+        "text": "cowboy",
+        "type": "person"
+    },
+    {
+        "text": "dancer",
+        "type": "person"
+    },
+    {
+        "text": "dispatch_rider",
+        "type": "person"
+    },
+    {
+        "text": "doctor",
+        "type": "person"
+    },
+    {
+        "text": "engineer",
+        "type": "person"
+    },
+    {
+        "text": "farmer",
+        "type": "person"
+    },
+    {
+        "text": "fashion_designer",
+        "type": "person"
+    },
+    {
+        "text": "fisherman",
+        "type": "person"
+    },
+    {
+        "text": "footballer",
+        "type": "person"
+    },
+    {
+        "text": "hockey_player",
+        "type": "person"
+    },
+    {
+        "text": "journalist",
+        "type": "person"
+    },
+    {
+        "text": "judge",
+        "type": "person"
+    },
+    {
+        "text": "keyboardist",
+        "type": "person"
+    },
+    {
+        "text": "king",
+        "type": "person"
+    },
+    {
+        "text": "knight",
+        "type": "person"
+    },
+    {
+        "text": "model",
+        "type": "person"
+    },
+    {
+        "text": "nun",
+        "type": "person"
+    },
+    {
+        "text": "nurse",
+        "type": "person"
+    },
+    {
+        "text": "photographer",
+        "type": "person"
+    },
+    {
+        "text": "pilot",
+        "type": "person"
+    },
+    {
+        "text": "pirate",
+        "type": "person"
+    },
+    {
+        "text": "priest",
+        "type": "person"
+    },
+    {
+        "text": "queen",
+        "type": "person"
+    },
+    {
+        "text": "referee",
+        "type": "person"
+    },
+    {
+        "text": "sailor",
+        "type": "person"
+    },
+    {
+        "text": "scientist",
+        "type": "person"
+    },
+    {
+        "text": "soldier",
+        "type": "person"
+    },
+    {
+        "text": "student",
+        "type": "person"
+    },
+    {
+        "text": "surveyor",
+        "type": "person"
+    },
+    {
+        "text": "teacher",
+        "type": "person"
+    },
+    {
+        "text": "tennis_player",
+        "type": "person"
+    },
+    {
+        "text": "vendor",
+        "type": "person"
+    },
+    {
+        "text": "vet",
+        "type": "person"
+    },
+    {
+        "text": "videographer",
+        "type": "person"
+    },
+    {
+        "text": "waiter",
+        "type": "person"
+    },
+    {
+        "text": "waitress",
+        "type": "person"
+    },
+    {
+        "text": "welder",
+        "type": "person"
+    },
+    {
+        "text": "airport",
+        "type": "place"
+    },
+    {
+        "text": "amusement_park",
+        "type": "place"
+    },
+    {
+        "text": "bakery",
+        "type": "place"
+    },
+    {
+        "text": "bank",
+        "type": "place"
+    },
+    {
+        "text": "basketball_court",
+        "type": "place"
+    },
+    {
+        "text": "beach",
+        "type": "place"
+    },
+    {
+        "text": "cafe",
+        "type": "place"
+    },
+    {
+        "text": "castle",
+        "type": "place"
+    },
+    {
+        "text": "cave",
+        "type": "place"
+    },
+    {
+        "text": "china",
+        "type": "place"
+    },
+    {
+        "text": "church",
+        "type": "place"
+    },
+    {
+        "text": "citadel",
+        "type": "place"
+    },
+    {
+        "text": "coffee_shop",
+        "type": "place"
+    },
+    {
+        "text": "courtroom",
+        "type": "place"
+    },
+    {
+        "text": "desert",
+        "type": "place"
+    },
+    {
+        "text": "dubai",
+        "type": "place"
+    },
+    {
+        "text": "factory",
+        "type": "place"
+    },
+    {
+        "text": "farm",
+        "type": "place"
+    },
+    {
+        "text": "fire_station",
+        "type": "place"
+    },
+    {
+        "text": "forest",
+        "type": "place"
+    },
+    {
+        "text": "gas_station",
+        "type": "place"
+    },
+    {
+        "text": "grand_canyon",
+        "type": "place"
+    },
+    {
+        "text": "hong_kong",
+        "type": "place"
+    },
+    {
+        "text": "hospital",
+        "type": "place"
+    },
+    {
+        "text": "hotel",
+        "type": "place"
+    },
+    {
+        "text": "island",
+        "type": "place"
+    },
+    {
+        "text": "jungle",
+        "type": "place"
+    },
+    {
+        "text": "london",
+        "type": "place"
+    },
+    {
+        "text": "mall",
+        "type": "place"
+    },
+    {
+        "text": "manger",
+        "type": "place"
+    },
+    {
+        "text": "mechanic_workshop",
+        "type": "place"
+    },
+    {
+        "text": "mosque",
+        "type": "place"
+    },
+    {
+        "text": "motel",
+        "type": "place"
+    },
+    {
+        "text": "national_park",
+        "type": "place"
+    },
+    {
+        "text": "new_yorkcity",
+        "type": "place"
+    },
+    {
+        "text": "paris",
+        "type": "place"
+    },
+    {
+        "text": "playground",
+        "type": "place"
+    },
+    {
+        "text": "prison",
+        "type": "place"
+    },
+    {
+        "text": "railway_station",
+        "type": "place"
+    },
+    {
+        "text": "resort",
+        "type": "place"
+    },
+    {
+        "text": "restaurant",
+        "type": "place"
+    },
+    {
+        "text": "rome",
+        "type": "place"
+    },
+    {
+        "text": "san_francisco",
+        "type": "place"
+    },
+    {
+        "text": "school",
+        "type": "place"
+    },
+    {
+        "text": "south_korea",
+        "type": "place"
+    },
+    {
+        "text": "stadium",
+        "type": "place"
+    },
+    {
+        "text": "theatre",
+        "type": "place"
+    },
+    {
+        "text": "toronto",
+        "type": "place"
+    },
+    {
+        "text": "whitehouse",
+        "type": "place"
+    },
+    {
+        "text": "zoo",
+        "type": "place"
     }
 ]

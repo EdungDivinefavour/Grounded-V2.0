@@ -26,8 +26,9 @@ const _$WordTypeEnumMap = {
   WordType.nature: 'nature',
   WordType.climate: 'climate',
   WordType.fruits: 'fruits',
-  WordType.country: 'country',
+  WordType.place: 'place',
   WordType.vehicle: 'vehicle',
   WordType.household: 'household',
   WordType.thing: 'thing',
+  WordType.person: 'person',
 };

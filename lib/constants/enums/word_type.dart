@@ -10,10 +10,11 @@ enum WordType {
   nature,
   climate,
   fruits,
-  country,
+  place,
   vehicle,
   household,
   thing,
+  person
 }
 
 extension WordTypeExtension on WordType {
