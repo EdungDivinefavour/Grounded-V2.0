@@ -54,6 +54,10 @@ class English extends Question {
 
     final randomIndex = r.nextInt(english.word!.text.length - 1) + 1;
     english.correctAnswer = english.word!.text[randomIndex];
+
+    // Replace all names that have _ with space and then replace the correct answer with _
+    english.displayedQuestion =
+        english.word!.text.replaceFirst(RegExp('_'), ' ');
     english.displayedQuestion =
         english.word!.text.replaceFirst(RegExp(english.correctAnswer!), '_');
 

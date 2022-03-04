@@ -33,12 +33,13 @@ class SolveTask extends StatefulWidget {
 class _SolveTaskState extends State<SolveTask> {
   final _audioPlayer = AudioCache(prefix: audioPath);
 
-  int _currentQuestionIndex = 0;
-
-  int _timeSpentOnQuestion = 0;
+  String? _displayedQuestionText;
   String? _pickedAnswer;
 
   Timer? _timer;
+
+  int _currentQuestionIndex = 0;
+  int _timeSpentOnQuestion = 0;
 
   @override
   void initState() {
@@ -134,7 +135,7 @@ class _SolveTaskState extends State<SolveTask> {
         pngSource: PNGSource.images,
       ),
       SizedBox(height: 50),
-      Text(_currentQuestion.displayedQuestion!,
+      Text(_displayedQuestionText!,
           style: TextStyles.medium.copyWith(
               fontSize:
                   _currentQuestion.displayedQuestion!.length < 8 ? 60 : 35)),
@@ -176,7 +177,7 @@ class _SolveTaskState extends State<SolveTask> {
     return [
       Text('Answer this question',
           style: TextStyles.bold.copyWith(fontSize: 18)),
-      Text(_currentQuestion.displayedQuestion!,
+      Text(_displayedQuestionText!,
           style: TextStyles.smallBold.copyWith(
               fontSize:
                   _currentQuestion.displayedQuestion!.length < 8 ? 80 : 60)),
@@ -232,7 +233,7 @@ class _SolveTaskState extends State<SolveTask> {
     setState(() {
       _currentQuestion.pickedAnswer = _pickedAnswer;
       if (widget.task.subjectType == SubjectType.english) {
-        _currentQuestion.displayedQuestion = _currentQuestion.displayedQuestion
+        _displayedQuestionText = _currentQuestion.displayedQuestion
             ?.replaceFirst('_', _pickedAnswer!);
       }
     });
@@ -240,11 +241,11 @@ class _SolveTaskState extends State<SolveTask> {
 
   void _confirmAnswer() {
     final wasAnswerCorrect = _pickedAnswer == _currentQuestion.correctAnswer;
-
     if (_pickedAnswer == null) {
       EasyLoading.showError("Please enter an answer to proceed");
       return;
     }
+
     _audioPlayer.play(wasAnswerCorrect ? correctTone : inCorrectTone);
     if (!wasAnswerCorrect) return;
 
@@ -281,6 +282,7 @@ class _SolveTaskState extends State<SolveTask> {
 
     _currentQuestionIndex =
         widget.task.questions.indexOf(widget.task.lastCompletedQuestion!) + 1;
+    _displayedQuestionText = _currentQuestion.displayedQuestion;
   }
 
   void _startCountDownTimer() {
@@ -292,6 +294,7 @@ class _SolveTaskState extends State<SolveTask> {
   void _resetScreenVariables() {
     setState(() {
       _currentQuestionIndex++;
+      _displayedQuestionText = _currentQuestion.displayedQuestion;
       _pickedAnswer = null;
       _timeSpentOnQuestion = 0;
     });

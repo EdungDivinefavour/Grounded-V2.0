@@ -40,21 +40,31 @@ class Math extends Question {
   static Math regularMath(MathType mathType) {
     final math = Math(mathType: mathType);
 
-    final num1 = Random().nextInt(10) + 1;
-    final num2 = Random().nextInt(10) + 1;
-
     if (math.mathType == MathType.addition) {
+      final num1 = Random().nextInt(10) + 1;
+      final num2 = Random().nextInt(10) + 1;
+
       math.correctAnswer = "${num1 + num2}";
       math.displayedQuestion = "$num1 + $num2";
     } else if (math.mathType == MathType.subtraction) {
+      final num1 = Random().nextInt(25) + 1;
+      final num2 = Random().nextInt(num1) + 1;
+
       math.correctAnswer = "${num1 - num2}";
       math.displayedQuestion = "$num1 - $num2";
     } else if (math.mathType == MathType.multiplication) {
+      final num1 = Random().nextInt(10) + 1;
+      final num2 = Random().nextInt(10) + 1;
+
       math.correctAnswer = "${num1 * num2}";
       math.displayedQuestion = "$num1 x $num2";
     } else if (math.mathType == MathType.division) {
-      math.correctAnswer = "${num1 / num2}";
-      math.displayedQuestion = "$num1 ÷ $num2";
+      final num1 = Random().nextInt(10) + 1;
+      final num2 = Random().nextInt(10) + 1;
+      final result = num1 * num2;
+
+      math.correctAnswer = "${result ~/ num1}";
+      math.displayedQuestion = "$result ÷ $num1";
     }
 
     return math;
@@ -63,25 +73,34 @@ class Math extends Question {
   static Math findMissingNumberMath(MathType mathType) {
     final math = Math(mathType: mathType);
 
-    final num1 = Random().nextInt(10) + 1;
-    final num2 = Random().nextInt(10) + 1;
-
     if (math.mathType == MathType.addition) {
+      final num1 = Random().nextInt(10) + 1;
+      final num2 = Random().nextInt(10) + 1;
       final result = num1 + num2;
+
       math.displayedQuestion = "$num1 + ? = $result";
-      math.correctAnswer = "${result - num1}";
+      math.correctAnswer = "$num2";
     } else if (math.mathType == MathType.subtraction) {
+      final num1 = Random().nextInt(25) + 1;
+      final num2 = Random().nextInt(num1) + 1;
       final result = num1 - num2;
+
       math.displayedQuestion = "$num1 - ? = $result";
-      math.correctAnswer = "${result + num1}";
+      math.correctAnswer = "$num2";
     } else if (math.mathType == MathType.multiplication) {
+      final num1 = Random().nextInt(10) + 1;
+      final num2 = Random().nextInt(10) + 1;
       final result = num1 * num2;
+
       math.displayedQuestion = "$num1 x ? = $result";
-      math.correctAnswer = "${result / num1}";
+      math.correctAnswer = "$num2";
     } else if (math.mathType == MathType.division) {
-      final result = num1 / num2;
-      math.displayedQuestion = "$num1 + ? = $result";
-      math.correctAnswer = "${result * num1}";
+      final num1 = Random().nextInt(10) + 1;
+      final num2 = Random().nextInt(10) + 1;
+      final result = num1 * num2;
+
+      math.displayedQuestion = "$result + ? = $num1";
+      math.correctAnswer = "$num2";
     }
 
     return math;
