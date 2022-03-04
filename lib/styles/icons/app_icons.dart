@@ -31,6 +31,7 @@ abstract class AppIcons {
   static const profile = 'profile.svg';
   static const reports = 'reports.svg';
   static const settings = 'settings.svg';
+  static const share = 'share.svg';
   static const star = 'star.svg';
   static const support = 'support.svg';
   static const subtractionPNG = 'subtraction.png';

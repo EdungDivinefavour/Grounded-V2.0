@@ -1,8 +1,13 @@
+import 'dart:math';
+
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:grounded/components/svg_icon.dart';
 import 'package:grounded/services/firebase/authentication_service.dart';
 import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/texts/text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:share_plus/share_plus.dart';
 
 class DrawerListItem extends StatelessWidget {
   final String title;
@@ -63,9 +68,36 @@ class DrawerListItem extends StatelessWidget {
         MaterialPageRoute(builder: (_) => screenToLaunch!),
         (_) => false,
       );
+    } else if (title == "Share") {
+      Share.share(
+          "Grounded is the awesome app i use to get the assign tasks to my kids from the comfort of my office or anywhere i'm at with just a few clicks. \n\nYou can download Grounded from the store using the following link https://apps.apple.com/ca/app/grounded/id1563059291",
+          subject: "Grounded");
+    } else if (title == "Contact") {
+      _openContactOptionSheet(context);
     } else {
       Navigator.push(
           context, MaterialPageRoute(builder: (_) => screenToLaunch!));
+    }
+  }
+
+  void _openContactOptionSheet(BuildContext context) async {
+    final result = await showModalActionSheet<String>(
+        context: context,
+        title: "Select option",
+        actions: [
+          SheetAction(key: "call_support", label: "Call Support"),
+          SheetAction(key: "email_support", label: "Email Support"),
+        ]);
+
+    if (result == "call_support") {
+      launch("tel: +2348168964795");
+    } else if (result == "email_support") {
+      final ticketNumber = (Random().nextInt(91039) + 29332);
+      final emailLaunchUri = Uri(
+          scheme: 'mailto',
+          path: "mleechin@hotmail.com",
+          queryParameters: {'subject': 'Ticket $ticketNumber'});
+      launch(emailLaunchUri.toString());
     }
   }
 }

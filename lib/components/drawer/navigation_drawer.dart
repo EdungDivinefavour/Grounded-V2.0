@@ -54,9 +54,12 @@ class NavigationDrawer extends StatelessWidget {
         screenToLaunch: About(),
       ),
       DrawerListItem(
+        title: "Share",
+        leftIcon: AppIcons.share,
+      ),
+      DrawerListItem(
         title: "Contact",
         leftIcon: AppIcons.support,
-        screenToLaunch: About(),
       ),
       DrawerListItem(
         title: "Log Out",
