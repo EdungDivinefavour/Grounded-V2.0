@@ -7,6 +7,6 @@ extension BadgeTypeExtension on BadgeType {
 }
 
 extension BadgeTypeStringExtension on String {
-  BadgeType get toOnlinePresence =>
+  BadgeType get toBadgeType =>
       BadgeType.values.firstWhere((e) => e.value == this);
 }

@@ -135,10 +135,13 @@ class _SolveTaskState extends State<SolveTask> {
         pngSource: PNGSource.images,
       ),
       SizedBox(height: 50),
-      Text(_displayedQuestionText!,
-          style: TextStyles.medium.copyWith(
-              fontSize:
-                  _currentQuestion.displayedQuestion!.length < 8 ? 60 : 35)),
+      _displayedQuestionText == null
+          ? emptyWidget
+          : Text(_displayedQuestionText!,
+              style: TextStyles.medium.copyWith(
+                  fontSize: _currentQuestion.displayedQuestion!.length < 8
+                      ? 60
+                      : 35)),
       SizedBox(height: 20),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -177,10 +180,13 @@ class _SolveTaskState extends State<SolveTask> {
     return [
       Text('Answer this question',
           style: TextStyles.bold.copyWith(fontSize: 18)),
-      Text(_displayedQuestionText!,
-          style: TextStyles.smallBold.copyWith(
-              fontSize:
-                  _currentQuestion.displayedQuestion!.length < 8 ? 80 : 60)),
+      _displayedQuestionText == null
+          ? emptyWidget
+          : Text(_displayedQuestionText!,
+              style: TextStyles.smallBold.copyWith(
+                  fontSize: _currentQuestion.displayedQuestion!.length < 8
+                      ? 80
+                      : 60)),
       Spacer(),
       _currentQuestion.pickedAnswer == null
           ? emptyWidget
@@ -277,11 +283,11 @@ class _SolveTaskState extends State<SolveTask> {
   void _setCurrentQuestionIndex() {
     if (widget.task.lastCompletedQuestion == null) {
       _currentQuestionIndex = 0;
-      return;
+    } else {
+      _currentQuestionIndex =
+          widget.task.questions.indexOf(widget.task.lastCompletedQuestion!) + 1;
     }
 
-    _currentQuestionIndex =
-        widget.task.questions.indexOf(widget.task.lastCompletedQuestion!) + 1;
     _displayedQuestionText = _currentQuestion.displayedQuestion;
   }
 

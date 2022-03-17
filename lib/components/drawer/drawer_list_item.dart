@@ -70,7 +70,7 @@ class DrawerListItem extends StatelessWidget {
       );
     } else if (title == "Share") {
       Share.share(
-          "Grounded is the awesome app i use to get the assign tasks to my kids from the comfort of my office or anywhere i'm at with just a few clicks. \n\nYou can download Grounded from the store using the following link https://apps.apple.com/ca/app/grounded/id1563059291",
+          "Grounded is the awesome app i use to assign tasks to my kids from the comfort of my office or anywhere i'm at with just a few clicks. \n\nYou can download Grounded from the store using the following link https://apps.apple.com/ca/app/grounded/id1563059291",
           subject: "Grounded");
     } else if (title == "Contact") {
       _openContactOptionSheet(context);
