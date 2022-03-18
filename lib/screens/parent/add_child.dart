@@ -36,10 +36,10 @@ class _AddChildState extends State<AddChild> {
   final _imagePicker = ImagePicker();
 
   File? _pickedImage;
-  String? pickedUploadedPhotoUrl;
+  String? _pickedUploadedPhotoUrl;
 
-  int _ageValue = 1;
-  double _gradeValue = 0;
+  int _ageValue = 0;
+  int _gradeValue = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,13 @@ class _AddChildState extends State<AddChild> {
             SizedBox(height: 25),
             InkWell(
               onTap: _openPickImageSheet,
-              child: UserImage(imageURL: pickedUploadedPhotoUrl),
+              child: _pickedImage == null
+                  ? UserImage(imageURL: _pickedUploadedPhotoUrl)
+                  : ClipRRect(
+                      borderRadius: BorderRadius.circular(150.0),
+                      child: Image.file(_pickedImage!,
+                          height: 150, width: 150, fit: BoxFit.cover),
+                    ),
             ),
             SizedBox(height: 30),
             InputField(
@@ -85,19 +91,22 @@ class _AddChildState extends State<AddChild> {
                 ),
                 Text("$_gradeValue", style: TextStyles.regular),
                 Slider(
-                    thumbColor: ThemeColors.primary,
-                    activeColor: ThemeColors.primary,
-                    inactiveColor: ThemeColors.lightBackground,
-                    divisions: 10,
-                    value: _gradeValue,
-                    max: 12,
-                    onChanged: (value) {
-                      setState(() => _gradeValue = value);
-                    }),
+                  min: 0,
+                  thumbColor: ThemeColors.primary,
+                  activeColor: ThemeColors.primary,
+                  inactiveColor: ThemeColors.lightBackground,
+                  divisions: 10,
+                  value: _gradeValue.toDouble(),
+                  max: 12,
+                  onChanged: (value) {
+                    setState(() => _gradeValue = value.round());
+                  },
+                ),
               ],
             ),
             Spacer(),
-            CustomActionButton(onPressed: _addChild, title: "Proceed"),
+            CustomActionButton(
+                title: "Proceed", onPressed: _addChild, isRedButton: true),
             SizedBox(height: 20),
           ],
         ),
@@ -160,16 +169,23 @@ class _AddChildState extends State<AddChild> {
     final uploadedPhotoUrl =
         await _storageService.uploadProfilePhoto(_pickedImage!);
 
-    await _firestoreService.updateChildProfilePhoto(
-        photoUrl: uploadedPhotoUrl, parentID: _authService.currentUser!.uid);
-
     EasyLoading.showInfo("Profile photo uploaded successfully");
     setState(() {
-      pickedUploadedPhotoUrl = uploadedPhotoUrl;
+      _pickedUploadedPhotoUrl = uploadedPhotoUrl;
     });
   }
 
   void _addChild() async {
+    if (_nameController.text.isEmpty || _ageValue == 0 || _gradeValue == 0) {
+      EasyLoading.showError("Please ensure that no fields are left empty");
+      return;
+    }
+
+    if (_pickedUploadedPhotoUrl == null) {
+      EasyLoading.showError("Please upload a photo to proceed");
+      return;
+    }
+
     EasyLoading.show();
     final parentID = _authService.currentUser!.uid;
     final loginToken = generateLoginToken;
@@ -180,10 +196,15 @@ class _AddChildState extends State<AddChild> {
       password: 'x$loginToken',
       loginToken: loginToken,
       name: _nameController.text,
+      photoUrl: _pickedUploadedPhotoUrl!,
       parentID: _authService.currentUser!.uid,
       age: int.parse(_ageController.text),
-      grade: _gradeValue.toInt(),
+      grade: _gradeValue,
     );
+
+    await _firestoreService.updateChildProfilePhoto(
+        photoUrl: _pickedUploadedPhotoUrl!,
+        childID: _authService.currentUser!.uid);
 
     await _authService.loginUser(
         email: widget.parent.email,

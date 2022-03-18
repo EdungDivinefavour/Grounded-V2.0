@@ -2,12 +2,15 @@ import 'package:charts_flutter/flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:grounded/components/custom_scaffold.dart';
+import 'package:grounded/components/png_icon.dart';
 import 'package:grounded/components/screen_title.dart';
+import 'package:grounded/components/svg_icon.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';
 import 'package:grounded/models/data_points/daily_data_point.dart';
 import 'package:grounded/models/managers/grounded_task_manager.dart';
 import 'package:grounded/services/firebase/firestore_service.dart';
+import 'package:grounded/styles/icons/app_icons.dart';
 import 'package:grounded/styles/texts/text_styles.dart';
 
 class Reports extends StatefulWidget {
@@ -75,6 +78,7 @@ class _ReportsState extends State<Reports> {
                           'Completed Tasks', _completedTasks),
                     ],
                   ),
+                  SizedBox(height: 10),
                   Divider(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -96,16 +100,33 @@ class _ReportsState extends State<Reports> {
   }
 
   Widget _buildEachTaskReporter(String title, int count) {
+    String icon = '';
+    if (title == "Assigned Tasks") {
+      icon = AppIcons.targetPNG;
+    } else if (title == "Completed Tasks") {
+      icon = AppIcons.tasksPNG;
+    } else if (title == "Correct Tasks") {
+      icon = AppIcons.correctPNG;
+    } else if (title == "Incorrect Tasks") {
+      icon = AppIcons.incorrectPNG;
+    }
+
     return Column(
       children: [
         Text(
           title,
           style: TextStyles.medium.copyWith(fontSize: 15),
         ),
-        SizedBox(height: 2),
-        Text(
-          '$count',
-          style: TextStyles.bold.copyWith(fontSize: 25),
+        SizedBox(height: 15),
+        Row(
+          children: [
+            PNGIcon(icon: icon, size: 35),
+            SizedBox(width: 100),
+            Text(
+              '$count',
+              style: TextStyles.bold.copyWith(fontSize: 26),
+            ),
+          ],
         )
       ],
     );

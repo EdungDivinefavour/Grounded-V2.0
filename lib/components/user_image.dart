@@ -17,12 +17,16 @@ class UserImage extends StatelessWidget {
 
     return toWidget<String>(
       imageURL,
-      builder: (url) => FadeInImage.assetNetwork(
-          placeholder: iconPath + AppIcons.fetchedImageFailedPNG,
-          image: url,
-          height: size,
-          width: size,
-          imageErrorBuilder: (_, __, ___) => failedIcon),
+      builder: (url) => ClipRRect(
+        borderRadius: BorderRadius.circular(150.0),
+        child: FadeInImage.assetNetwork(
+            placeholder: iconPath + AppIcons.fetchedImageFailedPNG,
+            image: url,
+            height: size,
+            width: size,
+            fit: BoxFit.cover,
+            imageErrorBuilder: (_, __, ___) => failedIcon),
+      ),
       orElse: () => failedIcon,
     );
   }

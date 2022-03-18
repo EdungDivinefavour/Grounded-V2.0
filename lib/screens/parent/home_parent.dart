@@ -83,11 +83,11 @@ class _HomeParentState extends State<HomeParent> {
                   children: [
                     Text(child.name, style: TextStyles.semiBold),
                     SizedBox(width: 5),
-                    Text("(" + child.age.toString() + " years old)")
+                    Text("(${child.age} years old)")
                   ],
                 ),
                 SizedBox(height: 10),
-                Text("Grade " + child.grade.toString()),
+                Text("Grade ${child.grade}"),
                 SizedBox(height: 10),
                 Text("Login Token - " + child.loginToken)
               ],

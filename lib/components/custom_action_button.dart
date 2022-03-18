@@ -7,12 +7,14 @@ class CustomActionButton extends StatelessWidget {
   final VoidCallback onPressed;
   final bool enabled;
   final bool isWhite;
+  final bool isRedButton;
 
   const CustomActionButton({
     required this.onPressed,
     required this.title,
     this.enabled = true,
     this.isWhite = false,
+    this.isRedButton = false,
   });
 
   @override
@@ -21,7 +23,7 @@ class CustomActionButton extends StatelessWidget {
       onPressed: onPressed,
       child: Container(
         decoration: BoxDecoration(
-          color: isWhite ? ThemeColors.lightElement : ThemeColors.primary,
+          color: isRedButton ? ThemeColors.error : ThemeColors.primary,
           borderRadius: const BorderRadius.all(Radius.circular(20)),
         ),
         height: 50,

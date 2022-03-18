@@ -1,4 +1,5 @@
 import 'package:grounded/components/user_image.dart';
+import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/texts/text_styles.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +23,9 @@ class DrawerHeaderItem extends StatelessWidget {
         const SizedBox(height: 10),
         Container(
           margin: const EdgeInsets.only(top: 13, left: 25, bottom: 10),
-          child: Text(title, style: TextStyles.semiBold),
+          child: Text(title,
+              style: TextStyles.semiBold
+                  .copyWith(color: ThemeColors.lightElement)),
         ),
         const Divider(color: Colors.black, height: 20, thickness: 0.2),
         const SizedBox(height: 20)

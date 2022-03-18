@@ -81,14 +81,15 @@ class FirestoreService {
 
   Future<void> updateChildProfilePhoto({
     required String photoUrl,
-    required String parentID,
+    required String childID,
   }) async {
-    // await _firestore.collection(FirebaseDocuments.users).doc(parentID).update({
-    //   "children": FieldValue.arrayUnion([newChild.toJson()])
-    // });
+    await _firestore
+        .collection(FirebaseDocuments.children)
+        .doc(childID)
+        .update({"profilePhoto": photoUrl});
 
-    final parent = await getParentInfo(parentID);
-    await _localStorage.storeUserInfoToLocal(parent);
+    final child = await getChildInfo(childID);
+    await _localStorage.storeUserInfoToLocal(child);
   }
 
   Future<void> storeTask({

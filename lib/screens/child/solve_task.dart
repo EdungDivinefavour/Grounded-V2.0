@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:grounded/components/custom_action_button.dart';
@@ -11,16 +10,13 @@ import 'package:grounded/components/empty_widget.dart';
 import 'package:grounded/components/png_icon.dart';
 import 'package:grounded/components/svg_icon.dart';
 import 'package:grounded/constants/enums/subject_type.dart';
-import 'package:grounded/constants/strings/paths.dart';
 import 'package:grounded/models/grounded_task/grounded_task.dart';
 import 'package:grounded/models/question/question.dart';
+import 'package:grounded/services/audio/audio_player.dart';
 import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/icons/app_icons.dart';
 import 'package:grounded/styles/texts/text_styles.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-
-const correctTone = "correct.mp3";
-const inCorrectTone = "incorrect.mp3";
 
 class SolveTask extends StatefulWidget {
   final GroundedTask task;
@@ -31,8 +27,6 @@ class SolveTask extends StatefulWidget {
 }
 
 class _SolveTaskState extends State<SolveTask> {
-  final _audioPlayer = AudioCache(prefix: audioPath);
-
   String? _displayedQuestionText;
   String? _pickedAnswer;
 
@@ -47,8 +41,6 @@ class _SolveTaskState extends State<SolveTask> {
 
     _setCurrentQuestionIndex();
     _startCountDownTimer();
-
-    _audioPlayer.loadAll([correctTone, inCorrectTone]);
   }
 
   @override
@@ -56,7 +48,6 @@ class _SolveTaskState extends State<SolveTask> {
     super.dispose();
 
     _timer?.cancel();
-    _audioPlayer.clearAll();
   }
 
   @override
@@ -139,9 +130,7 @@ class _SolveTaskState extends State<SolveTask> {
           ? emptyWidget
           : Text(_displayedQuestionText!,
               style: TextStyles.medium.copyWith(
-                  fontSize: _currentQuestion.displayedQuestion!.length < 8
-                      ? 60
-                      : 35)),
+                  fontSize: _displayedQuestionText!.length < 8 ? 60 : 35)),
       SizedBox(height: 20),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -184,17 +173,15 @@ class _SolveTaskState extends State<SolveTask> {
           ? emptyWidget
           : Text(_displayedQuestionText!,
               style: TextStyles.smallBold.copyWith(
-                  fontSize: _currentQuestion.displayedQuestion!.length < 8
-                      ? 80
-                      : 60)),
+                  fontSize: _displayedQuestionText!.length < 8 ? 80 : 60)),
       Spacer(),
-      _currentQuestion.pickedAnswer == null
+      _pickedAnswer == null
           ? emptyWidget
           : Container(
               padding: EdgeInsets.only(right: 30),
               alignment: Alignment.centerRight,
               child: Text(
-                _currentQuestion.pickedAnswer!,
+                _pickedAnswer!,
                 style: TextStyles.semiBold.copyWith(fontSize: 40),
               )),
       Spacer(),
@@ -237,7 +224,6 @@ class _SolveTaskState extends State<SolveTask> {
     }
 
     setState(() {
-      _currentQuestion.pickedAnswer = _pickedAnswer;
       if (widget.task.subjectType == SubjectType.english) {
         _displayedQuestionText = _currentQuestion.displayedQuestion
             ?.replaceFirst('_', _pickedAnswer!);
@@ -252,9 +238,20 @@ class _SolveTaskState extends State<SolveTask> {
       return;
     }
 
-    _audioPlayer.play(wasAnswerCorrect ? correctTone : inCorrectTone);
-    if (!wasAnswerCorrect) return;
+    AudioPlayer.instance
+        .play(wasAnswerCorrect ? AudioTones.correct : AudioTones.inCorrect);
+    if (!wasAnswerCorrect) {
+      _currentQuestion.pickedAnswer = _pickedAnswer = null;
 
+      if (widget.task.subjectType == SubjectType.english) {
+        setState(() {
+          _displayedQuestionText = _currentQuestion.displayedQuestion;
+        });
+      }
+      return;
+    }
+
+    _currentQuestion.pickedAnswer = _pickedAnswer;
     _currentQuestion.timeSpentOnQuestion = _timeSpentOnQuestion;
     _currentQuestion.setHasBeenAnswered();
 
@@ -273,10 +270,8 @@ class _SolveTaskState extends State<SolveTask> {
     }
 
     final lastIndex = _pickedAnswer!.length;
-    _pickedAnswer = _pickedAnswer!.substring(0, lastIndex - 1);
-
     setState(() {
-      _currentQuestion.pickedAnswer = _pickedAnswer;
+      _pickedAnswer = _pickedAnswer!.substring(0, lastIndex - 1);
     });
   }
 
@@ -289,6 +284,7 @@ class _SolveTaskState extends State<SolveTask> {
     }
 
     _displayedQuestionText = _currentQuestion.displayedQuestion;
+    _pickedAnswer = _currentQuestion.pickedAnswer;
   }
 
   void _startCountDownTimer() {
