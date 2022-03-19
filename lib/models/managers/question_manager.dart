@@ -1,9 +1,9 @@
 import 'dart:math';
 
+import 'package:grounded/extensions/question_manager_english_extension.dart';
+import 'package:grounded/extensions/question_manager_math_extension.dart';
 import 'package:grounded/models/grounded_task/grounded_task.dart';
-import 'package:grounded/models/question/english/english.dart';
 import 'package:grounded/models/question/english/word/word.dart';
-import 'package:grounded/models/question/math/math.dart';
 import 'package:grounded/services/local_asset/local_asset.dart';
 
 class QuestionManager {
@@ -22,11 +22,9 @@ class QuestionManager {
   }
 
   void buildMathList(GroundedTask task) {
-    for (int i = 0; i < 6; i++) {
-      task.questions.add(Math.regularMath(task.mathTypeToCreate!));
-    }
-    for (int i = 0; i < 4; i++) {
-      task.questions.add(Math.findMissingNumberMath(task.mathTypeToCreate!));
+    for (int i = 0; i < 10; i++) {
+      task.questions
+          .add(newMath(task.mathTypeToCreate!, task.mathSubTypeToCreate!));
     }
 
     task.questions.shuffle();
@@ -34,12 +32,14 @@ class QuestionManager {
 
   void buildEnglishList(GroundedTask task) {
     final r = Random();
+    final wordArrayToUse =
+        allWords.where((x) => x.type == task.englishSubTypeToCreate).toList();
 
     for (int i = 0; i < 10; i++) {
-      var word = allWords[r.nextInt(allWords.length)];
+      var word = wordArrayToUse[r.nextInt(wordArrayToUse.length)];
       word.text = word.text.toUpperCase();
 
-      task.questions.add(English.regularEnglish(word));
+      task.questions.add(newEnglish(word.text, task.englishSubTypeToCreate!));
     }
   }
 }

@@ -8,10 +8,11 @@ import 'package:grounded/components/empty_widget.dart';
 import 'package:grounded/components/input_field.dart';
 import 'package:grounded/components/png_icon.dart';
 import 'package:grounded/components/user_image.dart';
+import 'package:grounded/constants/enums/english_sub_type.dart';
 import 'package:grounded/constants/enums/english_type.dart';
+import 'package:grounded/constants/enums/math_sub_type.dart';
 import 'package:grounded/constants/enums/math_type.dart';
 import 'package:grounded/constants/enums/subject_type.dart';
-import 'package:grounded/constants/enums/word_type.dart';
 import 'package:grounded/models/grounded_task/grounded_task.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';
@@ -36,30 +37,23 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
 
   late TabController _tabController;
   final _taskNameController = TextEditingController();
-  final _subjectController = TextEditingController();
   final _expectedCompletionDateController = TextEditingController();
   final _expectedCompletionTimeController = TextEditingController();
-
-  final _mathTypeController = TextEditingController();
 
   DateTime? compiledDateAndTime;
 
   DateTime? _pickedDate;
   TimeOfDay? _pickedTime;
 
-  SubjectType? _selectedSubjectType;
+  SubjectType _selectedSubjectType = SubjectType.maths;
 
-  String? _selectedMathSubType;
-  String? _selectedEnglishWordType;
+  MathType? _selectedMathType;
+  EnglishType? _selectedEnglishType;
+
+  EnglishSubType? _selectedEnglishSubType;
+  MathSubType? _selectedMathSubType;
 
   int _currentTabIndex = 0;
-
-  final allMathSubtypes = [
-    "Add Doubles",
-    "Add Two Numbers Make Ten",
-    "Find Missing Number",
-    "Add Three Numbers",
-  ];
 
   @override
   void initState() {
@@ -132,25 +126,6 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
                 ),
                 SizedBox(height: 30),
                 _buildSubjectTabs,
-                _selectedSubjectType == SubjectType.maths
-                    ? SizedBox(height: 30)
-                    : emptyWidget,
-                _selectedSubjectType == SubjectType.maths
-                    ? InputField(
-                        title: "Type",
-                        hintText: "Click to display dropdown of math types",
-                        dropDownList: [
-                          MathType.addition.value,
-                          MathType.subtraction.value,
-                          MathType.multiplication.value,
-                          MathType.division.value,
-                        ],
-                        onDropDownChange: (value) {
-                          _mathTypeController.text = value!;
-                        },
-                        controller: _mathTypeController,
-                      )
-                    : emptyWidget,
                 SizedBox(height: 30),
                 CustomActionButton(
                     onPressed: _addTask, title: "Send Task", isRedButton: true),
@@ -195,6 +170,7 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
         _tabController.animateTo(index);
         setState(() {
           _currentTabIndex = index;
+          _selectedSubjectType = SubjectType.values[_currentTabIndex];
         });
       },
       child: Container(
@@ -223,23 +199,24 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildEnglishSubtypeContainer(WordType.animal),
-              _buildEnglishSubtypeContainer(WordType.person),
-              _buildEnglishSubtypeContainer(WordType.thing),
+              _buildEnglishSubTypeContainer(EnglishSubType.animal),
+              _buildEnglishSubTypeContainer(EnglishSubType.person),
+              _buildEnglishSubTypeContainer(EnglishSubType.thing),
             ],
           ),
           SizedBox(height: 20),
-          Row(children: [_buildEnglishSubtypeContainer(WordType.place)]),
+          Row(children: [_buildEnglishSubTypeContainer(EnglishSubType.place)]),
         ],
       ),
     );
   }
 
-  Widget _buildEnglishSubtypeContainer(WordType wordType) {
+  Widget _buildEnglishSubTypeContainer(EnglishSubType englishSubType) {
     return GestureDetector(
       onTap: () {
         setState(() {
-          _selectedEnglishWordType = wordType.value;
+          _selectedEnglishType = EnglishType.general;
+          _selectedEnglishSubType = englishSubType;
         });
       },
       child: Container(
@@ -247,16 +224,18 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
         width: 90,
         decoration: BoxDecoration(
             border: Border.all(
-                color: _selectedEnglishWordType == wordType.value
-                    ? ThemeColors.error.withOpacity(0.6)
+                width: 1.5,
+                color: _selectedEnglishSubType == englishSubType
+                    ? ThemeColors.error.withOpacity(0.8)
                     : ThemeColors.darkBackground.withOpacity(0.2)),
             borderRadius: BorderRadius.all(Radius.circular(8))),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            PNGIcon(icon: '${wordType.value.toLowerCase()}.png', size: 50),
+            PNGIcon(
+                icon: '${englishSubType.value.toLowerCase()}.png', size: 50),
             SizedBox(height: 10),
-            Text(wordType.value,
+            Text(englishSubType.value,
                 style: TextStyles.semiBold.copyWith(fontSize: 13))
           ],
         ),
@@ -273,6 +252,7 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
           itemBuilder: (context, i) {
             return InkWell(
               onTap: () {
+                _selectedMathType = MathType.values[i];
                 _showMathSubTypeAlert(i);
               },
               child: Container(
@@ -280,7 +260,9 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
                 padding: EdgeInsets.symmetric(horizontal: 15),
                 decoration: BoxDecoration(
                     border: Border.all(
-                        color: ThemeColors.darkBackground.withOpacity(0.2)),
+                        color: _selectedMathType == MathType.values[i]
+                            ? _buildMathTypeColor(i)
+                            : ThemeColors.darkBackground.withOpacity(0.2)),
                     borderRadius: BorderRadius.all(Radius.circular(12))),
                 height: 60,
                 child: Row(
@@ -310,14 +292,15 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildMathsSubtypeContainer(String title, int index, sts) {
+  Widget _buildMathsSubtypeContainer(MathSubType mathSubType, int index, sts) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 3.5, horizontal: 15),
       child: InkWell(
         onTap: () {
           sts(() {
-            _selectedMathSubType = title;
+            _selectedMathSubType = mathSubType;
           });
+          setState(() {});
         },
         child: Card(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -330,13 +313,13 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
                 SizedBox(
                   width: 190,
                   child: Text(
-                    title,
+                    mathSubType.value,
                     style: TextStyles.regular.copyWith(
                         fontSize: 15, color: _buildMathTypeColor(index)),
                   ),
                 ),
                 Spacer(),
-                _selectedMathSubType == title
+                _selectedMathSubType == mathSubType
                     ? Icon(Icons.check_circle,
                         size: 30, color: _buildMathTypeColor(index))
                     : emptyWidget
@@ -354,9 +337,9 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
     } else if (index == 1) {
       return Icons.remove_circle;
     } else if (index == 2) {
-      return TablerIcons.divide;
-    } else {
       return Icons.cancel_outlined;
+    } else {
+      return TablerIcons.divide;
     }
   }
 
@@ -382,7 +365,7 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             child: SizedBox(
-                height: 420,
+                height: _selectedMathType == MathType.addition ? 420 : 260,
                 width: MediaQuery.of(context).size.width * 0.8,
                 child: Column(
                   children: [
@@ -394,7 +377,7 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
                           Icon(_buildMathTypeIcon(index),
                               color: ThemeColors.lightElement, size: 35),
                           SizedBox(width: 10),
-                          Text(MathType.values[0].value,
+                          Text(MathType.values[index].value,
                               style: TextStyles.semiBold.copyWith(
                                   fontSize: 17,
                                   color: ThemeColors.lightElement)),
@@ -407,8 +390,15 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
                     Divider(color: ThemeColors.lightElement, thickness: 1),
                     SizedBox(height: 10),
                     Column(
-                      children: allMathSubtypes.map((x) {
-                        return _buildMathsSubtypeContainer(x, index, sts);
+                      children: MathSubType.values
+                          .where((x) =>
+                              x.value.toLowerCase().contains("find") ||
+                              x.value.toLowerCase().contains(_selectedMathType!
+                                  .value
+                                  .toLowerCase()
+                                  .substring(0, 3)))
+                          .map((y) {
+                        return _buildMathsSubtypeContainer(y, index, sts);
                       }).toList(),
                     ),
                     SizedBox(height: 10)
@@ -470,15 +460,11 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
       name: _taskNameController.text,
       parentID: widget.parent.id,
       childID: widget.child.id,
-      subjectType: _subjectController.text.toSubjectType,
-      mathTypeToCreate:
-          _subjectController.text.toSubjectType == SubjectType.maths
-              ? _mathTypeController.text.toMathType
-              : null,
-      englishTypeToCreate:
-          _subjectController.text.toSubjectType == SubjectType.maths
-              ? null
-              : EnglishType.general,
+      subjectType: _selectedSubjectType,
+      mathTypeToCreate: _selectedMathType,
+      mathSubTypeToCreate: _selectedMathSubType,
+      englishTypeToCreate: _selectedEnglishType,
+      englishSubTypeToCreate: _selectedEnglishSubType,
       expectedCompletionTimestamp: compiledDateAndTime!.millisecondsSinceEpoch,
     );
 
@@ -499,10 +485,11 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
   bool get _allFieldsPassedValidation {
     if (_taskNameController.text == "") {
       return false;
-    } else if (_subjectController.text == "") {
+    } else if (_selectedSubjectType == SubjectType.maths &&
+        (_selectedMathType == null || _selectedMathSubType == null)) {
       return false;
-    } else if (_subjectController.text == SubjectType.maths.value &&
-        _mathTypeController.text == "") {
+    } else if (_selectedSubjectType == SubjectType.english &&
+        _selectedEnglishSubType == null) {
       return false;
     } else if (_expectedCompletionDateController.text == "") {
       return false;

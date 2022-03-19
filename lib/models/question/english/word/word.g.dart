@@ -8,27 +8,27 @@ part of 'word.dart';
 
 Word _$WordFromJson(Map<String, dynamic> json) => Word(
       text: json['text'] as String,
-      type: $enumDecode(_$WordTypeEnumMap, json['type']),
+      type: $enumDecode(_$EnglishSubTypeEnumMap, json['type']),
     );
 
 Map<String, dynamic> _$WordToJson(Word instance) => <String, dynamic>{
-      'type': _$WordTypeEnumMap[instance.type],
+      'type': _$EnglishSubTypeEnumMap[instance.type],
       'text': instance.text,
     };
 
-const _$WordTypeEnumMap = {
-  WordType.animal: 'animal',
-  WordType.music: 'music',
-  WordType.sport: 'sport',
-  WordType.color: 'color',
-  WordType.number: 'number',
-  WordType.food: 'food',
-  WordType.nature: 'nature',
-  WordType.climate: 'climate',
-  WordType.fruits: 'fruits',
-  WordType.place: 'place',
-  WordType.vehicle: 'vehicle',
-  WordType.household: 'household',
-  WordType.thing: 'thing',
-  WordType.person: 'person',
+const _$EnglishSubTypeEnumMap = {
+  EnglishSubType.animal: 'animal',
+  EnglishSubType.music: 'music',
+  EnglishSubType.sport: 'sport',
+  EnglishSubType.color: 'color',
+  EnglishSubType.number: 'number',
+  EnglishSubType.food: 'food',
+  EnglishSubType.nature: 'nature',
+  EnglishSubType.climate: 'climate',
+  EnglishSubType.fruits: 'fruits',
+  EnglishSubType.place: 'place',
+  EnglishSubType.vehicle: 'vehicle',
+  EnglishSubType.household: 'household',
+  EnglishSubType.thing: 'thing',
+  EnglishSubType.person: 'person',
 };

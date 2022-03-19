@@ -40,7 +40,7 @@ class _SolveTaskState extends State<SolveTask> {
     super.initState();
 
     _setCurrentQuestionIndex();
-    _startCountDownTimer();
+    _startTimer();
   }
 
   @override
@@ -122,7 +122,7 @@ class _SolveTaskState extends State<SolveTask> {
       SizedBox(height: 40),
       PNGIcon(
         size: 160,
-        icon: 'questions/${_currentQuestion.word!.text.toLowerCase()}.png',
+        icon: 'questions/${_currentQuestion.word!.toLowerCase()}.png',
         pngSource: PNGSource.images,
       ),
       SizedBox(height: 50),
@@ -241,7 +241,9 @@ class _SolveTaskState extends State<SolveTask> {
     AudioPlayer.instance
         .play(wasAnswerCorrect ? AudioTones.correct : AudioTones.inCorrect);
     if (!wasAnswerCorrect) {
-      _currentQuestion.pickedAnswer = _pickedAnswer = null;
+      setState(() {
+        _currentQuestion.pickedAnswer = _pickedAnswer = null;
+      });
 
       if (widget.task.subjectType == SubjectType.english) {
         setState(() {
@@ -287,9 +289,10 @@ class _SolveTaskState extends State<SolveTask> {
     _pickedAnswer = _currentQuestion.pickedAnswer;
   }
 
-  void _startCountDownTimer() {
+  void _startTimer() {
     _timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
       setState(() => _timeSpentOnQuestion++);
+      _currentQuestion.timeSpentOnQuestion = _timeSpentOnQuestion;
     });
   }
 

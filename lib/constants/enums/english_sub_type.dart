@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-enum WordType {
+enum EnglishSubType {
   animal,
   music,
   sport,
@@ -17,14 +17,14 @@ enum WordType {
   person
 }
 
-extension WordTypeExtension on WordType {
+extension EnglishSubTypeExtension on EnglishSubType {
   String get stringValue => describeEnum(this);
 
   String get value =>
       "${stringValue[0].toUpperCase()}${stringValue.substring(1).toLowerCase()}";
 }
 
-extension WordTypeExtensionStringExtension on String {
-  WordType get toWordType =>
-      WordType.values.firstWhere((e) => e.value.toLowerCase() == toLowerCase());
+extension EnglishSubTypeExtensionStringExtension on String {
+  EnglishSubType get toEnglishSubType => EnglishSubType.values
+      .firstWhere((e) => e.value.toLowerCase() == toLowerCase());
 }

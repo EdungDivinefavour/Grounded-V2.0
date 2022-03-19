@@ -1,8 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-enum EnglishType {
-  general,
-}
+enum EnglishType { general }
 
 extension EnglishTypeExtension on EnglishType {
   String get value => describeEnum(this);

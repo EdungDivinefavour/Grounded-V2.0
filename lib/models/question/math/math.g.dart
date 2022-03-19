@@ -8,6 +8,7 @@ part of 'math.dart';
 
 Math _$MathFromJson(Map<String, dynamic> json) => Math(
       mathType: $enumDecode(_$MathTypeEnumMap, json['mathType']),
+      mathSubType: $enumDecode(_$MathSubTypeEnumMap, json['mathSubType']),
       subjectType:
           $enumDecodeNullable(_$SubjectTypeEnumMap, json['subjectType']) ??
               SubjectType.maths,
@@ -18,16 +19,14 @@ Math _$MathFromJson(Map<String, dynamic> json) => Math(
       ..suggestedAnswers = (json['suggestedAnswers'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList()
-      ..word = json['word'] == null
-          ? null
-          : Word.fromJson(json['word'] as Map<String, dynamic>)
-      ..timeSpentOnQuestion = json['timeSpentOnQuestion'] as int?
+      ..word = json['word'] as String?
+      ..timeSpentOnQuestion = json['timeSpentOnQuestion'] as int
       ..hasBeenAnswered = json['hasBeenAnswered'] as bool
       ..correctAnswer = json['correctAnswer'] as String?;
 
 Map<String, dynamic> _$MathToJson(Math instance) => <String, dynamic>{
       'suggestedAnswers': instance.suggestedAnswers,
-      'word': instance.word?.toJson(),
+      'word': instance.word,
       'timeSpentOnQuestion': instance.timeSpentOnQuestion,
       'hasBeenAnswered': instance.hasBeenAnswered,
       'subjectType': _$SubjectTypeEnumMap[instance.subjectType],
@@ -36,6 +35,7 @@ Map<String, dynamic> _$MathToJson(Math instance) => <String, dynamic>{
       'correctAnswer': instance.correctAnswer,
       'completedTimestamp': instance.completedTimestamp,
       'mathType': _$MathTypeEnumMap[instance.mathType],
+      'mathSubType': _$MathSubTypeEnumMap[instance.mathSubType],
     };
 
 const _$MathTypeEnumMap = {
@@ -43,6 +43,16 @@ const _$MathTypeEnumMap = {
   MathType.subtraction: 'subtraction',
   MathType.multiplication: 'multiplication',
   MathType.division: 'division',
+};
+
+const _$MathSubTypeEnumMap = {
+  MathSubType.addDoubles: 'addDoubles',
+  MathSubType.addTwoNumbersMakeTen: 'addTwoNumbersMakeTen',
+  MathSubType.addThreeNumbers: 'addThreeNumbers',
+  MathSubType.subtractDoubles: 'subtractDoubles',
+  MathSubType.multiplyDoubles: 'multiplyDoubles',
+  MathSubType.divideDoubles: 'divideDoubles',
+  MathSubType.findMissingNumber: 'findMissingNumber',
 };
 
 const _$SubjectTypeEnumMap = {

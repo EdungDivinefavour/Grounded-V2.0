@@ -1,7 +1,8 @@
+import 'package:grounded/constants/enums/english_sub_type.dart';
 import 'package:grounded/constants/enums/english_type.dart';
+import 'package:grounded/constants/enums/math_sub_type.dart';
 import 'package:grounded/constants/enums/math_type.dart';
 import 'package:grounded/constants/enums/subject_type.dart';
-import 'package:grounded/models/question/english/word/word.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'question.g.dart';
@@ -9,15 +10,20 @@ part 'question.g.dart';
 @JsonSerializable(explicitToJson: true)
 class Question {
   final SubjectType subjectType;
+
   final MathType? mathType;
+  final MathSubType? mathSubType;
+
   final EnglishType? englishType;
+  final EnglishSubType? englishSubType;
+
   String? displayedQuestion;
   String? pickedAnswer;
   String? correctAnswer;
   int? completedTimestamp;
   List<String>? suggestedAnswers;
-  Word? word;
-  int? timeSpentOnQuestion;
+  String? word;
+  int timeSpentOnQuestion;
 
   bool hasBeenAnswered;
 
@@ -32,9 +38,11 @@ class Question {
     this.correctAnswer,
     this.completedTimestamp,
     this.mathType,
+    this.mathSubType,
     this.englishType,
+    this.englishSubType,
     this.word,
-    this.timeSpentOnQuestion,
+    this.timeSpentOnQuestion = 0,
   });
 
   void setHasBeenAnswered() {

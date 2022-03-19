@@ -1,11 +1,11 @@
-import 'package:grounded/constants/enums/word_type.dart';
+import 'package:grounded/constants/enums/english_sub_type.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'word.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Word {
-  final WordType type;
+  final EnglishSubType type;
   String text;
 
   Word({

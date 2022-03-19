@@ -19,8 +19,12 @@ GroundedTask _$GroundedTaskFromJson(Map<String, dynamic> json) => GroundedTask(
           .toList(),
       mathTypeToCreate:
           $enumDecodeNullable(_$MathTypeEnumMap, json['mathTypeToCreate']),
+      mathSubTypeToCreate: $enumDecodeNullable(
+          _$MathSubTypeEnumMap, json['mathSubTypeToCreate']),
       englishTypeToCreate: $enumDecodeNullable(
           _$EnglishTypeEnumMap, json['englishTypeToCreate']),
+      englishSubTypeToCreate: $enumDecodeNullable(
+          _$EnglishSubTypeEnumMap, json['englishSubTypeToCreate']),
     );
 
 Map<String, dynamic> _$GroundedTaskToJson(GroundedTask instance) =>
@@ -33,7 +37,10 @@ Map<String, dynamic> _$GroundedTaskToJson(GroundedTask instance) =>
       'expectedCompletionTimestamp': instance.expectedCompletionTimestamp,
       'subjectType': _$SubjectTypeEnumMap[instance.subjectType],
       'mathTypeToCreate': _$MathTypeEnumMap[instance.mathTypeToCreate],
+      'mathSubTypeToCreate': _$MathSubTypeEnumMap[instance.mathSubTypeToCreate],
       'englishTypeToCreate': _$EnglishTypeEnumMap[instance.englishTypeToCreate],
+      'englishSubTypeToCreate':
+          _$EnglishSubTypeEnumMap[instance.englishSubTypeToCreate],
       'questions': instance.questions.map((e) => e.toJson()).toList(),
     };
 
@@ -49,6 +56,33 @@ const _$MathTypeEnumMap = {
   MathType.division: 'division',
 };
 
+const _$MathSubTypeEnumMap = {
+  MathSubType.addDoubles: 'addDoubles',
+  MathSubType.addTwoNumbersMakeTen: 'addTwoNumbersMakeTen',
+  MathSubType.addThreeNumbers: 'addThreeNumbers',
+  MathSubType.subtractDoubles: 'subtractDoubles',
+  MathSubType.multiplyDoubles: 'multiplyDoubles',
+  MathSubType.divideDoubles: 'divideDoubles',
+  MathSubType.findMissingNumber: 'findMissingNumber',
+};
+
 const _$EnglishTypeEnumMap = {
   EnglishType.general: 'general',
+};
+
+const _$EnglishSubTypeEnumMap = {
+  EnglishSubType.animal: 'animal',
+  EnglishSubType.music: 'music',
+  EnglishSubType.sport: 'sport',
+  EnglishSubType.color: 'color',
+  EnglishSubType.number: 'number',
+  EnglishSubType.food: 'food',
+  EnglishSubType.nature: 'nature',
+  EnglishSubType.climate: 'climate',
+  EnglishSubType.fruits: 'fruits',
+  EnglishSubType.place: 'place',
+  EnglishSubType.vehicle: 'vehicle',
+  EnglishSubType.household: 'household',
+  EnglishSubType.thing: 'thing',
+  EnglishSubType.person: 'person',
 };

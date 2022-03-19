@@ -1,5 +1,7 @@
 import 'package:dart_date/dart_date.dart';
+import 'package:grounded/constants/enums/english_sub_type.dart';
 import 'package:grounded/constants/enums/english_type.dart';
+import 'package:grounded/constants/enums/math_sub_type.dart';
 import 'package:grounded/constants/enums/math_type.dart';
 import 'package:grounded/constants/enums/subject_type.dart';
 import 'package:grounded/styles/icons/app_icons.dart';
@@ -21,7 +23,9 @@ class GroundedTask {
   final int expectedCompletionTimestamp;
   final SubjectType subjectType;
   final MathType? mathTypeToCreate;
+  final MathSubType? mathSubTypeToCreate;
   final EnglishType? englishTypeToCreate;
+  final EnglishSubType? englishSubTypeToCreate;
   List<Question> questions;
 
   String get taskIcon => _buildTaskIcon;
@@ -60,7 +64,9 @@ class GroundedTask {
     required this.subjectType,
     required this.questions,
     this.mathTypeToCreate,
+    this.mathSubTypeToCreate,
     this.englishTypeToCreate,
+    this.englishSubTypeToCreate,
   });
 
   static GroundedTask newTask({
@@ -70,7 +76,9 @@ class GroundedTask {
     required SubjectType subjectType,
     required int expectedCompletionTimestamp,
     MathType? mathTypeToCreate,
+    MathSubType? mathSubTypeToCreate,
     EnglishType? englishTypeToCreate,
+    EnglishSubType? englishSubTypeToCreate,
   }) {
     final task = GroundedTask(
       id: Uuid().v1(),
@@ -82,7 +90,9 @@ class GroundedTask {
       subjectType: subjectType,
       questions: [],
       mathTypeToCreate: mathTypeToCreate,
+      mathSubTypeToCreate: mathSubTypeToCreate,
       englishTypeToCreate: englishTypeToCreate,
+      englishSubTypeToCreate: englishSubTypeToCreate,
     );
 
     if (subjectType == SubjectType.maths) {

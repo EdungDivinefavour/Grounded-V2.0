@@ -1,8 +1,6 @@
-import 'dart:math';
-
+import 'package:grounded/constants/enums/english_sub_type.dart';
 import 'package:grounded/constants/enums/english_type.dart';
 import 'package:grounded/constants/enums/subject_type.dart';
-import 'package:grounded/models/question/english/word/word.dart';
 import 'package:grounded/models/question/question.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -23,23 +21,27 @@ class English extends Question {
   @override
   int? completedTimestamp;
   @override
-  final EnglishType? englishType;
-  @override
   List<String>? suggestedAnswers;
   @override
-  Word? word;
+  String? word;
+  @override
+  final EnglishType englishType;
+  @override
+  final EnglishSubType englishSubType;
 
   English({
     required this.word,
     required this.suggestedAnswers,
-    this.subjectType = SubjectType.english,
     this.englishType = EnglishType.general,
+    required this.englishSubType,
+    this.subjectType = SubjectType.english,
     this.displayedQuestion,
     this.pickedAnswer,
     this.completedTimestamp,
   }) : super(
           subjectType: subjectType,
           englishType: englishType,
+          englishSubType: englishSubType,
           displayedQuestion: displayedQuestion,
           pickedAnswer: pickedAnswer,
           correctAnswer: pickedAnswer,
@@ -47,34 +49,6 @@ class English extends Question {
           suggestedAnswers: suggestedAnswers,
           word: word,
         );
-
-  static English regularEnglish(Word word) {
-    final r = Random();
-    final english = English(word: word, suggestedAnswers: []);
-
-    final randomIndex = r.nextInt(english.word!.text.length - 1) + 1;
-    english.correctAnswer = english.word!.text[randomIndex];
-
-    // Replace all names that have _ with space and then replace the correct answer with _
-    english.displayedQuestion =
-        english.word!.text.replaceFirst(RegExp('_'), ' ');
-    english.displayedQuestion =
-        english.word!.text.replaceFirst(RegExp(english.correctAnswer!), '_');
-
-    // Setup suggestions
-    english.suggestedAnswers?.add(english.correctAnswer!);
-    // Remove correct answer from allAlphabets array
-    final chars = allLetters.replaceFirst(RegExp(english.correctAnswer!), '');
-
-    for (int i = 0; i < 3; i++) {
-      final letter =
-          List.generate(1, (index) => chars[r.nextInt(chars.length)]).join();
-      english.suggestedAnswers?.add(letter);
-    }
-    english.suggestedAnswers?.shuffle();
-
-    return english;
-  }
 
   factory English.fromJson(Map<String, dynamic> json) =>
       _$EnglishFromJson(json);

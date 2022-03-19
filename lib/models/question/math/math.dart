@@ -1,9 +1,8 @@
-import 'dart:math';
+import 'package:grounded/constants/enums/math_sub_type.dart';
 import 'package:grounded/constants/enums/math_type.dart';
 import 'package:grounded/constants/enums/subject_type.dart';
 import 'package:grounded/models/question/question.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:grounded/models/question/english/word/word.dart';
 
 part 'math.g.dart';
 
@@ -21,9 +20,12 @@ class Math extends Question {
   int? completedTimestamp;
   @override
   final MathType mathType;
+  @override
+  final MathSubType mathSubType;
 
   Math({
     required this.mathType,
+    required this.mathSubType,
     this.subjectType = SubjectType.maths,
     this.displayedQuestion,
     this.pickedAnswer,
@@ -31,80 +33,12 @@ class Math extends Question {
   }) : super(
           subjectType: subjectType,
           mathType: mathType,
+          mathSubType: mathSubType,
           displayedQuestion: displayedQuestion,
           pickedAnswer: pickedAnswer,
           correctAnswer: pickedAnswer,
           completedTimestamp: completedTimestamp,
         );
-
-  static Math regularMath(MathType mathType) {
-    final math = Math(mathType: mathType);
-
-    if (math.mathType == MathType.addition) {
-      final num1 = Random().nextInt(10) + 1;
-      final num2 = Random().nextInt(10) + 1;
-
-      math.correctAnswer = "${num1 + num2}";
-      math.displayedQuestion = "$num1 + $num2";
-    } else if (math.mathType == MathType.subtraction) {
-      final num1 = Random().nextInt(25) + 1;
-      final num2 = Random().nextInt(num1) + 1;
-
-      math.correctAnswer = "${num1 - num2}";
-      math.displayedQuestion = "$num1 - $num2";
-    } else if (math.mathType == MathType.multiplication) {
-      final num1 = Random().nextInt(10) + 1;
-      final num2 = Random().nextInt(10) + 1;
-
-      math.correctAnswer = "${num1 * num2}";
-      math.displayedQuestion = "$num1 x $num2";
-    } else if (math.mathType == MathType.division) {
-      final num1 = Random().nextInt(10) + 1;
-      final num2 = Random().nextInt(10) + 1;
-      final result = num1 * num2;
-
-      math.correctAnswer = "${result ~/ num1}";
-      math.displayedQuestion = "$result ÷ $num1";
-    }
-
-    return math;
-  }
-
-  static Math findMissingNumberMath(MathType mathType) {
-    final math = Math(mathType: mathType);
-
-    if (math.mathType == MathType.addition) {
-      final num1 = Random().nextInt(10) + 1;
-      final num2 = Random().nextInt(10) + 1;
-      final result = num1 + num2;
-
-      math.displayedQuestion = "$num1 + ? = $result";
-      math.correctAnswer = "$num2";
-    } else if (math.mathType == MathType.subtraction) {
-      final num1 = Random().nextInt(25) + 1;
-      final num2 = Random().nextInt(num1) + 1;
-      final result = num1 - num2;
-
-      math.displayedQuestion = "$num1 - ? = $result";
-      math.correctAnswer = "$num2";
-    } else if (math.mathType == MathType.multiplication) {
-      final num1 = Random().nextInt(10) + 1;
-      final num2 = Random().nextInt(10) + 1;
-      final result = num1 * num2;
-
-      math.displayedQuestion = "$num1 x ? = $result";
-      math.correctAnswer = "$num2";
-    } else if (math.mathType == MathType.division) {
-      final num1 = Random().nextInt(10) + 1;
-      final num2 = Random().nextInt(10) + 1;
-      final result = num1 * num2;
-
-      math.displayedQuestion = "$result + ? = $num1";
-      math.correctAnswer = "$num2";
-    }
-
-    return math;
-  }
 
   factory Math.fromJson(Map<String, dynamic> json) => _$MathFromJson(json);
   @override
