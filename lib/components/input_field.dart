@@ -18,6 +18,7 @@ class InputField extends StatelessWidget {
   final String? rightIcon;
   final List<String>? dropDownList;
   final ValueChanged<String?>? onDropDownChange;
+  final Color? iconColor;
 
   const InputField({
     required this.controller,
@@ -30,6 +31,7 @@ class InputField extends StatelessWidget {
     this.rightIcon,
     this.dropDownList,
     this.onDropDownChange,
+    this.iconColor,
   });
 
   @override
@@ -98,7 +100,9 @@ class InputField extends StatelessWidget {
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.only(left: 10, top: 10),
             child: SVGIcon(
-                icon: leftIcon!, color: ThemeColors.darkBackground, size: 50),
+                icon: leftIcon!,
+                color: iconColor ?? ThemeColors.darkBackground,
+                size: 50),
           );
   }
 

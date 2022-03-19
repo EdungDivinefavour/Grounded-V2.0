@@ -18,9 +18,13 @@ enum WordType {
 }
 
 extension WordTypeExtension on WordType {
-  String get value => describeEnum(this);
+  String get stringValue => describeEnum(this);
+
+  String get value =>
+      "${stringValue[0].toUpperCase()}${stringValue.substring(1).toLowerCase()}";
 }
 
 extension WordTypeExtensionStringExtension on String {
-  WordType get toWordType => WordType.values.firstWhere((e) => e.value == this);
+  WordType get toWordType =>
+      WordType.values.firstWhere((e) => e.value.toLowerCase() == toLowerCase());
 }

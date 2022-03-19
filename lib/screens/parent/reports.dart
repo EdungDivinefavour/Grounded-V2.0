@@ -4,7 +4,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/components/png_icon.dart';
 import 'package:grounded/components/screen_title.dart';
-import 'package:grounded/components/svg_icon.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';
 import 'package:grounded/models/data_points/daily_data_point.dart';

@@ -12,6 +12,7 @@ abstract class AppIcons {
   static const centerLeftBubble = 'center_left_bubble.svg';
   static const centerRightBubble = 'center_right_bubble.svg';
   static const checkBox = "check_box.svg";
+  static const checkOutline = "check_outline.svg";
   static const checkYourEmailPNG = "check_your_email.png";
   static const clock = 'clock.svg';
   static const correctPNG = 'correct.png';

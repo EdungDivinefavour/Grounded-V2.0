@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:grounded/components/custom_action_button.dart';
 import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/components/empty_widget.dart';
 import 'package:grounded/components/input_field.dart';
+import 'package:grounded/components/png_icon.dart';
 import 'package:grounded/components/user_image.dart';
 import 'package:grounded/constants/enums/english_type.dart';
 import 'package:grounded/constants/enums/math_type.dart';
 import 'package:grounded/constants/enums/subject_type.dart';
+import 'package:grounded/constants/enums/word_type.dart';
 import 'package:grounded/models/grounded_task/grounded_task.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';
 import 'package:grounded/screens/parent/task_sent.dart';
 import 'package:grounded/services/firebase/firestore_service.dart';
+import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/icons/app_icons.dart';
 import 'package:grounded/styles/texts/text_styles.dart';
 
@@ -27,9 +31,10 @@ class AddTask extends StatefulWidget {
   State<AddTask> createState() => _AddTaskState();
 }
 
-class _AddTaskState extends State<AddTask> {
+class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
   final _firestoreService = FirestoreService.instance;
 
+  late TabController _tabController;
   final _taskNameController = TextEditingController();
   final _subjectController = TextEditingController();
   final _expectedCompletionDateController = TextEditingController();
@@ -44,15 +49,34 @@ class _AddTaskState extends State<AddTask> {
 
   SubjectType? _selectedSubjectType;
 
+  String? _selectedMathSubType;
+  String? _selectedEnglishWordType;
+
+  int _currentTabIndex = 0;
+
+  final allMathSubtypes = [
+    "Add Doubles",
+    "Add Two Numbers Make Ten",
+    "Find Missing Number",
+    "Add Three Numbers",
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+
+    _tabController = TabController(vsync: this, length: 2, initialIndex: 0);
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-        appBar: CustomAppBar(title: "Add New Task"),
+        appBar: CustomAppBar(title: "Add  Task"),
         bubblePosition: BackgroundBubblePosition.topRight,
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(20),
-            height: 900,
+            height: 1000,
             child: Column(
               children: [
                 SizedBox(height: 20),
@@ -84,7 +108,7 @@ class _AddTaskState extends State<AddTask> {
                     SizedBox(height: 10),
                   ],
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 20),
                 InputField(
                   title: "Task Name",
                   hintText: "Enter the name of the task",
@@ -92,20 +116,22 @@ class _AddTaskState extends State<AddTask> {
                 ),
                 SizedBox(height: 30),
                 InputField(
-                  title: "Subject",
-                  hintText: "Click to display dropdown of subjects",
-                  dropDownList: [
-                    SubjectType.maths.value,
-                    SubjectType.english.value
-                  ],
-                  onDropDownChange: (value) {
-                    setState(() {
-                      _selectedSubjectType = value!.toSubjectType;
-                      _subjectController.text = value;
-                    });
-                  },
-                  controller: _subjectController,
+                  title: "Expected completion date",
+                  hintText: "Click here to pick a date",
+                  leftIcon: AppIcons.calendar,
+                  controller: _expectedCompletionDateController,
+                  onTap: _openDatePicker,
                 ),
+                SizedBox(height: 30),
+                InputField(
+                  title: "Expected completion time",
+                  hintText: "Click here to pick a time",
+                  leftIcon: AppIcons.clock,
+                  controller: _expectedCompletionTimeController,
+                  onTap: _openTimePicker,
+                ),
+                SizedBox(height: 30),
+                _buildSubjectTabs,
                 _selectedSubjectType == SubjectType.maths
                     ? SizedBox(height: 30)
                     : emptyWidget,
@@ -126,22 +152,6 @@ class _AddTaskState extends State<AddTask> {
                       )
                     : emptyWidget,
                 SizedBox(height: 30),
-                InputField(
-                  title: "Expected completion date",
-                  hintText: "Click here to pick a date",
-                  leftIcon: AppIcons.calendar,
-                  controller: _expectedCompletionDateController,
-                  onTap: _openDatePicker,
-                ),
-                SizedBox(height: 30),
-                InputField(
-                  title: "Expected completion time",
-                  hintText: "Click here to pick a time",
-                  leftIcon: AppIcons.clock,
-                  controller: _expectedCompletionTimeController,
-                  onTap: _openTimePicker,
-                ),
-                SizedBox(height: 60),
                 CustomActionButton(
                     onPressed: _addTask, title: "Send Task", isRedButton: true),
                 SizedBox(height: 20),
@@ -149,6 +159,265 @@ class _AddTaskState extends State<AddTask> {
             ),
           ),
         ));
+  }
+
+  Widget get _buildSubjectTabs {
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: ThemeColors.primaryDark),
+            borderRadius: BorderRadius.all(Radius.circular(12)),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _buildTabHeader(title: "Maths", index: 0),
+              _buildTabHeader(title: "English", index: 1),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 330,
+          child: TabBarView(
+              controller: _tabController,
+              physics: const NeverScrollableScrollPhysics(),
+              children: [_buildMathsTabContent(), _buildEnglishTabContent()]),
+        )
+      ],
+    );
+  }
+
+  Widget _buildTabHeader({required String title, required int index}) {
+    return GestureDetector(
+      onTap: () {
+        _tabController.animateTo(index);
+        setState(() {
+          _currentTabIndex = index;
+        });
+      },
+      child: Container(
+          alignment: Alignment.center,
+          height: 43,
+          width: (MediaQuery.of(context).size.width - 42) / 2,
+          decoration: BoxDecoration(
+              color: _currentTabIndex == index
+                  ? ThemeColors.primaryDark
+                  : Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(12))),
+          child: Text(title,
+              style: TextStyles.semiBold.copyWith(
+                  fontSize: 16,
+                  color: _currentTabIndex == index
+                      ? Colors.white
+                      : ThemeColors.primaryDark))),
+    );
+  }
+
+  Widget _buildEnglishTabContent() {
+    return Padding(
+      padding: EdgeInsets.only(top: 20),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _buildEnglishSubtypeContainer(WordType.animal),
+              _buildEnglishSubtypeContainer(WordType.person),
+              _buildEnglishSubtypeContainer(WordType.thing),
+            ],
+          ),
+          SizedBox(height: 20),
+          Row(children: [_buildEnglishSubtypeContainer(WordType.place)]),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEnglishSubtypeContainer(WordType wordType) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedEnglishWordType = wordType.value;
+        });
+      },
+      child: Container(
+        height: 100,
+        width: 90,
+        decoration: BoxDecoration(
+            border: Border.all(
+                color: _selectedEnglishWordType == wordType.value
+                    ? ThemeColors.error.withOpacity(0.6)
+                    : ThemeColors.darkBackground.withOpacity(0.2)),
+            borderRadius: BorderRadius.all(Radius.circular(8))),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            PNGIcon(icon: '${wordType.value.toLowerCase()}.png', size: 50),
+            SizedBox(height: 10),
+            Text(wordType.value,
+                style: TextStyles.semiBold.copyWith(fontSize: 13))
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMathsTabContent() {
+    return Padding(
+      padding: EdgeInsets.only(top: 20),
+      child: ListView.builder(
+          itemCount: 4,
+          physics: NeverScrollableScrollPhysics(),
+          itemBuilder: (context, i) {
+            return InkWell(
+              onTap: () {
+                _showMathSubTypeAlert(i);
+              },
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 10),
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                decoration: BoxDecoration(
+                    border: Border.all(
+                        color: ThemeColors.darkBackground.withOpacity(0.2)),
+                    borderRadius: BorderRadius.all(Radius.circular(12))),
+                height: 60,
+                child: Row(
+                  children: [
+                    Icon(
+                      _buildMathTypeIcon(i),
+                      color: _buildMathTypeColor(i),
+                      size: 30,
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      MathType.values[i].value,
+                      style: TextStyles.semiBold.copyWith(
+                          fontSize: 16, color: _buildMathTypeColor(i)),
+                    ),
+                    Spacer(),
+                    Icon(
+                      Icons.keyboard_arrow_down,
+                      color: _buildMathTypeColor(i),
+                      size: 30,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }),
+    );
+  }
+
+  Widget _buildMathsSubtypeContainer(String title, int index, sts) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 3.5, horizontal: 15),
+      child: InkWell(
+        onTap: () {
+          sts(() {
+            _selectedMathSubType = title;
+          });
+        },
+        child: Card(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          child: Container(
+            height: 65,
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            alignment: Alignment.centerLeft,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 190,
+                  child: Text(
+                    title,
+                    style: TextStyles.regular.copyWith(
+                        fontSize: 15, color: _buildMathTypeColor(index)),
+                  ),
+                ),
+                Spacer(),
+                _selectedMathSubType == title
+                    ? Icon(Icons.check_circle,
+                        size: 30, color: _buildMathTypeColor(index))
+                    : emptyWidget
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  IconData _buildMathTypeIcon(int index) {
+    if (index == 0) {
+      return Icons.add_circle;
+    } else if (index == 1) {
+      return Icons.remove_circle;
+    } else if (index == 2) {
+      return TablerIcons.divide;
+    } else {
+      return Icons.cancel_outlined;
+    }
+  }
+
+  Color _buildMathTypeColor(int index) {
+    if (index == 0) {
+      return ThemeColors.primary;
+    } else if (index == 1) {
+      return ThemeColors.darkElement;
+    } else if (index == 2) {
+      return ThemeColors.error;
+    } else {
+      return ThemeColors.primaryDark;
+    }
+  }
+
+  void _showMathSubTypeAlert(int index) {
+    showDialog(
+      context: context,
+      builder: (_) {
+        return StatefulBuilder(builder: (context, sts) {
+          return Dialog(
+            backgroundColor: _buildMathTypeColor(index),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            child: SizedBox(
+                height: 420,
+                width: MediaQuery.of(context).size.width * 0.8,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                          top: 17, left: 12, right: 12, bottom: 5),
+                      child: Row(
+                        children: [
+                          Icon(_buildMathTypeIcon(index),
+                              color: ThemeColors.lightElement, size: 35),
+                          SizedBox(width: 10),
+                          Text(MathType.values[0].value,
+                              style: TextStyles.semiBold.copyWith(
+                                  fontSize: 17,
+                                  color: ThemeColors.lightElement)),
+                          Spacer(),
+                          Icon(Icons.keyboard_arrow_up,
+                              color: ThemeColors.lightElement, size: 30),
+                        ],
+                      ),
+                    ),
+                    Divider(color: ThemeColors.lightElement, thickness: 1),
+                    SizedBox(height: 10),
+                    Column(
+                      children: allMathSubtypes.map((x) {
+                        return _buildMathsSubtypeContainer(x, index, sts);
+                      }).toList(),
+                    ),
+                    SizedBox(height: 10)
+                  ],
+                )),
+          );
+        });
+      },
+    );
   }
 
   void _openDatePicker() async {
