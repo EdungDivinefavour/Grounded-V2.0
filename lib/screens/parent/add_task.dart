@@ -79,7 +79,7 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
                     Row(
                       children: [
                         UserImage(
-                            imageURL: widget.child.profilePhoto, size: 60),
+                            imageURL: widget.child.profilePhoto, size: 80),
                         SizedBox(width: 20),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -460,6 +460,8 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
       name: _taskNameController.text,
       parentID: widget.parent.id,
       childID: widget.child.id,
+      childName: widget.child.name,
+      childPhotoUrl: widget.child.profilePhoto,
       subjectType: _selectedSubjectType,
       mathTypeToCreate: _selectedMathType,
       mathSubTypeToCreate: _selectedMathSubType,

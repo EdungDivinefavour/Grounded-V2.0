@@ -1,6 +1,8 @@
 import 'package:grounded/components/drawer/drawer_header_item.dart';
 import 'package:grounded/components/drawer/drawer_list_item.dart';
+import 'package:grounded/components/empty_widget.dart';
 import 'package:grounded/components/png_icon.dart';
+import 'package:grounded/constants/enums/user_type.dart';
 import 'package:grounded/models/grounded_user/grounded_user.dart';
 import 'package:grounded/screens/about.dart';
 import 'package:grounded/screens/bottom_tabs.dart';
@@ -49,11 +51,13 @@ class NavigationDrawer extends StatelessWidget {
         leftIcon: AppIcons.home,
         screenToLaunch: BottomTabs(groundedUser: groundedUser),
       ),
-      DrawerListItem(
-        title: "Assigned Tasks",
-        leftIcon: AppIcons.tasks,
-        screenToLaunch: AssignedTask(),
-      ),
+      groundedUser.userType == UserType.parent
+          ? DrawerListItem(
+              title: "Assigned Tasks",
+              leftIcon: AppIcons.tasks,
+              screenToLaunch: AssignedTask(),
+            )
+          : emptyWidget,
       DrawerListItem(
         title: "About",
         leftIcon: AppIcons.info,

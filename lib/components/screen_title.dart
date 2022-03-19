@@ -20,7 +20,7 @@ class ScreenTitle extends StatelessWidget {
     return Container(
       height: 90,
       width: MediaQuery.of(context).size.width,
-      color: isWhiteBackround ? ThemeColors.lightElement : ThemeColors.primary,
+      color: isWhiteBackround ? ThemeColors.scaffoldColor : ThemeColors.primary,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -19,6 +19,8 @@ class GroundedTask {
   final String name;
   final String parentID;
   final String childID;
+  final String childName;
+  final String childPhotoUrl;
   final int creationTimestamp;
   final int expectedCompletionTimestamp;
   final SubjectType subjectType;
@@ -26,6 +28,7 @@ class GroundedTask {
   final MathSubType? mathSubTypeToCreate;
   final EnglishType? englishTypeToCreate;
   final EnglishSubType? englishSubTypeToCreate;
+
   List<Question> questions;
 
   String get taskIcon => _buildTaskIcon;
@@ -59,6 +62,8 @@ class GroundedTask {
     required this.name,
     required this.parentID,
     required this.childID,
+    required this.childName,
+    required this.childPhotoUrl,
     required this.creationTimestamp,
     required this.expectedCompletionTimestamp,
     required this.subjectType,
@@ -73,6 +78,8 @@ class GroundedTask {
     required String name,
     required String parentID,
     required String childID,
+    required String childName,
+    required String childPhotoUrl,
     required SubjectType subjectType,
     required int expectedCompletionTimestamp,
     MathType? mathTypeToCreate,
@@ -84,6 +91,8 @@ class GroundedTask {
       id: Uuid().v1(),
       parentID: parentID,
       childID: childID,
+      childName: childName,
+      childPhotoUrl: childPhotoUrl,
       name: name,
       creationTimestamp: DateTime.now().millisecondsSinceEpoch,
       expectedCompletionTimestamp: expectedCompletionTimestamp,

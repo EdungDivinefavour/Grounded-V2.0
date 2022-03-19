@@ -31,7 +31,7 @@ class CustomScaffold extends StatefulWidget {
     this.floatingActionButton,
     this.bottomNavigationBar,
     this.bubblePosition = BackgroundBubblePosition.none,
-    this.backgroundColor = ThemeColors.lightElement,
+    this.backgroundColor = ThemeColors.scaffoldColor,
   });
 
   @override

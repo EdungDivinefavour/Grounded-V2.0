@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grounded/components/png_icon.dart';
 import 'package:grounded/components/svg_icon.dart';
 import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/icons/app_icons.dart';
@@ -37,7 +38,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: widget.isWhiteBackround
-          ? ThemeColors.lightElement
+          ? ThemeColors.scaffoldColor
           : ThemeColors.primary,
       elevation: 0,
       title: Container(
@@ -62,8 +63,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
     return InkWell(
       onTap: widget.hasDrawer ? _openDrawer : _closeScreen,
       child: SizedBox(
-        height: 25,
-        width: 25,
+        height: 30,
+        width: 30,
         child: SVGIcon(
           icon: widget.hasDrawer ? AppIcons.menu : AppIcons.back,
           color: widget.theme ?? CustomAppBarTheme.dark,
@@ -86,10 +87,10 @@ class _CustomAppBarState extends State<CustomAppBar> {
 
   Widget get _buildRightIcon {
     return SizedBox(
-      height: 25,
-      width: 25,
+      height: 27,
+      width: 27,
       child: widget.hasDrawer
-          ? SVGIcon(icon: AppIcons.notification)
+          ? PNGIcon(icon: AppIcons.notificationPNG)
           : widget.rightIcon,
     );
   }

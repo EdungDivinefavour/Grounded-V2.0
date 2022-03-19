@@ -29,7 +29,7 @@ abstract class AppIcons {
   static const logout = 'logout.svg';
   static const menu = 'menu.svg';
   static const multiplicationPNG = 'multiplication.png';
-  static const notification = 'notification.svg';
+  static const notificationPNG = 'notification.png';
   static const phoneInHandPNG = 'phone_in_hand.png';
   static const profile = 'profile.svg';
   static const reports = 'reports.svg';

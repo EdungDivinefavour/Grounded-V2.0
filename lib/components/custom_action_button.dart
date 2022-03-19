@@ -14,7 +14,7 @@ class CustomActionButton extends StatelessWidget {
     required this.title,
     this.enabled = true,
     this.isWhite = false,
-    this.isRedButton = false,
+    this.isRedButton = true,
   });
 
   @override
