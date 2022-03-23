@@ -71,7 +71,7 @@ class _AssignedTaskState extends State<AssignedTask> {
         title: Row(
           children: [
             Text(
-              '${task.name} (${task.subjectType.value})',
+              task.subjectType.value,
               style: TextStyles.semiBold,
             ),
             SizedBox(width: 10),

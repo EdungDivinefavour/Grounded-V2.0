@@ -42,8 +42,7 @@ class _TaskSentState extends State<TaskSent> {
           padding: EdgeInsets.all(20),
           child: Column(
             children: [
-              Text("${widget.task.name} (${widget.task.subjectType.value})",
-                  style: TextStyles.extraBold),
+              Text(widget.task.subjectType.value, style: TextStyles.extraBold),
               SizedBox(height: 15),
               Text("Assigned to", style: TextStyles.regular),
               SizedBox(height: 40),

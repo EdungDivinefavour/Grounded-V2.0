@@ -36,7 +36,6 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
   final _firestoreService = FirestoreService.instance;
 
   late TabController _tabController;
-  final _taskNameController = TextEditingController();
   final _expectedCompletionDateController = TextEditingController();
   final _expectedCompletionTimeController = TextEditingController();
 
@@ -103,12 +102,6 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
                   ],
                 ),
                 SizedBox(height: 20),
-                InputField(
-                  title: "Task Name",
-                  hintText: "Enter the name of the task",
-                  controller: _taskNameController,
-                ),
-                SizedBox(height: 30),
                 InputField(
                   title: "Expected completion date",
                   hintText: "Click here to pick a date",
@@ -457,7 +450,6 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
     }
     EasyLoading.show();
     final task = GroundedTask.newTask(
-      name: _taskNameController.text,
       parentID: widget.parent.id,
       childID: widget.child.id,
       childName: widget.child.name,
@@ -485,9 +477,7 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
   }
 
   bool get _allFieldsPassedValidation {
-    if (_taskNameController.text == "") {
-      return false;
-    } else if (_selectedSubjectType == SubjectType.maths &&
+    if (_selectedSubjectType == SubjectType.maths &&
         (_selectedMathType == null || _selectedMathSubType == null)) {
       return false;
     } else if (_selectedSubjectType == SubjectType.english &&

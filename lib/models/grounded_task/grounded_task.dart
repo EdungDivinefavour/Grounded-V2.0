@@ -16,7 +16,6 @@ part 'grounded_task.g.dart';
 @JsonSerializable(explicitToJson: true)
 class GroundedTask {
   final String id;
-  final String name;
   final String parentID;
   final String childID;
   final String childName;
@@ -59,7 +58,6 @@ class GroundedTask {
 
   GroundedTask({
     required this.id,
-    required this.name,
     required this.parentID,
     required this.childID,
     required this.childName,
@@ -75,7 +73,6 @@ class GroundedTask {
   });
 
   static GroundedTask newTask({
-    required String name,
     required String parentID,
     required String childID,
     required String childName,
@@ -93,7 +90,6 @@ class GroundedTask {
       childID: childID,
       childName: childName,
       childPhotoUrl: childPhotoUrl,
-      name: name,
       creationTimestamp: DateTime.now().millisecondsSinceEpoch,
       expectedCompletionTimestamp: expectedCompletionTimestamp,
       subjectType: subjectType,

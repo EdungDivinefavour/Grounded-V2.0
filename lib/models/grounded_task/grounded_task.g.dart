@@ -8,7 +8,6 @@ part of 'grounded_task.dart';
 
 GroundedTask _$GroundedTaskFromJson(Map<String, dynamic> json) => GroundedTask(
       id: json['id'] as String,
-      name: json['name'] as String,
       parentID: json['parentID'] as String,
       childID: json['childID'] as String,
       childName: json['childName'] as String,
@@ -32,7 +31,6 @@ GroundedTask _$GroundedTaskFromJson(Map<String, dynamic> json) => GroundedTask(
 Map<String, dynamic> _$GroundedTaskToJson(GroundedTask instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'name': instance.name,
       'parentID': instance.parentID,
       'childID': instance.childID,
       'childName': instance.childName,
