@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:grounded/components/custom_action_button.dart';
-import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
+import 'package:grounded/components/custom_app_bar.dart';
 import 'package:grounded/components/custom_scaffold.dart';
-import 'package:grounded/components/empty_widget.dart';
+import 'package:grounded/components/dialog_list_item.dart';
 import 'package:grounded/components/input_field.dart';
 import 'package:grounded/components/png_icon.dart';
 import 'package:grounded/components/user_image.dart';
@@ -16,7 +15,9 @@ import 'package:grounded/constants/enums/subject_type.dart';
 import 'package:grounded/models/grounded_task/grounded_task.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';
+import 'package:grounded/screens/parent/add_task/multiplication_choice.dart';
 import 'package:grounded/screens/parent/task_sent.dart';
+import 'package:grounded/services/audio/audio_player.dart';
 import 'package:grounded/services/firebase/firestore_service.dart';
 import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/icons/app_icons.dart';
@@ -39,7 +40,7 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
   final _expectedCompletionDateController = TextEditingController();
   final _expectedCompletionTimeController = TextEditingController();
 
-  DateTime? compiledDateAndTime;
+  DateTime? _compiledDateAndTime;
 
   DateTime? _pickedDate;
   TimeOfDay? _pickedTime;
@@ -69,7 +70,7 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(20),
-            height: 1000,
+            height: 910,
             child: Column(
               children: [
                 SizedBox(height: 20),
@@ -88,11 +89,15 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
                                 Text(widget.child.name,
                                     style: TextStyles.semiBold),
                                 SizedBox(width: 5),
-                                Text("(${widget.child.age} years old)")
+                                Text("(${widget.child.age} years old)",
+                                    style: TextStyles.regular
+                                        .copyWith(fontSize: 15))
                               ],
                             ),
                             SizedBox(height: 10),
-                            Text("Grade ${widget.child.grade}"),
+                            Text("Grade ${widget.child.grade}",
+                                style:
+                                    TextStyles.regular.copyWith(fontSize: 15)),
                             SizedBox(height: 10),
                           ],
                         )
@@ -105,7 +110,9 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
                 InputField(
                   title: "Expected completion date",
                   hintText: "Click here to pick a date",
-                  leftIcon: AppIcons.calendar,
+                  leftIcon: AppIcons.calendarPNG,
+                  shouldUsePNG: true,
+                  hasBorder: true,
                   controller: _expectedCompletionDateController,
                   onTap: _openDatePicker,
                 ),
@@ -113,13 +120,15 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
                 InputField(
                   title: "Expected completion time",
                   hintText: "Click here to pick a time",
-                  leftIcon: AppIcons.clock,
+                  shouldUsePNG: true,
+                  hasBorder: true,
+                  leftIcon: AppIcons.clockPNG,
                   controller: _expectedCompletionTimeController,
                   onTap: _openTimePicker,
                 ),
                 SizedBox(height: 30),
                 _buildSubjectTabs,
-                SizedBox(height: 30),
+                SizedBox(height: 40),
                 CustomActionButton(
                     onPressed: _addTask, title: "Send Task", isRedButton: true),
                 SizedBox(height: 20),
@@ -236,6 +245,7 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
     );
   }
 
+  MathType? _tappedMathType;
   Widget _buildMathsTabContent() {
     return Padding(
       padding: EdgeInsets.only(top: 20),
@@ -243,38 +253,41 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
           itemCount: 4,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, i) {
+            final itrMathType = MathType.values[i];
+
             return InkWell(
               onTap: () {
-                _selectedMathType = MathType.values[i];
-                _showMathSubTypeAlert(i);
+                _tappedMathType = _selectedMathType = itrMathType;
+                _showMathSubTypeAlert();
               },
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: 10),
                 padding: EdgeInsets.symmetric(horizontal: 15),
                 decoration: BoxDecoration(
                     border: Border.all(
+                        width: 2,
                         color: _selectedMathType == MathType.values[i]
-                            ? _buildMathTypeColor(i)
+                            ? itrMathType.color
                             : ThemeColors.darkBackground.withOpacity(0.2)),
                     borderRadius: BorderRadius.all(Radius.circular(12))),
                 height: 60,
                 child: Row(
                   children: [
                     Icon(
-                      _buildMathTypeIcon(i),
-                      color: _buildMathTypeColor(i),
+                      itrMathType.icon,
+                      color: itrMathType.color,
                       size: 30,
                     ),
                     SizedBox(width: 10),
                     Text(
                       MathType.values[i].value,
-                      style: TextStyles.semiBold.copyWith(
-                          fontSize: 16, color: _buildMathTypeColor(i)),
+                      style: TextStyles.semiBold
+                          .copyWith(fontSize: 16, color: itrMathType.color),
                     ),
                     Spacer(),
                     Icon(
                       Icons.keyboard_arrow_down,
-                      color: _buildMathTypeColor(i),
+                      color: itrMathType.color,
                       size: 30,
                     ),
                   ],
@@ -285,80 +298,73 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildMathsSubtypeContainer(MathSubType mathSubType, int index, sts) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 3.5, horizontal: 15),
-      child: InkWell(
-        onTap: () {
-          sts(() {
-            _selectedMathSubType = mathSubType;
-          });
-          setState(() {});
-        },
-        child: Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          child: Container(
-            height: 65,
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            alignment: Alignment.centerLeft,
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 190,
-                  child: Text(
-                    mathSubType.value,
-                    style: TextStyles.regular.copyWith(
-                        fontSize: 15, color: _buildMathTypeColor(index)),
-                  ),
-                ),
-                Spacer(),
-                _selectedMathSubType == mathSubType
-                    ? Icon(Icons.check_circle,
-                        size: 30, color: _buildMathTypeColor(index))
-                    : emptyWidget
-              ],
-            ),
-          ),
+  Widget _buildMathSubTypeList(sts) {
+    if (_selectedMathType == MathType.multiplication) {
+      final mathSubTypeList =
+          MathSubType.values.where((x) => x.value.toLowerCase().contains("x"));
+
+      return Container(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        height: 300,
+        child: GridView(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              crossAxisSpacing: 15,
+              mainAxisSpacing: 15,
+              childAspectRatio: 1.5),
+          children: mathSubTypeList
+              .map((x) => MultiplicationChoice(
+                  title: x.value,
+                  stateSetter: sts,
+                  isSelected: x == _selectedMathSubType,
+                  onTap: () {
+                    setState(() {
+                      _selectedMathSubType = x;
+                    });
+                  }))
+              .toList(),
         ),
-      ),
-    );
-  }
-
-  IconData _buildMathTypeIcon(int index) {
-    if (index == 0) {
-      return Icons.add_circle;
-    } else if (index == 1) {
-      return Icons.remove_circle;
-    } else if (index == 2) {
-      return Icons.cancel_outlined;
+      );
     } else {
-      return TablerIcons.divide;
+      final mathSubTypeList = MathSubType.values.where((x) =>
+          x.value.toLowerCase().contains("find") ||
+          x.value.toLowerCase().contains(
+              _selectedMathType!.value.toLowerCase().substring(0, 3)));
+
+      return Column(
+        children: mathSubTypeList
+            .map((mathSubType) => DialogListItem(
+                title:
+                    '${mathSubType.value} | ${mathSubType.example(mathType: _tappedMathType)}',
+                onTap: () {
+                  setState(() {
+                    _selectedMathSubType = mathSubType;
+                  });
+                },
+                stateSetter: sts,
+                isSelected: _selectedMathSubType == mathSubType,
+                textColor: ThemeColors.primary,
+                iconColor: ThemeColors.primary))
+            .toList(),
+      );
     }
   }
 
-  Color _buildMathTypeColor(int index) {
-    if (index == 0) {
-      return ThemeColors.primary;
-    } else if (index == 1) {
-      return ThemeColors.darkElement;
-    } else if (index == 2) {
-      return ThemeColors.error;
-    } else {
-      return ThemeColors.primaryDark;
-    }
-  }
-
-  void _showMathSubTypeAlert(int index) {
+  void _showMathSubTypeAlert() {
     showDialog(
       context: context,
       builder: (_) {
         return StatefulBuilder(builder: (context, sts) {
           return Dialog(
-            backgroundColor: _buildMathTypeColor(index),
+            backgroundColor: ThemeColors.primary,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             child: SizedBox(
-                height: _selectedMathType == MathType.addition ? 420 : 260,
+                height: _selectedMathType == MathType.addition
+                    ? 420
+                    : _selectedMathType == MathType.multiplication
+                        ? 400
+                        : 260,
                 width: MediaQuery.of(context).size.width * 0.8,
                 child: Column(
                   children: [
@@ -367,10 +373,10 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
                           top: 17, left: 12, right: 12, bottom: 5),
                       child: Row(
                         children: [
-                          Icon(_buildMathTypeIcon(index),
+                          Icon(_tappedMathType!.icon,
                               color: ThemeColors.lightElement, size: 35),
                           SizedBox(width: 10),
-                          Text(MathType.values[index].value,
+                          Text(_tappedMathType!.value,
                               style: TextStyles.semiBold.copyWith(
                                   fontSize: 17,
                                   color: ThemeColors.lightElement)),
@@ -382,18 +388,7 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
                     ),
                     Divider(color: ThemeColors.lightElement, thickness: 1),
                     SizedBox(height: 10),
-                    Column(
-                      children: MathSubType.values
-                          .where((x) =>
-                              x.value.toLowerCase().contains("find") ||
-                              x.value.toLowerCase().contains(_selectedMathType!
-                                  .value
-                                  .toLowerCase()
-                                  .substring(0, 3)))
-                          .map((y) {
-                        return _buildMathsSubtypeContainer(y, index, sts);
-                      }).toList(),
-                    ),
+                    _buildMathSubTypeList(sts),
                     SizedBox(height: 10)
                   ],
                 )),
@@ -429,7 +424,7 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
     );
 
     if (_pickedTime == null) return;
-    compiledDateAndTime = DateTime(
+    _compiledDateAndTime = DateTime(
       _pickedDate!.year,
       _pickedDate!.month,
       _pickedDate!.day,
@@ -448,6 +443,7 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
       EasyLoading.showError("Please fill out all the empty fields to proceed");
       return;
     }
+
     EasyLoading.show();
     final task = GroundedTask.newTask(
       parentID: widget.parent.id,
@@ -459,21 +455,30 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
       mathSubTypeToCreate: _selectedMathSubType,
       englishTypeToCreate: _selectedEnglishType,
       englishSubTypeToCreate: _selectedEnglishSubType,
-      expectedCompletionTimestamp: compiledDateAndTime!.millisecondsSinceEpoch,
+      expectedCompletionTimestamp: _compiledDateAndTime!.millisecondsSinceEpoch,
     );
 
     await _firestoreService.storeTask(task: task, child: widget.child);
     EasyLoading.dismiss();
+    await AudioPlayer.instance.play(AudioTones.swoosh);
 
     _openTaskSentScreen(task);
   }
 
-  void _openTaskSentScreen(GroundedTask task) {
-    Navigator.pushReplacement(
+  void _openTaskSentScreen(GroundedTask task) async {
+    final wantsToSendAnotherTask = await Navigator.push<bool>(
         context,
-        MaterialPageRoute<void>(
+        MaterialPageRoute<bool>(
             builder: (BuildContext context) =>
                 TaskSent(child: widget.child, task: task)));
+
+    if (!wantsToSendAnotherTask!) return;
+    setState(() {
+      _selectedMathType = null;
+      _selectedMathSubType = null;
+      _selectedEnglishType = null;
+      _selectedEnglishSubType = null;
+    });
   }
 
   bool get _allFieldsPassedValidation {

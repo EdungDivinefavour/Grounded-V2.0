@@ -51,6 +51,7 @@ class _CustomNumPadState extends State<CustomNumPad> {
       child: Container(
         margin: EdgeInsets.all(7.5),
         decoration: BoxDecoration(
+          border: Border.all(color: ThemeColors.primaryDark),
           borderRadius: BorderRadius.circular(15),
           color: buttonText == "Enter"
               ? ThemeColors.primary

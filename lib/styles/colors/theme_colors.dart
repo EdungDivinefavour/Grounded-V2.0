@@ -14,5 +14,5 @@ class ThemeColors {
   static const darkElement = Colors.black;
   static const lightElement = Colors.white;
   static const bottomBarColor = Color.fromRGBO(250, 250, 250, 1);
-  static const scaffoldColor = Colors.white70;
+  static const scaffoldColor = Color.fromRGBO(25, 196, 140, 0.025);
 }

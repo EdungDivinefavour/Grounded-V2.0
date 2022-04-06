@@ -3,7 +3,7 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:grounded/components/custom_action_button.dart';
-import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
+import 'package:grounded/components/custom_app_bar.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/components/input_field.dart';
 import 'package:grounded/components/user_image.dart';
@@ -66,6 +66,7 @@ class _AddChildState extends State<AddChild> {
               title: "Name",
               hintText: "Enter your child's name",
               controller: _nameController,
+              hasBorder: true,
             ),
             SizedBox(height: 35),
             InputField(
@@ -73,6 +74,7 @@ class _AddChildState extends State<AddChild> {
               hintText: 'Enter the child age',
               controller: _ageController,
               onTap: _showAgeDialog,
+              hasBorder: true,
             ),
             SizedBox(height: 35),
             Column(
@@ -92,9 +94,8 @@ class _AddChildState extends State<AddChild> {
                 Text("$_gradeValue", style: TextStyles.regular),
                 Slider(
                   min: 0,
-                  thumbColor: ThemeColors.primary,
-                  activeColor: ThemeColors.primary,
-                  inactiveColor: ThemeColors.lightBackground,
+                  thumbColor: ThemeColors.primaryDark,
+                  activeColor: ThemeColors.primaryDark,
                   divisions: 10,
                   value: _gradeValue.toDouble(),
                   max: 12,

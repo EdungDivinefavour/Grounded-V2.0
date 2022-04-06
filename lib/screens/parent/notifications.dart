@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
+import 'package:grounded/components/custom_app_bar.dart';
 import 'package:grounded/components/custom_check_box.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';

@@ -137,12 +137,6 @@ class AuthenticationService {
     await _firestoreService.storePassword(currentUser!.uid, newPassword);
   }
 
-  void terminateLogin({required String message}) {
-    signOutUser();
-    EasyLoading.showError(message);
-    return;
-  }
-
   void signOutUser() async {
     await _auth.signOut();
     _localStorage.clearUserInfoFromLocal();

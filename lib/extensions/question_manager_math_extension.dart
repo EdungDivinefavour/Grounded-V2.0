@@ -6,23 +6,22 @@ import 'package:grounded/models/managers/question_manager.dart';
 import 'package:grounded/models/question/math/math.dart';
 
 extension QuestionManagerMathExtension on QuestionManager {
-  Math newMath(MathType mathType, MathSubType mathSubType) {
+  Math newMath(MathType mathType, MathSubType mathSubType,
+      {required int questionIndex}) {
     if (mathSubType == MathSubType.addDoubles) {
       return _addDoubles(mathType, mathSubType);
     } else if (mathSubType == MathSubType.addTwoNumbersMakeTen) {
       return _addTwoNumbersMakeTen(mathType, mathSubType);
-    } else if (mathSubType == MathSubType.findMissingNumber) {
-      return _findMissingNumberMath(mathType, mathSubType);
     } else if (mathSubType == MathSubType.addThreeNumbers) {
       return _addThreeNumbers(mathType, mathSubType);
     } else if (mathSubType == MathSubType.subtractDoubles) {
       return _subtractDoubles(mathType, mathSubType);
-    } else if (mathSubType == MathSubType.multiplyDoubles) {
-      return _multiplyDoubles(mathType, mathSubType);
     } else if (mathSubType == MathSubType.divideDoubles) {
       return _divideDoubles(mathType, mathSubType);
+    } else if (mathSubType == MathSubType.findMissingNumber) {
+      return _findMissingNumberMath(mathType, mathSubType);
     } else {
-      return _generalMath(mathType, mathSubType);
+      return _multiplyNumbers(mathType, mathSubType, questionIndex);
     }
   }
 
@@ -131,13 +130,24 @@ extension QuestionManagerMathExtension on QuestionManager {
     return _generalMath(mathType, mathSubType);
   }
 
-  // MULTIPLICATION SPECIFIC MATHS
-  Math _multiplyDoubles(MathType mathType, MathSubType mathSubType) {
-    return _generalMath(mathType, mathSubType);
-  }
-
   // DIVISION SPECIFIC MATHS
   Math _divideDoubles(MathType mathType, MathSubType mathSubType) {
     return _generalMath(mathType, mathSubType);
+  }
+
+  // MULTIPLICATION SPECIFIC MATHS
+  Math _multiplyNumbers(
+      MathType mathType, MathSubType mathSubType, int questionIndex) {
+    final math = Math(mathType: mathType, mathSubType: mathSubType);
+
+    final mathSubTypeStringValue =
+        mathSubType.value.replaceFirst(RegExp(" x"), '');
+
+    final num1 = int.parse(mathSubTypeStringValue);
+    final num2 = questionIndex + 1;
+
+    math.correctAnswer = "${num1 * num2}";
+    math.displayedQuestion = "$num1 x $num2";
+    return math;
   }
 }

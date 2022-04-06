@@ -85,6 +85,7 @@ class _HomeChildState extends State<HomeChild> {
   Widget _buildEachTask(GroundedTask task) {
     return Container(
       decoration: BoxDecoration(
+        border: Border.all(color: ThemeColors.primaryDark, width: 0.1),
         borderRadius: BorderRadius.circular(10.0),
         color: ThemeColors.lightBackground,
       ),

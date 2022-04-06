@@ -7,7 +7,7 @@ import 'package:grounded/components/user_image.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';
 import 'package:grounded/screens/parent/add_child.dart';
-import 'package:grounded/screens/parent/add_task.dart';
+import 'package:grounded/screens/parent/add_task/add_task.dart';
 import 'package:grounded/services/firebase/firestore_service.dart';
 import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/icons/app_icons.dart';
@@ -69,43 +69,47 @@ class _HomeParentState extends State<HomeParent> {
   }
 
   Widget _buildEachChild(Child child) {
-    return Column(
-      children: [
-        SizedBox(height: 20),
-        Row(
-          children: [
-            UserImage(imageURL: child.profilePhoto, size: 60),
-            SizedBox(width: 20),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(child.name, style: TextStyles.semiBold),
-                    SizedBox(width: 5),
-                    Text("(${child.age} years old)")
-                  ],
-                ),
-                SizedBox(height: 10),
-                Text("Grade ${child.grade}"),
-                SizedBox(height: 10),
-                Text("Login Token - " + child.loginToken)
-              ],
-            )
-          ],
-        ),
-        SizedBox(height: 20),
-        TextButton(
-            onPressed: () {
-              _openAddTaskScreen(child);
-            },
-            child: Text(
-              'Assign New Task',
-              style: TextStyles.bold
-                  .copyWith(fontSize: 16, color: ThemeColors.darkElement),
-            )),
-        Divider(height: 5, thickness: 1)
-      ],
+    final textStyle = TextStyles.regular.copyWith(fontSize: 15);
+
+    return Container(
+      padding: EdgeInsets.only(top: 20),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              UserImage(imageURL: child.profilePhoto, size: 60),
+              SizedBox(width: 20),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(child.name, style: TextStyles.semiBold),
+                      SizedBox(width: 5),
+                      Text("(${child.age} years old)", style: textStyle)
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Text("Grade ${child.grade}", style: textStyle),
+                  SizedBox(height: 10),
+                  Text("Login Token - " + child.loginToken, style: textStyle)
+                ],
+              )
+            ],
+          ),
+          SizedBox(height: 15),
+          TextButton(
+              onPressed: () {
+                _openAddTaskScreen(child);
+              },
+              child: Text(
+                'Assign New Task',
+                style: TextStyles.bold
+                    .copyWith(fontSize: 16, color: ThemeColors.darkElement),
+              )),
+          Divider(height: 5, thickness: 1)
+        ],
+      ),
     );
   }
 

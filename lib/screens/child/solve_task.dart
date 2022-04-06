@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:grounded/components/custom_action_button.dart';
-import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
+import 'package:grounded/components/custom_app_bar.dart';
 import 'package:grounded/components/custom_num_pad.dart';
 import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/components/empty_widget.dart';
@@ -34,6 +34,7 @@ class _SolveTaskState extends State<SolveTask> {
 
   int _currentQuestionIndex = 0;
   int _timeSpentOnQuestion = 0;
+  int _numberOfTimesAttempted = 0;
 
   @override
   void initState() {
@@ -70,17 +71,12 @@ class _SolveTaskState extends State<SolveTask> {
       Row(
         children: [
           Spacer(),
-          SVGIcon(
-              icon: AppIcons.clock,
-              size: 25,
-              color: _timeSpentOnQuestion < 60
-                  ? ThemeColors.darkBackground
-                  : ThemeColors.error),
+          PNGIcon(icon: AppIcons.clockPNG, size: 25),
           SizedBox(width: 5),
           Text(_buildDisplayedTime,
               style: TextStyles.smallBold.copyWith(fontSize: 18).copyWith(
                   color: _timeSpentOnQuestion < 60
-                      ? ThemeColors.darkBackground
+                      ? ThemeColors.primary
                       : ThemeColors.error)),
         ],
       ),
@@ -238,6 +234,7 @@ class _SolveTaskState extends State<SolveTask> {
       return;
     }
 
+    _numberOfTimesAttempted++;
     AudioPlayer.instance
         .play(wasAnswerCorrect ? AudioTones.correct : AudioTones.inCorrect);
     if (!wasAnswerCorrect) {
@@ -255,6 +252,7 @@ class _SolveTaskState extends State<SolveTask> {
 
     _currentQuestion.pickedAnswer = _pickedAnswer;
     _currentQuestion.timeSpentOnQuestion = _timeSpentOnQuestion;
+    _currentQuestion.numberOfTimesAttempted = _numberOfTimesAttempted;
     _currentQuestion.setHasBeenAnswered();
 
     if (widget.task.hasBeenCompleted) {
@@ -287,6 +285,7 @@ class _SolveTaskState extends State<SolveTask> {
 
     _displayedQuestionText = _currentQuestion.displayedQuestion;
     _pickedAnswer = _currentQuestion.pickedAnswer;
+    _numberOfTimesAttempted = _currentQuestion.numberOfTimesAttempted;
   }
 
   void _startTimer() {

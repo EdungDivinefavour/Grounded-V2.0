@@ -25,6 +25,7 @@ Question _$QuestionFromJson(Map<String, dynamic> json) => Question(
           $enumDecodeNullable(_$EnglishSubTypeEnumMap, json['englishSubType']),
       word: json['word'] as String?,
       timeSpentOnQuestion: json['timeSpentOnQuestion'] as int? ?? 0,
+      numberOfTimesAttempted: json['numberOfTimesAttempted'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
@@ -40,6 +41,7 @@ Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
       'suggestedAnswers': instance.suggestedAnswers,
       'word': instance.word,
       'timeSpentOnQuestion': instance.timeSpentOnQuestion,
+      'numberOfTimesAttempted': instance.numberOfTimesAttempted,
       'hasBeenAnswered': instance.hasBeenAnswered,
     };
 
@@ -60,9 +62,18 @@ const _$MathSubTypeEnumMap = {
   MathSubType.addTwoNumbersMakeTen: 'addTwoNumbersMakeTen',
   MathSubType.addThreeNumbers: 'addThreeNumbers',
   MathSubType.subtractDoubles: 'subtractDoubles',
-  MathSubType.multiplyDoubles: 'multiplyDoubles',
   MathSubType.divideDoubles: 'divideDoubles',
   MathSubType.findMissingNumber: 'findMissingNumber',
+  MathSubType.oneX: 'oneX',
+  MathSubType.twoX: 'twoX',
+  MathSubType.threeX: 'threeX',
+  MathSubType.fourX: 'fourX',
+  MathSubType.fiveX: 'fiveX',
+  MathSubType.sixX: 'sixX',
+  MathSubType.sevenX: 'sevenX',
+  MathSubType.eightX: 'eightX',
+  MathSubType.nineX: 'nineX',
+  MathSubType.tenX: 'tenX',
 };
 
 const _$EnglishTypeEnumMap = {

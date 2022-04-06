@@ -22,7 +22,7 @@ class AudioPlayer {
     ]);
   }
 
-  void play(String audio) {
-    _audioPlayer.play(audio);
+  Future<void> play(String audio) {
+    return _audioPlayer.play(audio);
   }
 }

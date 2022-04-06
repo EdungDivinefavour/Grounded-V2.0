@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:grounded/components/clickable_text.dart';
 import 'package:grounded/components/custom_action_button.dart';
-import 'package:grounded/components/custom_app_bar/custom_app_bar.dart';
+import 'package:grounded/components/custom_app_bar.dart';
 import 'package:grounded/components/input_field.dart';
 import 'package:grounded/components/screen_title.dart';
 import 'package:grounded/constants/enums/user_type.dart';

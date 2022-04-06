@@ -63,9 +63,18 @@ const _$MathSubTypeEnumMap = {
   MathSubType.addTwoNumbersMakeTen: 'addTwoNumbersMakeTen',
   MathSubType.addThreeNumbers: 'addThreeNumbers',
   MathSubType.subtractDoubles: 'subtractDoubles',
-  MathSubType.multiplyDoubles: 'multiplyDoubles',
   MathSubType.divideDoubles: 'divideDoubles',
   MathSubType.findMissingNumber: 'findMissingNumber',
+  MathSubType.oneX: 'oneX',
+  MathSubType.twoX: 'twoX',
+  MathSubType.threeX: 'threeX',
+  MathSubType.fourX: 'fourX',
+  MathSubType.fiveX: 'fiveX',
+  MathSubType.sixX: 'sixX',
+  MathSubType.sevenX: 'sevenX',
+  MathSubType.eightX: 'eightX',
+  MathSubType.nineX: 'nineX',
+  MathSubType.tenX: 'tenX',
 };
 
 const _$EnglishTypeEnumMap = {

@@ -24,6 +24,7 @@ class Question {
   List<String>? suggestedAnswers;
   String? word;
   int timeSpentOnQuestion;
+  int numberOfTimesAttempted;
 
   bool hasBeenAnswered;
 
@@ -43,6 +44,7 @@ class Question {
     this.englishSubType,
     this.word,
     this.timeSpentOnQuestion = 0,
+    this.numberOfTimesAttempted = 0,
   });
 
   void setHasBeenAnswered() {

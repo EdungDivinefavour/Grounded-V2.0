@@ -1,6 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:grounded/constants/enums/online_presence.dart';
 import 'package:grounded/constants/enums/user_type.dart';
+import 'package:grounded/services/firebase/firestore_service.dart';
+import 'package:grounded/services/firebase/messaging_service.dart';
 import 'package:grounded/services/local_storage/local_storage.dart';
 
 class DatabaseReferences {
@@ -16,6 +18,9 @@ class DatabaseService {
 
   final _localStorage = LocalStorage.instance;
 
+  final _firestoreService = FirestoreService.instance;
+  final _messagingService = MessagingService.instance;
+
   Future<void> updateRealTimeDbPresence({
     required String userId,
     required OnlinePresence onlinePresence,
@@ -25,7 +30,16 @@ class DatabaseService {
         ? DatabaseReferences.parents
         : DatabaseReferences.children;
 
-    return _databaseReference.child(reference).child(userId).update({
+    if (userInfo!.userType == UserType.child) {
+      final parentInfo =
+          await _firestoreService.getParentInfo(userInfo.parentID);
+      await _messagingService.sendRemoteMessage(
+          receiverToken: parentInfo.firebaseToken,
+          title: 'Hey ${parentInfo.name}',
+          body: '${userInfo.name} " has is now ${onlinePresence.value}');
+    }
+
+    await _databaseReference.child(reference).child(userId).update({
       "onlinePresence": onlinePresence.value,
       'lastSeenAt': DateTime.now().millisecondsSinceEpoch,
     });

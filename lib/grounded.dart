@@ -43,7 +43,7 @@ class _GroundedState extends State<Grounded> with WidgetsBindingObserver {
         userId: _authService.currentUser!.uid,
         onlinePresence: state == AppLifecycleState.resumed
             ? OnlinePresence.online
-            : OnlinePresence.away,
+            : OnlinePresence.offline,
       );
     }
   }
