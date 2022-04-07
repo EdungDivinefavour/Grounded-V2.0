@@ -11,6 +11,7 @@ import 'package:grounded/screens/parent/badges_parent.dart';
 import 'package:grounded/screens/parent/home_parent.dart';
 import 'package:grounded/screens/parent/reports.dart';
 import 'package:grounded/screens/parent/settings.dart';
+import 'package:grounded/screens/parent/view_notifications.dart';
 import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/icons/app_icons.dart';
 import 'package:flutter/material.dart';
@@ -28,14 +29,12 @@ class _BottomTabsState extends State<BottomTabs> {
   int _currentIndex = 0;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      appBar: CustomAppBar(hasDrawer: true),
+      appBar: CustomAppBar(
+        hasDrawer: true,
+        onRightIconTap: _openViewNotificationsScreen,
+      ),
       drawer: NavigationDrawer(groundedUser: widget.groundedUser),
       body: IndexedStack(index: _currentIndex, children: _buildTabs),
       bottomNavigationBar: CustomBottomBar(
@@ -84,6 +83,11 @@ class _BottomTabsState extends State<BottomTabs> {
       title: title,
       selectedColor: ThemeColors.primary,
     );
+  }
+
+  void _openViewNotificationsScreen() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => ViewNotifications()));
   }
 
   void _onTabTapped(int index) {

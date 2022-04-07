@@ -36,7 +36,7 @@ class DatabaseService {
       await _messagingService.sendRemoteMessage(
           receiverToken: parentInfo.firebaseToken,
           title: 'Hey ${parentInfo.name}',
-          body: '${userInfo.name} " has is now ${onlinePresence.value}');
+          body: '${userInfo.name} " is now ${onlinePresence.value}');
     }
 
     await _databaseReference.child(reference).child(userId).update({

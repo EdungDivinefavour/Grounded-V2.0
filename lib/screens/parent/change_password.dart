@@ -27,6 +27,7 @@ class ChangePassword extends StatelessWidget {
                 InputField(
                   title: "Current Password",
                   controller: _currentPasswordController,
+                  hasBorder: true,
                   inputFieldType: InputFieldType.password,
                   hintText: 'Enter your current password',
                 ),
@@ -34,6 +35,7 @@ class ChangePassword extends StatelessWidget {
                 InputField(
                   title: "New Password",
                   controller: _newPasswordController,
+                  hasBorder: true,
                   inputFieldType: InputFieldType.password,
                   hintText: 'Enter your new password',
                 ),
@@ -41,15 +43,17 @@ class ChangePassword extends StatelessWidget {
                 InputField(
                   title: "Confirm New Password",
                   controller: _confirmNewPasswordController,
+                  hasBorder: true,
                   inputFieldType: InputFieldType.password,
                   hintText: 'Confirm your current password',
                 ),
                 SizedBox(height: 60),
                 CustomActionButton(
-                    onPressed: () {
-                      _updatePassword(context);
-                    },
-                    title: 'Change Password')
+                  title: 'Change Password',
+                  onPressed: () {
+                    _updatePassword(context);
+                  },
+                )
               ],
             ),
           ),

@@ -17,7 +17,6 @@ class MessagingService {
   final _messaging = FirebaseMessaging.instance;
   final _firestoreService = FirestoreService.instance;
   final _localStorage = LocalStorage.instance;
-
   final _httpService = HttpService.instance;
 
   UserType? userType;

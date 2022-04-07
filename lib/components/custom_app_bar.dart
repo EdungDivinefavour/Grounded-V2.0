@@ -14,13 +14,15 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String? title;
   final Widget? rightIcon;
   final Color? theme;
+  final VoidCallback? onRightIconTap;
   final bool hasDrawer;
   final bool isWhiteBackround;
 
   CustomAppBar({
     this.title,
-    this.rightIcon,
     this.theme,
+    this.rightIcon,
+    this.onRightIconTap,
     this.hasDrawer = false,
     this.isWhiteBackround = true,
   });
@@ -86,12 +88,15 @@ class _CustomAppBarState extends State<CustomAppBar> {
   }
 
   Widget get _buildRightIcon {
-    return SizedBox(
-      height: 27,
-      width: 27,
-      child: widget.hasDrawer
-          ? PNGIcon(icon: AppIcons.notificationPNG)
-          : widget.rightIcon,
+    return InkWell(
+      onTap: widget.onRightIconTap,
+      child: SizedBox(
+        height: 27,
+        width: 27,
+        child: widget.hasDrawer
+            ? PNGIcon(icon: AppIcons.notificationPNG)
+            : widget.rightIcon,
+      ),
     );
   }
 

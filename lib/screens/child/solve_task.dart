@@ -227,7 +227,7 @@ class _SolveTaskState extends State<SolveTask> {
     });
   }
 
-  void _confirmAnswer() {
+  void _confirmAnswer() async {
     final wasAnswerCorrect = _pickedAnswer == _currentQuestion.correctAnswer;
     if (_pickedAnswer == null) {
       EasyLoading.showError("Please enter an answer to proceed");
@@ -256,7 +256,9 @@ class _SolveTaskState extends State<SolveTask> {
     _currentQuestion.setHasBeenAnswered();
 
     if (widget.task.hasBeenCompleted) {
+      await _showCongratulationsDialog();
       Navigator.pop(context);
+
       return;
     }
 
@@ -302,5 +304,41 @@ class _SolveTaskState extends State<SolveTask> {
       _pickedAnswer = null;
       _timeSpentOnQuestion = 0;
     });
+  }
+
+  Future<void> _showCongratulationsDialog() async {
+    final dialog = Dialog(
+        child: SizedBox(
+      height: 350,
+      width: 600,
+      child: Column(
+        children: const [
+          PNGIcon(icon: AppIcons.celebratePNG, size: 270),
+          Text("Congratulations xxx!", style: TextStyles.bold),
+          SizedBox(height: 10),
+          Text("You did an amazing job!", style: TextStyles.regular)
+        ],
+      ),
+    ));
+
+    showGeneralDialog(
+      barrierLabel: "Barrier",
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: Duration(milliseconds: 300),
+      context: context,
+      pageBuilder: (_, __, ___) {
+        return Align(alignment: Alignment.bottomCenter, child: dialog);
+      },
+      transitionBuilder: (_, anim, __, child) {
+        return SlideTransition(
+          position: Tween(begin: Offset(0, 1), end: Offset(0, 0)).animate(anim),
+          child: child,
+        );
+      },
+    );
+
+    await Future.delayed(Duration(seconds: 2));
+    Navigator.pop(context);
   }
 }

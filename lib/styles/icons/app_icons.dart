@@ -9,6 +9,7 @@ abstract class AppIcons {
   static const badges = 'badges.svg';
   static const bottomLeftBubble = 'bottom_left_bubble.svg';
   static const calendarPNG = 'calendar.png';
+  static const celebratePNG = 'celebrate.png';
   static const centerLeftBubble = 'center_left_bubble.svg';
   static const centerRightBubble = 'center_right_bubble.svg';
   static const checkBox = "check_box.svg";

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:grounded/constants/enums/math_type.dart';
+import 'package:grounded/constants/enums/subject_type.dart';
 import 'package:grounded/extensions/question_manager_english_extension.dart';
 import 'package:grounded/extensions/question_manager_math_extension.dart';
 import 'package:grounded/models/grounded_task/grounded_task.dart';
@@ -12,18 +13,26 @@ class QuestionManager {
   static final QuestionManager _instance = QuestionManager._();
   static QuestionManager get instance => _instance;
 
-  List<Word> allWords = [];
+  List<Word> _allWords = [];
 
   Future<void> init() async {
     LocalAsset.instance.readJSON("english_words.json").then((allwords) {
       final List<dynamic> jsonList = allwords;
 
-      allWords = List<Word>.from(jsonList.map((x) => Word.fromJson(x)));
+      _allWords = List<Word>.from(jsonList.map((x) => Word.fromJson(x)));
     });
   }
 
-  void buildMathList(GroundedTask task) {
-    for (int i = 0; i < 10; i++) {
+  void buildQuestionsForTask(GroundedTask task, {int numberOfQuestions = 10}) {
+    if (task.subjectType == SubjectType.maths) {
+      _buildMathList(task, numberOfQuestions);
+    } else {
+      _buildEnglishList(task, numberOfQuestions);
+    }
+  }
+
+  void _buildMathList(GroundedTask task, [int numberOfQuestions = 10]) {
+    for (int i = 0; i < numberOfQuestions; i++) {
       task.questions.add(
         newMath(task.mathTypeToCreate!, task.mathSubTypeToCreate!,
             questionIndex: i),
@@ -34,12 +43,12 @@ class QuestionManager {
     task.questions.shuffle();
   }
 
-  void buildEnglishList(GroundedTask task) {
+  void _buildEnglishList(GroundedTask task, [int numberOfQuestions = 10]) {
     final r = Random();
     final wordArrayToUse =
-        allWords.where((x) => x.type == task.englishSubTypeToCreate).toList();
+        _allWords.where((x) => x.type == task.englishSubTypeToCreate).toList();
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < numberOfQuestions; i++) {
       var word = wordArrayToUse[r.nextInt(wordArrayToUse.length)];
       word.text = word.text.toUpperCase();
 

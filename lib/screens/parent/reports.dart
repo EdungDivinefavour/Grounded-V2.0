@@ -10,6 +10,7 @@ import 'package:grounded/models/grounded_user/child/child.dart';
 import 'package:grounded/models/grounded_user/parent/parent.dart';
 import 'package:grounded/models/data_points/daily_data_point.dart';
 import 'package:grounded/models/managers/grounded_task_manager.dart';
+import 'package:grounded/screens/parent/assigned_tasks.dart';
 import 'package:grounded/services/firebase/firestore_service.dart';
 import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/icons/app_icons.dart';
@@ -56,7 +57,19 @@ class _ReportsState extends State<Reports> {
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              ScreenTitle(title: "Reports", isWhiteBackround: true),
+              Stack(
+                children: [
+                  ScreenTitle(title: "Reports", isWhiteBackround: true),
+                  Positioned(
+                    top: 27.5,
+                    right: 0,
+                    child: TextButton(
+                        onPressed: _openAssignedTasksScreen,
+                        child: Text("View details of tasks",
+                            style: TextStyles.semiBold.copyWith(fontSize: 15))),
+                  ),
+                ],
+              ),
               InputField(
                 title: "",
                 controller: _selectedChildController,
@@ -316,5 +329,10 @@ class _ReportsState extends State<Reports> {
     _children.addAll(_childrenDuplicate);
 
     setState(() {});
+  }
+
+  void _openAssignedTasksScreen() {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (_) => AssignedTask(child: _selectedChild)));
   }
 }

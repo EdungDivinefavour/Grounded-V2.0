@@ -18,7 +18,7 @@ class _IntroState extends State<Intro> {
     List<Widget> _introScreens = [
       _buildIntroScreens(
           currentPosition: 0.0,
-          title: 'Assign Task To Your Kids Remotely',
+          title: 'Assign Tasks To Your Kids Remotely',
           subTitle: "Give your kids assignments to do while you're away",
           sliderImage: 'intro_1.png'),
       _buildIntroScreens(

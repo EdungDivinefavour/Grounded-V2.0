@@ -92,6 +92,13 @@ class FirestoreService {
     await _localStorage.storeUserInfoToLocal(child);
   }
 
+  Future<void> deleteChild(Child child) async {
+    await _firestore
+        .collection(FirebaseDocuments.children)
+        .doc(child.id)
+        .delete();
+  }
+
   Future<void> storeTask({
     required GroundedTask task,
     required Child child,

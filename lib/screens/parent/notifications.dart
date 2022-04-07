@@ -37,7 +37,7 @@ class NotificationsState extends State<Notifications> {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               children: [
-                SizedBox(height: 30),
+                SizedBox(height: 20),
                 CustomCheckBox(
                   title: "Notify me when my child completes a \ntask",
                   value: _parent?.notificationPreferences

@@ -5,10 +5,13 @@ import 'package:grounded/models/managers/question_manager.dart';
 import 'package:grounded/services/audio/audio_player.dart';
 import 'package:grounded/services/local_storage/local_storage.dart';
 import 'package:grounded/services/notification/notification_service.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  await initializeDateFormatting('en', null);
 
   await NotificationService.instance.init();
   await AudioPlayer.instance.init();

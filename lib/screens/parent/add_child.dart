@@ -83,19 +83,17 @@ class _AddChildState extends State<AddChild> {
                   padding: const EdgeInsets.only(left: 10),
                   child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Grade',
-                        style: TextStyles.semiBold.copyWith(
-                          color: ThemeColors.darkBackground,
-                          fontSize: 15,
-                        ),
-                      )),
+                      child: Text('Grade',
+                          style: TextStyles.semiBold.copyWith(
+                              color: ThemeColors.darkBackground,
+                              fontSize: 15))),
                 ),
                 Text("$_gradeValue", style: TextStyles.regular),
                 Slider(
                   min: 0,
-                  thumbColor: ThemeColors.primaryDark,
-                  activeColor: ThemeColors.primaryDark,
+                  thumbColor: ThemeColors.error,
+                  activeColor: ThemeColors.link.withOpacity(0.9),
+                  inactiveColor: ThemeColors.link.withOpacity(0.9),
                   divisions: 10,
                   value: _gradeValue.toDouble(),
                   max: 12,

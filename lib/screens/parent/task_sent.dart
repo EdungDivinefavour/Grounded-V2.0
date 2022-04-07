@@ -35,7 +35,7 @@ class TaskSent extends StatelessWidget {
               SizedBox(height: 10),
               Text("Assigned to", style: TextStyles.semiBold),
               SizedBox(height: 30),
-              UserImage(imageURL: child.profilePhoto, size: 120),
+              UserImage(imageURL: child.profilePhoto, size: 130),
               SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

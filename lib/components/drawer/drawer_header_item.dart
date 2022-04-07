@@ -27,7 +27,8 @@ class DrawerHeaderItem extends StatelessWidget {
               style: TextStyles.semiBold
                   .copyWith(color: ThemeColors.lightElement)),
         ),
-        const Divider(color: Colors.black, height: 20, thickness: 0.2),
+        const Divider(
+            color: ThemeColors.darkElement, height: 20, thickness: 0.2),
         const SizedBox(height: 20)
       ],
     );

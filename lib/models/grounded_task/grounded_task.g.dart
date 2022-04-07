@@ -18,6 +18,7 @@ GroundedTask _$GroundedTaskFromJson(Map<String, dynamic> json) => GroundedTask(
       questions: (json['questions'] as List<dynamic>)
           .map((e) => Question.fromJson(e as Map<String, dynamic>))
           .toList(),
+      numberOfQuestionsToCreate: json['numberOfQuestionsToCreate'] as int?,
       mathTypeToCreate:
           $enumDecodeNullable(_$MathTypeEnumMap, json['mathTypeToCreate']),
       mathSubTypeToCreate: $enumDecodeNullable(
@@ -38,6 +39,7 @@ Map<String, dynamic> _$GroundedTaskToJson(GroundedTask instance) =>
       'creationTimestamp': instance.creationTimestamp,
       'expectedCompletionTimestamp': instance.expectedCompletionTimestamp,
       'subjectType': _$SubjectTypeEnumMap[instance.subjectType],
+      'numberOfQuestionsToCreate': instance.numberOfQuestionsToCreate,
       'mathTypeToCreate': _$MathTypeEnumMap[instance.mathTypeToCreate],
       'mathSubTypeToCreate': _$MathSubTypeEnumMap[instance.mathSubTypeToCreate],
       'englishTypeToCreate': _$EnglishTypeEnumMap[instance.englishTypeToCreate],

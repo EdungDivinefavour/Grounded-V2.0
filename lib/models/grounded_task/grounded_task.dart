@@ -23,6 +23,8 @@ class GroundedTask {
   final int creationTimestamp;
   final int expectedCompletionTimestamp;
   final SubjectType subjectType;
+
+  final int? numberOfQuestionsToCreate;
   final MathType? mathTypeToCreate;
   final MathSubType? mathSubTypeToCreate;
   final EnglishType? englishTypeToCreate;
@@ -66,6 +68,7 @@ class GroundedTask {
     required this.expectedCompletionTimestamp,
     required this.subjectType,
     required this.questions,
+    this.numberOfQuestionsToCreate,
     this.mathTypeToCreate,
     this.mathSubTypeToCreate,
     this.englishTypeToCreate,
@@ -79,6 +82,7 @@ class GroundedTask {
     required String childPhotoUrl,
     required SubjectType subjectType,
     required int expectedCompletionTimestamp,
+    int? numberOfQuestionsToCreate,
     MathType? mathTypeToCreate,
     MathSubType? mathSubTypeToCreate,
     EnglishType? englishTypeToCreate,
@@ -93,6 +97,7 @@ class GroundedTask {
       creationTimestamp: DateTime.now().millisecondsSinceEpoch,
       expectedCompletionTimestamp: expectedCompletionTimestamp,
       subjectType: subjectType,
+      numberOfQuestionsToCreate: numberOfQuestionsToCreate,
       questions: [],
       mathTypeToCreate: mathTypeToCreate,
       mathSubTypeToCreate: mathSubTypeToCreate,
@@ -100,11 +105,7 @@ class GroundedTask {
       englishSubTypeToCreate: englishSubTypeToCreate,
     );
 
-    if (subjectType == SubjectType.maths) {
-      QuestionManager.instance.buildMathList(task);
-    } else {
-      QuestionManager.instance.buildEnglishList(task);
-    }
+    QuestionManager.instance.buildQuestionsForTask(task);
     return task;
   }
 

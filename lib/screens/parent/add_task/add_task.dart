@@ -22,6 +22,7 @@ import 'package:grounded/services/firebase/firestore_service.dart';
 import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/icons/app_icons.dart';
 import 'package:grounded/styles/texts/text_styles.dart';
+import 'package:intl/intl.dart';
 
 class AddTask extends StatefulWidget {
   final Parent parent;
@@ -36,12 +37,12 @@ class AddTask extends StatefulWidget {
 class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
   final _firestoreService = FirestoreService.instance;
 
-  late TabController _tabController;
   final _expectedCompletionDateController = TextEditingController();
   final _expectedCompletionTimeController = TextEditingController();
 
-  DateTime? _compiledDateAndTime;
+  TabController? _tabController;
 
+  DateTime? _compiledDateAndTime;
   DateTime? _pickedDate;
   TimeOfDay? _pickedTime;
 
@@ -53,6 +54,7 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
   EnglishSubType? _selectedEnglishSubType;
   MathSubType? _selectedMathSubType;
 
+  int _numberOfQuestionsToCreate = 10;
   int _currentTabIndex = 0;
 
   @override
@@ -70,16 +72,17 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(20),
-            height: 910,
+            height: 950,
             child: Column(
               children: [
                 SizedBox(height: 20),
                 Column(
                   children: [
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         UserImage(
-                            imageURL: widget.child.profilePhoto, size: 80),
+                            imageURL: widget.child.profilePhoto, size: 110),
                         SizedBox(width: 20),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,12 +92,13 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
                                 Text(widget.child.name,
                                     style: TextStyles.semiBold),
                                 SizedBox(width: 5),
-                                Text("(${widget.child.age} years old)",
-                                    style: TextStyles.regular
-                                        .copyWith(fontSize: 15))
                               ],
                             ),
-                            SizedBox(height: 10),
+                            SizedBox(height: 5),
+                            Text("${widget.child.age} years old",
+                                style:
+                                    TextStyles.regular.copyWith(fontSize: 15)),
+                            SizedBox(height: 5),
                             Text("Grade ${widget.child.grade}",
                                 style:
                                     TextStyles.regular.copyWith(fontSize: 15)),
@@ -128,7 +132,7 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
                 ),
                 SizedBox(height: 30),
                 _buildSubjectTabs,
-                SizedBox(height: 40),
+                SizedBox(height: 30),
                 CustomActionButton(
                     onPressed: _addTask, title: "Send Task", isRedButton: true),
                 SizedBox(height: 20),
@@ -169,7 +173,7 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
   Widget _buildTabHeader({required String title, required int index}) {
     return GestureDetector(
       onTap: () {
-        _tabController.animateTo(index);
+        _tabController?.animateTo(index);
         setState(() {
           _currentTabIndex = index;
           _selectedSubjectType = SubjectType.values[_currentTabIndex];
@@ -350,6 +354,35 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
     }
   }
 
+  Widget _buildNumberOfQuestionsPicker(sts) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Number of questions: $_numberOfQuestionsToCreate',
+                style: TextStyles.semiBold
+                    .copyWith(color: ThemeColors.lightElement, fontSize: 15),
+              )),
+        ),
+        Slider(
+          min: 0,
+          thumbColor: ThemeColors.error,
+          activeColor: ThemeColors.link.withOpacity(0.9),
+          inactiveColor: ThemeColors.link.withOpacity(0.9),
+          divisions: 3,
+          value: _numberOfQuestionsToCreate.toDouble(),
+          max: 30,
+          onChanged: (value) {
+            sts(() => _numberOfQuestionsToCreate = value.round());
+          },
+        ),
+      ],
+    );
+  }
+
   void _showMathSubTypeAlert() {
     showDialog(
       context: context,
@@ -361,10 +394,10 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             child: SizedBox(
                 height: _selectedMathType == MathType.addition
-                    ? 420
+                    ? 500
                     : _selectedMathType == MathType.multiplication
-                        ? 400
-                        : 260,
+                        ? 480
+                        : 340,
                 width: MediaQuery.of(context).size.width * 0.8,
                 child: Column(
                   children: [
@@ -389,6 +422,8 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
                     Divider(color: ThemeColors.lightElement, thickness: 1),
                     SizedBox(height: 10),
                     _buildMathSubTypeList(sts),
+                    SizedBox(height: 15),
+                    _buildNumberOfQuestionsPicker(sts),
                     SizedBox(height: 10)
                   ],
                 )),
@@ -408,7 +443,7 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
 
     setState(() {
       _expectedCompletionDateController.text =
-          "${_pickedDate!.day} - ${_pickedDate!.month} - ${_pickedDate!.year}";
+          DateFormat("MMMM d, yyyy").format(_pickedDate!);
     });
   }
 
@@ -428,13 +463,13 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
       _pickedDate!.year,
       _pickedDate!.month,
       _pickedDate!.day,
-      _pickedDate!.hour,
-      _pickedDate!.minute,
+      _pickedTime!.hour,
+      _pickedTime!.minute,
     );
 
     setState(() {
       _expectedCompletionTimeController.text =
-          "${_pickedTime!.hour} : ${_pickedTime!.minute}";
+          DateFormat.jm().format(_compiledDateAndTime!);
     });
   }
 
@@ -451,6 +486,7 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
       childName: widget.child.name,
       childPhotoUrl: widget.child.profilePhoto,
       subjectType: _selectedSubjectType,
+      numberOfQuestionsToCreate: _numberOfQuestionsToCreate,
       mathTypeToCreate: _selectedMathType,
       mathSubTypeToCreate: _selectedMathSubType,
       englishTypeToCreate: _selectedEnglishType,
@@ -491,6 +527,8 @@ class _AddTaskState extends State<AddTask> with TickerProviderStateMixin {
     } else if (_expectedCompletionDateController.text == "") {
       return false;
     } else if (_expectedCompletionTimeController.text == "") {
+      return false;
+    } else if (_numberOfQuestionsToCreate == 0) {
       return false;
     }
 

@@ -1,3 +1,4 @@
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:grounded/components/center_text.dart';
@@ -51,12 +52,14 @@ class _HomeParentState extends State<HomeParent> {
                 ? CenterText(
                     text:
                         "You haven't added any children yet. Click the button below to add children")
-                : ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: _children.length,
-                    itemBuilder: (_, index) {
-                      return _buildEachChild(_children[index]);
-                    }),
+                : Expanded(
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: _children.length,
+                        itemBuilder: (_, index) {
+                          return _buildEachChild(_children[index]);
+                        }),
+                  ),
           ],
         ),
       ),
@@ -71,46 +74,85 @@ class _HomeParentState extends State<HomeParent> {
   Widget _buildEachChild(Child child) {
     final textStyle = TextStyles.regular.copyWith(fontSize: 15);
 
-    return Container(
-      padding: EdgeInsets.only(top: 20),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              UserImage(imageURL: child.profilePhoto, size: 60),
-              SizedBox(width: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(child.name, style: TextStyles.semiBold),
-                      SizedBox(width: 5),
-                      Text("(${child.age} years old)", style: textStyle)
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                  Text("Grade ${child.grade}", style: textStyle),
-                  SizedBox(height: 10),
-                  Text("Login Token - " + child.loginToken, style: textStyle)
-                ],
-              )
-            ],
-          ),
-          SizedBox(height: 15),
-          TextButton(
-              onPressed: () {
-                _openAddTaskScreen(child);
-              },
-              child: Text(
-                'Assign New Task',
-                style: TextStyles.bold
-                    .copyWith(fontSize: 16, color: ThemeColors.darkElement),
-              )),
-          Divider(height: 5, thickness: 1)
-        ],
+    return InkWell(
+      onTap: () {
+        _openChildOptionsSheet(child);
+      },
+      child: Container(
+        padding: EdgeInsets.only(top: 20),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                UserImage(imageURL: child.profilePhoto, size: 90),
+                SizedBox(width: 20),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(child.name, style: TextStyles.semiBold),
+                        SizedBox(width: 5),
+                      ],
+                    ),
+                    SizedBox(height: 5),
+                    Text("${child.age} years old", style: textStyle),
+                    SizedBox(height: 5),
+                    Text("Grade ${child.grade}", style: textStyle),
+                    SizedBox(height: 5),
+                    Text("Login Token - " + child.loginToken, style: textStyle)
+                  ],
+                )
+              ],
+            ),
+            SizedBox(height: 15),
+            TextButton(
+                onPressed: () {
+                  _openAddTaskScreen(child);
+                },
+                child: Text(
+                  'Assign New Task',
+                  style: TextStyles.bold
+                      .copyWith(fontSize: 16, color: ThemeColors.darkElement),
+                )),
+            Divider(height: 5, thickness: 1)
+          ],
+        ),
       ),
     );
+  }
+
+  void _openChildOptionsSheet(Child child) async {
+    final result = await showModalActionSheet<String>(
+        context: context,
+        title: "Select option",
+        actions: [
+          SheetAction(
+              key: "delete", label: "Delete child", isDestructiveAction: true),
+        ]);
+
+    if (result != "delete") return;
+    _openConfirmChildDeleteDialog(child);
+  }
+
+  void _openConfirmChildDeleteDialog(Child child) async {
+    final result = await showAlertDialog<String>(
+      context: context,
+      title: "Are you sure?",
+      message:
+          "Please confirm you want to perform this action as it is irreversible.",
+      actions: [
+        AlertDialogAction(key: "proceed", label: "Proceed"),
+        AlertDialogAction(key: "cancel", label: "Cancel"),
+      ],
+    );
+
+    if (result != "proceed") return;
+    _firestoreService.deleteChild(child);
+
+    setState(() {
+      _children.remove(child);
+    });
   }
 
   void _getChildren() async {

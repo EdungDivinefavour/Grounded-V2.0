@@ -18,8 +18,12 @@ import 'package:grounded/services/local_storage/local_storage.dart';
 import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/icons/app_icons.dart';
 import 'package:grounded/styles/texts/text_styles.dart';
+import 'package:grounded/utils/int_utils.dart';
 
 class AssignedTask extends StatefulWidget {
+  final Child? child;
+  AssignedTask({this.child});
+
   @override
   State<AssignedTask> createState() => _AssignedTaskState();
 }
@@ -30,7 +34,7 @@ class _AssignedTaskState extends State<AssignedTask> {
   final _localStorage = LocalStorage.instance;
   final _firestoreService = FirestoreService.instance;
 
-  List<GroundedTask>? _tasks;
+  final List<GroundedTask> _tasks = [];
   List<Child> _children = [];
 
   @override
@@ -45,15 +49,15 @@ class _AssignedTaskState extends State<AssignedTask> {
     return CustomScaffold(
       appBar: CustomAppBar(title: "Assigned Tasks"),
       bubblePosition: BackgroundBubblePosition.topRight,
-      body: _tasks == null
+      body: _tasks.isEmpty
           ? CenterText(text: "No tasks fetched")
           : Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
               child: ListView.builder(
                   shrinkWrap: true,
-                  itemCount: _tasks!.length,
+                  itemCount: _tasks.length,
                   itemBuilder: (_, index) {
-                    return _buildEachTask(_tasks![index]);
+                    return _buildEachTask(_tasks[index]);
                   }),
             ),
     );
@@ -74,7 +78,9 @@ class _AssignedTaskState extends State<AssignedTask> {
             PNGIcon(icon: AppIcons.tasksPNG, size: 30),
             SizedBox(width: 10),
             Text(task.subjectType.value, style: TextStyles.semiBold),
-            SizedBox(width: 10),
+            SizedBox(width: 5),
+            Text("(${task.creationTimestamp.toFormattedDate})",
+                style: TextStyles.semiBold),
             Spacer(),
             task.hasBeenCompleted
                 ? SVGIcon(
@@ -115,12 +121,12 @@ class _AssignedTaskState extends State<AssignedTask> {
               Text('Correct Answer: ${question.correctAnswer}', style: style),
               question.numberOfTimesAttempted != 0
                   ? Text(
-                      'Number of times attempted: ${question.numberOfTimesAttempted}(seconds)',
+                      'Number of times attempted: ${question.numberOfTimesAttempted}',
                       style: style)
                   : emptyWidget,
               question.timeSpentOnQuestion != 0
                   ? Text(
-                      'Time spent on question: ${question.timeSpentOnQuestion}(seconds)',
+                      'Time spent on question: ${question.timeSpentOnQuestion} seconds',
                       style: style)
                   : emptyWidget,
               question.subjectType == SubjectType.english
@@ -136,16 +142,20 @@ class _AssignedTaskState extends State<AssignedTask> {
   }
 
   void _getAllChildren() async {
-    _children = await _firestoreService.getChildrenForParent(_parent!);
     final allTasks = <GroundedTask>[];
-    _tasks = [];
 
-    for (final child in _children) {
-      allTasks.addAll(child.tasks);
+    if (widget.child != null) {
+      allTasks.addAll(widget.child!.tasks);
+    } else {
+      _children = await _firestoreService.getChildrenForParent(_parent!);
+
+      for (final child in _children) {
+        allTasks.addAll(child.tasks);
+      }
     }
 
     setState(() {
-      _tasks?.addAll(allTasks);
+      _tasks.addAll(allTasks);
     });
     EasyLoading.dismiss();
   }
