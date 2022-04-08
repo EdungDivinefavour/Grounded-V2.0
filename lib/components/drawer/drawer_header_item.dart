@@ -6,8 +6,13 @@ import 'package:flutter/material.dart';
 class DrawerHeaderItem extends StatelessWidget {
   final String title;
   final String profilePhoto;
+  final bool hasChalkBoardFont;
 
-  const DrawerHeaderItem({required this.title, required this.profilePhoto});
+  const DrawerHeaderItem({
+    required this.title,
+    required this.profilePhoto,
+    this.hasChalkBoardFont = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +29,9 @@ class DrawerHeaderItem extends StatelessWidget {
         Container(
           margin: const EdgeInsets.only(top: 13, left: 25, bottom: 10),
           child: Text(title,
-              style: TextStyles.semiBold
+              style: (hasChalkBoardFont
+                      ? TextStyles.chalkboard.copyWith(fontSize: 26)
+                      : TextStyles.semiBold)
                   .copyWith(color: ThemeColors.lightElement)),
         ),
         const Divider(

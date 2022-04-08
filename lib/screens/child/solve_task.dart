@@ -74,7 +74,7 @@ class _SolveTaskState extends State<SolveTask> {
           PNGIcon(icon: AppIcons.clockPNG, size: 25),
           SizedBox(width: 5),
           Text(_buildDisplayedTime,
-              style: TextStyles.smallBold.copyWith(fontSize: 18).copyWith(
+              style: TextStyles.chalkboard.copyWith(fontSize: 22).copyWith(
                   color: _timeSpentOnQuestion < 60
                       ? ThemeColors.primary
                       : ThemeColors.error)),
@@ -90,7 +90,7 @@ class _SolveTaskState extends State<SolveTask> {
           SVGIcon(icon: AppIcons.star, size: 25),
           SizedBox(width: 6),
           Text('${widget.task.totalPointsGotten} points',
-              style: TextStyles.smallBold.copyWith(fontSize: 20)),
+              style: TextStyles.chalkboard.copyWith(fontSize: 22)),
         ],
       ),
       SizedBox(height: 15),
@@ -114,7 +114,7 @@ class _SolveTaskState extends State<SolveTask> {
   List<Widget> get _buildEnglishQuestionBody {
     return [
       Text('What letter is missing?',
-          style: TextStyles.bold.copyWith(fontSize: 18)),
+          style: TextStyles.chalkboard.copyWith(fontSize: 26)),
       SizedBox(height: 40),
       PNGIcon(
         size: 160,
@@ -125,8 +125,8 @@ class _SolveTaskState extends State<SolveTask> {
       _displayedQuestionText == null
           ? emptyWidget
           : Text(_displayedQuestionText!,
-              style: TextStyles.medium.copyWith(
-                  fontSize: _displayedQuestionText!.length < 8 ? 60 : 35)),
+              style: TextStyles.chalkboard.copyWith(
+                  fontSize: _displayedQuestionText!.length < 8 ? 62 : 37)),
       SizedBox(height: 20),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -135,7 +135,8 @@ class _SolveTaskState extends State<SolveTask> {
             .toList(),
       ),
       Spacer(),
-      CustomActionButton(title: 'Proceed', onPressed: _confirmAnswer),
+      CustomActionButton(
+          title: 'Proceed', hasChalkBoardFont: true, onPressed: _confirmAnswer),
       SizedBox(height: 40),
     ];
   }
@@ -156,8 +157,8 @@ class _SolveTaskState extends State<SolveTask> {
         width: 60,
         alignment: Alignment.center,
         child: Text(buttonText,
-            style: TextStyles.semiBold
-                .copyWith(fontSize: 22, color: ThemeColors.darkElement)),
+            style: TextStyles.chalkboard
+                .copyWith(fontSize: 26, color: ThemeColors.darkElement)),
       ),
     );
   }
@@ -165,7 +166,7 @@ class _SolveTaskState extends State<SolveTask> {
   List<Widget> get _buildMathsQuestionBody {
     return [
       Text('Answer this question',
-          style: TextStyles.bold.copyWith(fontSize: 18)),
+          style: TextStyles.chalkboard.copyWith(fontSize: 24)),
       _displayedQuestionText == null
           ? emptyWidget
           : Text(_displayedQuestionText!,
@@ -179,7 +180,7 @@ class _SolveTaskState extends State<SolveTask> {
               alignment: Alignment.centerRight,
               child: Text(
                 _pickedAnswer!,
-                style: TextStyles.semiBold.copyWith(fontSize: 40),
+                style: TextStyles.chalkboard.copyWith(fontSize: 50),
               )),
       Spacer(),
       CustomNumPad(

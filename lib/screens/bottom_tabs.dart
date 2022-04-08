@@ -35,7 +35,10 @@ class _BottomTabsState extends State<BottomTabs> {
         hasDrawer: true,
         onRightIconTap: _openViewNotificationsScreen,
       ),
-      drawer: NavigationDrawer(groundedUser: widget.groundedUser),
+      drawer: NavigationDrawer(
+        groundedUser: widget.groundedUser,
+        hasChalkBoardFont: widget.groundedUser.userType == UserType.child,
+      ),
       body: IndexedStack(index: _currentIndex, children: _buildTabs),
       bottomNavigationBar: CustomBottomBar(
         currentIndex: _currentIndex,

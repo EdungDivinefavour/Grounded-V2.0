@@ -7,6 +7,7 @@ import 'package:grounded/components/png_icon.dart';
 import 'package:grounded/components/screen_title.dart';
 import 'package:grounded/components/small_input_field.dart';
 import 'package:grounded/constants/enums/user_type.dart';
+import 'package:grounded/extensions/textstyle_extension.dart';
 import 'package:grounded/models/grounded_user/grounded_user.dart';
 import 'package:grounded/screens/bottom_tabs.dart';
 import 'package:grounded/services/firebase/authentication_service.dart';
@@ -40,7 +41,10 @@ class _LoginChildState extends State<LoginChild> {
               Padding(
                 padding: EdgeInsets.only(left: 20),
                 child: ScreenTitle(
-                    title: "Sign In As Child", isWhiteForeground: true),
+                    title: "Sign In As Child",
+                    titleTextStyle: TextStyles.chalkboard.copyWith(
+                        fontSize: 40, color: ThemeColors.lightElement),
+                    isWhiteForeground: true),
               ),
               Container(
                 padding: EdgeInsets.all(20),
@@ -56,21 +60,26 @@ class _LoginChildState extends State<LoginChild> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text('Hey There',
-                          style: TextStyles.bold.copyWith(fontSize: 26)),
+                          style: TextStyles.chalkboard.copyWith(fontSize: 34)),
                     ),
                     SizedBox(height: 5),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         "Enter the token given to you by your parent",
-                        style: TextStyles.regular,
+                        style: TextStyles.extraBold
+                            .copyWith(fontSize: 20)
+                            .toChalkBoard,
                       ),
                     ),
                     PNGIcon(size: 280, icon: AppIcons.phoneInHandPNG),
                     _buildInputBoxes,
                     SizedBox(height: 100),
                     CustomActionButton(
-                        title: 'Proceed', onPressed: _loginChild),
+                      title: 'Proceed',
+                      hasChalkBoardFont: true,
+                      onPressed: _loginChild,
+                    ),
                     SizedBox(height: 200),
                   ],
                 ),

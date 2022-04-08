@@ -20,9 +20,6 @@ class TaskSent extends StatelessWidget {
 
   TaskSent({required this.child, required this.task});
 
-  DateTime get _expectedCompletionDate =>
-      DateTime.fromMillisecondsSinceEpoch(task.expectedCompletionTimestamp);
-
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(

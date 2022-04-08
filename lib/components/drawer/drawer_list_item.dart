@@ -15,6 +15,7 @@ class DrawerListItem extends StatelessWidget {
   final Widget? screenToLaunch;
   final String? adminEmail;
   final String? adminPhoneNumber;
+  final bool hasChalkBoardFont;
 
   final _authService = AuthenticationService.instance;
 
@@ -24,6 +25,7 @@ class DrawerListItem extends StatelessWidget {
     this.screenToLaunch,
     this.adminEmail,
     this.adminPhoneNumber,
+    this.hasChalkBoardFont = false,
   });
 
   @override
@@ -50,9 +52,13 @@ class DrawerListItem extends StatelessWidget {
                             Padding(
                                 padding: const EdgeInsets.only(left: 20),
                                 child: Text(title,
-                                    style: TextStyles.semiBold.copyWith(
-                                        fontSize: 17,
-                                        color: ThemeColors.lightElement)))
+                                    style: (hasChalkBoardFont
+                                            ? TextStyles.chalkboard
+                                                .copyWith(fontSize: 22)
+                                            : TextStyles.semiBold
+                                                .copyWith(fontSize: 17))
+                                        .copyWith(
+                                            color: ThemeColors.lightElement)))
                           ],
                         ))
                   ],

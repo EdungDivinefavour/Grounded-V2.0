@@ -30,6 +30,7 @@ class _BadgesChildState extends State<BadgesChild> {
                 child: ScreenTitle(
                   title: "You Rock!",
                   isWhiteBackround: true,
+                  titleTextStyle: TextStyles.chalkboard.copyWith(fontSize: 40),
                 ),
               ),
               Container(
@@ -37,14 +38,15 @@ class _BadgesChildState extends State<BadgesChild> {
                 alignment: Alignment.centerLeft,
                 child: Text(
                     "Your parents will see these great \nachievements and you might just get a reward! 😉",
-                    style: TextStyles.regular),
+                    style: TextStyles.chalkboard.copyWith(fontSize: 22)),
               ),
               SizedBox(height: 25),
               Align(
                 alignment: Alignment.center,
                 child: Column(
                   children: [
-                    Text('Latest Badge', style: TextStyles.extraBold),
+                    Text('Latest Badge',
+                        style: TextStyles.chalkboard.copyWith(fontSize: 30)),
                     SizedBox(height: 10),
                     AchievedBadge(
                       badge: widget.child.achievements.last.badge,
@@ -69,7 +71,8 @@ class _BadgesChildState extends State<BadgesChild> {
                         padding: EdgeInsets.all(20),
                         alignment: Alignment.centerLeft,
                         child: Text("Achievements",
-                            style: TextStyles.extraBold.copyWith(fontSize: 20)),
+                            style:
+                                TextStyles.chalkboard.copyWith(fontSize: 22)),
                       ),
                       AchievementsList(achievements: widget.child.achievements),
                     ],

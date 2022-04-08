@@ -65,8 +65,8 @@ class _CustomNumPadState extends State<CustomNumPad> {
         child: buttonText == "Delete"
             ? SVGIcon(icon: AppIcons.backSpace, size: 35)
             : Text(buttonText,
-                style: TextStyles.semiBold.copyWith(
-                    fontSize: 22,
+                style: TextStyles.chalkboard.copyWith(
+                    fontSize: 26,
                     color: buttonText == "Enter"
                         ? ThemeColors.lightElement
                         : ThemeColors.darkElement)),

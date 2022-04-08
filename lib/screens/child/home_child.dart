@@ -4,6 +4,7 @@ import 'package:grounded/components/custom_scaffold.dart';
 import 'package:grounded/components/png_icon.dart';
 import 'package:grounded/components/screen_title.dart';
 import 'package:grounded/constants/enums/subject_type.dart';
+import 'package:grounded/extensions/textstyle_extension.dart';
 import 'package:grounded/models/grounded_task/grounded_task.dart';
 import 'package:grounded/models/grounded_user/child/child.dart';
 import 'package:grounded/screens/child/solve_task.dart';
@@ -45,13 +46,15 @@ class _HomeChildState extends State<HomeChild> {
             title: "Hey " + shortenToFirstOnly(widget.child.name),
             subTitle: "Ready to make your parents proud today?",
             isWhiteBackround: true,
+            titleTextStyle: TextStyles.chalkboard.copyWith(fontSize: 40),
+            subTitleTextStyle: TextStyles.chalkboard.copyWith(fontSize: 22),
           ),
           SizedBox(height: 40),
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
               "Pending Tasks",
-              style: TextStyles.extraBold.copyWith(fontSize: 20),
+              style: TextStyles.extraBold.copyWith(fontSize: 20).toChalkBoard,
             ),
           ),
           SizedBox(height: 20),
@@ -64,7 +67,10 @@ class _HomeChildState extends State<HomeChild> {
   Widget _buildTasksList() {
     return Expanded(
       child: _tasks.isEmpty
-          ? Text("No tasks yet!. Your parents haven't assigned any to you")
+          ? Text(
+              "No tasks yet!. Your parents haven't assigned any to you",
+              style: TextStyles.chalkboard.copyWith(fontSize: 20),
+            )
           : GridView.builder(
               itemCount: _tasks.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -94,7 +100,7 @@ class _HomeChildState extends State<HomeChild> {
               task.subjectType == SubjectType.english
                   ? task.subjectType.value
                   : task.questions[0].mathType!.value,
-              style: TextStyles.smallBold),
+              style: TextStyles.chalkboard.copyWith(fontSize: 22)),
           SizedBox(height: 15),
           PNGIcon(size: 70, icon: task.taskIcon),
           SizedBox(height: 12),
@@ -140,7 +146,9 @@ class _HomeChildState extends State<HomeChild> {
           alignment: Alignment.center,
           child: Text(
             "Continue",
-            style: TextStyles.smallBold.copyWith(color: Colors.white),
+            style: TextStyles.chalkboard
+                .copyWith(fontSize: 22)
+                .copyWith(color: Colors.white),
           )),
     );
   }

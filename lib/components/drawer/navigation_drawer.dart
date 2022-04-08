@@ -16,7 +16,12 @@ import 'package:flutter/material.dart';
 
 class NavigationDrawer extends StatelessWidget {
   final GroundedUser groundedUser;
-  const NavigationDrawer({required this.groundedUser});
+  final bool hasChalkBoardFont;
+
+  const NavigationDrawer({
+    required this.groundedUser,
+    this.hasChalkBoardFont = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +35,16 @@ class NavigationDrawer extends StatelessWidget {
               DrawerHeaderItem(
                 title: "Hey, " + shortenToFirstOnly(groundedUser.name),
                 profilePhoto: groundedUser.profilePhoto,
+                hasChalkBoardFont: hasChalkBoardFont,
               ),
               ..._buildDrawerItemsList,
               Spacer(),
               PNGIcon(size: 70, icon: AppIcons.logoPNG, radius: 15),
               SizedBox(height: 20),
               Text("Grounded V2.0.0",
-                  style: TextStyles.bold
+                  style: (hasChalkBoardFont
+                          ? TextStyles.chalkboard.copyWith(fontSize: 22)
+                          : TextStyles.bold)
                       .copyWith(fontSize: 15, color: ThemeColors.lightElement)),
               SizedBox(height: 50)
             ],
@@ -50,6 +58,7 @@ class NavigationDrawer extends StatelessWidget {
         title: "Home",
         leftIcon: AppIcons.home,
         screenToLaunch: BottomTabs(groundedUser: groundedUser),
+        hasChalkBoardFont: hasChalkBoardFont,
       ),
       groundedUser.userType == UserType.parent
           ? DrawerListItem(
@@ -62,18 +71,22 @@ class NavigationDrawer extends StatelessWidget {
         title: "About",
         leftIcon: AppIcons.info,
         screenToLaunch: About(),
+        hasChalkBoardFont: hasChalkBoardFont,
       ),
       DrawerListItem(
         title: "Share",
         leftIcon: AppIcons.share,
+        hasChalkBoardFont: hasChalkBoardFont,
       ),
       DrawerListItem(
         title: "Contact",
         leftIcon: AppIcons.support,
+        hasChalkBoardFont: hasChalkBoardFont,
       ),
       DrawerListItem(
         title: "Log Out",
         leftIcon: AppIcons.logout,
+        hasChalkBoardFont: hasChalkBoardFont,
         screenToLaunch: Intro(),
       ),
     ];

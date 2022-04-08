@@ -8,6 +8,7 @@ class CustomActionButton extends StatelessWidget {
   final bool enabled;
   final bool isWhite;
   final bool isRedButton;
+  final bool hasChalkBoardFont;
 
   const CustomActionButton({
     required this.onPressed,
@@ -15,6 +16,7 @@ class CustomActionButton extends StatelessWidget {
     this.enabled = true,
     this.isWhite = false,
     this.isRedButton = true,
+    this.hasChalkBoardFont = false,
   });
 
   @override
@@ -29,7 +31,10 @@ class CustomActionButton extends StatelessWidget {
         height: 50,
         alignment: Alignment.center,
         child: Text(title,
-            style: TextStyles.bold.copyWith(
+            style: (hasChalkBoardFont
+                    ? TextStyles.chalkboard.copyWith(fontSize: 24)
+                    : TextStyles.bold)
+                .copyWith(
               color: isWhite ? ThemeColors.primary : ThemeColors.lightElement,
             )),
       ),

@@ -7,7 +7,9 @@ import 'package:grounded/utils/device_utils.dart';
 
 class AchievementsList extends StatelessWidget {
   final List<Achievement> achievements;
-  AchievementsList({required this.achievements});
+  final bool hasChalkboardFont;
+  AchievementsList(
+      {required this.achievements, this.hasChalkboardFont = false});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,9 @@ class AchievementsList extends StatelessWidget {
           ? Padding(
               padding: EdgeInsets.only(left: 20),
               child: Text(
-                  "No achievements yet!. Assign some assignments to your children and they will receive achievements when they complete some assignments"),
+                "No achievements yet!. Assign some assignments to your children and they will receive achievements when they complete some assignments",
+                style: TextStyles.chalkboard.copyWith(fontSize: 22),
+              ),
             )
           : ListView.builder(
               shrinkWrap: true,
@@ -48,7 +52,7 @@ class AchievementsList extends StatelessWidget {
                 width: getDeviceWidth(context) - 120,
                 child: Text(
                   achievement.title,
-                  style: TextStyles.regular.copyWith(fontSize: 14),
+                  style: TextStyles.chalkboard.copyWith(fontSize: 20),
                   overflow: TextOverflow.clip,
                 ),
               )
