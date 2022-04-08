@@ -25,13 +25,13 @@ class QuestionManager {
 
   void buildQuestionsForTask(GroundedTask task, {int numberOfQuestions = 10}) {
     if (task.subjectType == SubjectType.maths) {
-      _buildMathList(task, numberOfQuestions);
+      _buildMathList(task, numberOfQuestions: numberOfQuestions);
     } else {
-      _buildEnglishList(task, numberOfQuestions);
+      _buildEnglishList(task, numberOfQuestions: numberOfQuestions);
     }
   }
 
-  void _buildMathList(GroundedTask task, [int numberOfQuestions = 10]) {
+  void _buildMathList(GroundedTask task, {required int numberOfQuestions}) {
     for (int i = 0; i < numberOfQuestions; i++) {
       task.questions.add(
         newMath(task.mathTypeToCreate!, task.mathSubTypeToCreate!,
@@ -43,7 +43,7 @@ class QuestionManager {
     task.questions.shuffle();
   }
 
-  void _buildEnglishList(GroundedTask task, [int numberOfQuestions = 10]) {
+  void _buildEnglishList(GroundedTask task, {required int numberOfQuestions}) {
     final r = Random();
     final wordArrayToUse =
         _allWords.where((x) => x.type == task.englishSubTypeToCreate).toList();

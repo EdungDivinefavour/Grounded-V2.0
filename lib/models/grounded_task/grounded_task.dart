@@ -105,7 +105,8 @@ class GroundedTask {
       englishSubTypeToCreate: englishSubTypeToCreate,
     );
 
-    QuestionManager.instance.buildQuestionsForTask(task);
+    QuestionManager.instance.buildQuestionsForTask(task,
+        numberOfQuestions: numberOfQuestionsToCreate ?? 10);
     return task;
   }
 
