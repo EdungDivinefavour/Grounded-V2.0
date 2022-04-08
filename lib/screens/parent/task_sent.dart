@@ -11,6 +11,8 @@ import 'package:grounded/models/grounded_user/child/child.dart';
 import 'package:grounded/styles/colors/theme_colors.dart';
 import 'package:grounded/styles/icons/app_icons.dart';
 import 'package:grounded/styles/texts/text_styles.dart';
+import 'package:grounded/utils/int_utils.dart';
+import 'package:intl/intl.dart';
 
 class TaskSent extends StatelessWidget {
   final GroundedTask task;
@@ -43,13 +45,15 @@ class TaskSent extends StatelessWidget {
                   PNGIcon(icon: AppIcons.calendarPNG, size: 30),
                   SizedBox(width: 10),
                   Text(
-                      "${_expectedCompletionDate.day} - ${_expectedCompletionDate.month} - ${_expectedCompletionDate.year}",
+                      DateFormat("MMMM d, yyyy")
+                          .format(task.creationTimestamp.toDateTime),
                       style: TextStyles.semiBold.copyWith(fontSize: 17)),
                   SizedBox(width: 70),
                   PNGIcon(icon: AppIcons.clockPNG, size: 30),
                   SizedBox(width: 10),
                   Text(
-                      "${_expectedCompletionDate.hour} : ${_expectedCompletionDate.minute}",
+                      DateFormat.jm()
+                          .format(task.expectedCompletionTimestamp.toDateTime),
                       style: TextStyles.semiBold.copyWith(fontSize: 17)),
                 ],
               ),

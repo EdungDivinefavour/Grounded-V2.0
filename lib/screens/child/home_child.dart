@@ -38,34 +38,31 @@ class _HomeChildState extends State<HomeChild> {
   Widget build(BuildContext context) {
     return CustomScaffold(
       bubblePosition: BackgroundBubblePosition.bottomLeft,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Column(children: [
-            ScreenTitle(
-              title: "Hey " + shortenToFirstOnly(widget.child.name),
-              subTitle: "Ready to make your parents proud today?",
-              isWhiteBackround: true,
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: Column(children: [
+          ScreenTitle(
+            title: "Hey " + shortenToFirstOnly(widget.child.name),
+            subTitle: "Ready to make your parents proud today?",
+            isWhiteBackround: true,
+          ),
+          SizedBox(height: 40),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "Pending Tasks",
+              style: TextStyles.extraBold.copyWith(fontSize: 20),
             ),
-            SizedBox(height: 40),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Pending Tasks",
-                style: TextStyles.extraBold.copyWith(fontSize: 20),
-              ),
-            ),
-            SizedBox(height: 20),
-            _buildTasksList(),
-          ]),
-        ),
+          ),
+          SizedBox(height: 20),
+          _buildTasksList(),
+        ]),
       ),
     );
   }
 
   Widget _buildTasksList() {
-    return SizedBox(
-      height: 2000,
+    return Expanded(
       child: _tasks.isEmpty
           ? Text("No tasks yet!. Your parents haven't assigned any to you")
           : GridView.builder(
@@ -85,7 +82,7 @@ class _HomeChildState extends State<HomeChild> {
   Widget _buildEachTask(GroundedTask task) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: ThemeColors.primaryDark, width: 0.1),
+        border: Border.all(color: ThemeColors.primaryDark, width: 0.4),
         borderRadius: BorderRadius.circular(10.0),
         color: ThemeColors.lightBackground,
       ),
@@ -105,7 +102,7 @@ class _HomeChildState extends State<HomeChild> {
             barRadius: Radius.circular(5),
             lineHeight: 8.0,
             percent: task.completedPercentage / 100,
-            progressColor: ThemeColors.primary,
+            progressColor: ThemeColors.link,
             backgroundColor: ThemeColors.primaryLight,
           ),
           SizedBox(height: 5),

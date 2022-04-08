@@ -52,7 +52,7 @@ class _AssignedTaskState extends State<AssignedTask> {
       body: _tasks.isEmpty
           ? CenterText(text: "No tasks fetched")
           : Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
               child: ListView.builder(
                   shrinkWrap: true,
                   itemCount: _tasks.length,
@@ -76,11 +76,14 @@ class _AssignedTaskState extends State<AssignedTask> {
         title: Row(
           children: [
             PNGIcon(icon: AppIcons.tasksPNG, size: 30),
-            SizedBox(width: 10),
+            SizedBox(width: 5),
             Text(task.subjectType.value, style: TextStyles.semiBold),
             SizedBox(width: 5),
-            Text("(${task.creationTimestamp.toFormattedDate})",
+            Text("(${task.totalPointsGotten} points)",
                 style: TextStyles.semiBold),
+            SizedBox(width: 10),
+            Text(task.creationTimestamp.toFormattedDate,
+                style: TextStyles.regular),
             Spacer(),
             task.hasBeenCompleted
                 ? SVGIcon(

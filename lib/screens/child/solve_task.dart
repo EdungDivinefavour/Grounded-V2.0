@@ -98,7 +98,7 @@ class _SolveTaskState extends State<SolveTask> {
         barRadius: Radius.circular(5),
         lineHeight: 8.0,
         percent: widget.task.completedPercentage / 100,
-        progressColor: ThemeColors.primary,
+        progressColor: ThemeColors.link,
         backgroundColor: ThemeColors.primaryLight,
       ),
       SizedBox(height: 40),
@@ -148,6 +148,7 @@ class _SolveTaskState extends State<SolveTask> {
       child: Container(
         margin: EdgeInsets.all(7.5),
         decoration: BoxDecoration(
+          border: Border.all(color: ThemeColors.primaryDark),
           borderRadius: BorderRadius.circular(15),
           color: ThemeColors.lightBackground,
         ),
@@ -256,6 +257,8 @@ class _SolveTaskState extends State<SolveTask> {
     _currentQuestion.setHasBeenAnswered();
 
     if (widget.task.hasBeenCompleted) {
+      AudioPlayer.instance.play(AudioTones.congrats);
+
       await _showCongratulationsDialog();
       Navigator.pop(context);
 
@@ -338,7 +341,7 @@ class _SolveTaskState extends State<SolveTask> {
       },
     );
 
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 3));
     Navigator.pop(context);
   }
 }

@@ -4,15 +4,19 @@ import 'package:grounded/styles/texts/text_styles.dart';
 
 class ScreenTitle extends StatelessWidget {
   final String title;
-  final String? subTitle;
   final bool isWhiteForeground;
   final bool isWhiteBackround;
+  final String? subTitle;
+  final TextStyle? titleTextStyle;
+  final TextStyle? subTitleTextStyle;
 
   ScreenTitle({
     required this.title,
-    this.subTitle,
     this.isWhiteForeground = false,
     this.isWhiteBackround = false,
+    this.subTitle,
+    this.titleTextStyle,
+    this.subTitleTextStyle,
   });
 
   @override
@@ -27,16 +31,17 @@ class ScreenTitle extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyles.extraBold.copyWith(
-              fontSize: 25,
-              color: isWhiteForeground
-                  ? ThemeColors.lightElement
-                  : ThemeColors.darkElement,
-            ),
+            style: titleTextStyle ??
+                TextStyles.extraBold.copyWith(
+                  fontSize: 25,
+                  color: isWhiteForeground
+                      ? ThemeColors.lightElement
+                      : ThemeColors.darkElement,
+                ),
           ),
           subTitle == null
               ? SizedBox(height: 20)
-              : Text(subTitle!, style: TextStyles.regular)
+              : Text(subTitle!, style: subTitleTextStyle ?? TextStyles.regular)
         ],
       ),
     );

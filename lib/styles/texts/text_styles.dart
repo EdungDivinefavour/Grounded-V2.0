@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const chalkBoardFamily = 'Chalkboard';
+
 const lightFamily = 'Poppins-Light';
 const regularFamily = 'Poppins-Regular';
 const mediumFamily = 'Poppins-Medium';
@@ -15,4 +17,7 @@ class TextStyles {
   static const semiBold = TextStyle(fontSize: 18, fontFamily: semiBoldFamily);
   static const bold = TextStyle(fontSize: 18, fontFamily: boldFamily);
   static const extraBold = TextStyle(fontSize: 20, fontFamily: boldFamily);
+
+  static const chalkboard =
+      TextStyle(fontSize: 16, fontFamily: chalkBoardFamily);
 }
